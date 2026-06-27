@@ -14,11 +14,10 @@
     --border: #2a2a2a;
     --border2: #383838;
     --text: #e0e0e0;
-    --text2: #888888;
-    --text3: #555555;
+    --text2: #888;
+    --text3: #555;
     --gold: #c8a951;
     --gold-bg: rgba(200,169,81,.1);
-    --gold2: #b8942e;
     --ice: #4fc3f7;
     --ice-bg: rgba(79,195,247,.1);
     --crimson: #d32f2f;
@@ -27,181 +26,174 @@
     --emerald-bg: rgba(76,175,80,.1);
     --amber: #ffc107;
     --amber-bg: rgba(255,193,7,.1);
-    --radius: 12px;
-    --radius-sm: 8px;
+    --radius: 10px;
+    --radius-sm: 6px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { font-size:16px; }
+  html { font-size:15px; }
   body {
     font-family:'Inter',system-ui,sans-serif;
     background:var(--bg);
     color:var(--text);
     padding:0; min-height:100vh;
   }
-  .app { max-width:640px; margin:0 auto; padding:16px 12px 80px; }
+  .app { max-width:640px; margin:0 auto; padding:12px 10px 70px; }
 
-  .header { margin-bottom:4px; }
-  .header h1 { font-size:20px; font-weight:800; letter-spacing:-.5px; color:var(--gold); }
-  .header .sub { font-size:12px; color:var(--text2); margin-top:1px; }
-  .header .sub strong { color:var(--text); font-weight:500; }
+  .header { display:flex; align-items:baseline; gap:10px; margin-bottom:2px; }
+  .header h1 { font-size:15px; font-weight:700; color:var(--gold); letter-spacing:-.2px; }
+  .header .sub { font-size:11px; color:var(--text2); }
 
-  .status-bar {
-    display:flex; gap:4px; flex-wrap:wrap; font-size:10px;
-    padding:6px 10px; background:var(--surface); border-radius:var(--radius-sm);
-    border:1px solid var(--border); margin:10px 0; color:var(--text2);
+  .bar {
+    display:flex; gap:3px; flex-wrap:wrap; font-size:9px;
+    padding:5px 8px; background:var(--surface); border-radius:var(--radius-sm);
+    border:1px solid var(--border); margin:8px 0; color:var(--text2);
   }
-  .status-bar strong { color:var(--text); font-weight:500; }
+  .bar strong { color:var(--text); font-weight:500; }
 
-  .seg-control { display:flex; gap:4px; margin-bottom:10px; }
-  .seg-control select {
+  .seg { display:flex; gap:3px; margin-bottom:8px; }
+  .seg select {
     flex:1; background:var(--surface2); color:var(--text); border:1px solid var(--border);
-    padding:9px 12px; border-radius:var(--radius-sm); font-size:13px; font-weight:500;
+    padding:7px 10px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
     outline:none; cursor:pointer; font-family:inherit;
     appearance:none; -webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:right 12px center; padding-right:32px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 10px center; padding-right:28px;
   }
-  .seg-control select option { background:var(--surface2); color:var(--text); }
-  .seg-control .btn-all {
+  .seg select option { background:var(--surface2); color:var(--text); }
+  .seg .btn {
     background:var(--surface2); border:1px solid var(--border); color:var(--text2);
-    padding:7px 12px; border-radius:var(--radius-sm); font-size:11px; font-weight:500;
+    padding:6px 10px; border-radius:var(--radius-sm); font-size:10px; font-weight:500;
     cursor:pointer; white-space:nowrap;
   }
-  .seg-control .btn-all.on { border-color:var(--gold); color:var(--gold); background:var(--gold-bg); }
+  .seg .btn.on { border-color:var(--gold); color:var(--gold); background:var(--gold-bg); }
 
   .card {
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-    margin-bottom:8px; overflow:hidden;
+    margin-bottom:7px; overflow:hidden;
   }
   .card:active { border-color:var(--border2); }
 
-  .card-hd {
-    display:flex; align-items:center; gap:10px;
-    padding:11px 12px; cursor:pointer; user-select:none;
+  .chd {
+    display:flex; align-items:center; gap:8px;
+    padding:9px 10px; cursor:pointer; user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .card-hd .badge-status { font-size:9px; font-weight:600; padding:2px 7px; border-radius:8px; text-transform:uppercase; letter-spacing:.3px; flex-shrink:0; }
-  .badge-s-green { background:var(--emerald-bg); color:var(--emerald); }
-  .badge-s-gold { background:var(--gold-bg); color:var(--gold); }
-  .badge-s-ice { background:var(--ice-bg); color:var(--ice); }
-  .badge-s-amber { background:var(--amber-bg); color:var(--amber); }
-  .badge-s-crimson { background:var(--crimson-bg); color:var(--crimson); }
-
-  .card-hd .info { flex:1; min-width:0; }
-  .card-hd .info .name { font-size:13px; font-weight:600; }
-  .card-hd .info .line2 { font-size:10px; color:var(--text2); margin-top:1px; }
-  .card-hd .arrow {
-    width:22px; height:22px; border-radius:6px; background:var(--surface2); border:1px solid var(--border);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    font-size:12px; color:var(--text3); transition:transform .25s;
+  .chd .type {
+    font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;
+    padding:2px 6px; border-radius:4px; flex-shrink:0;
   }
-  .card-hd .arrow.open { transform:rotate(180deg); color:var(--gold); }
+  .type-bk { background:var(--gold-bg); color:var(--gold); }
+  .type-fe { background:var(--ice-bg); color:var(--ice); }
+  .type-ag { background:var(--emerald-bg); color:var(--emerald); }
+  .type-sc { background:var(--amber-bg); color:var(--amber); }
 
-  .card-bd { max-height:0; overflow:hidden; transition:max-height .35s ease; }
-  .card-bd.open { max-height:2500px; }
-  .card-bd-inner { padding:0 12px 12px; border-top:1px solid var(--border); }
-  .card-bd-inner > * { padding-top:8px; }
+  .chd .info { flex:1; min-width:0; }
+  .chd .info .nm { font-size:12px; font-weight:600; }
+  .chd .info .l2 { font-size:9px; color:var(--text2); margin-top:0; }
 
-  .m-row { display:flex; justify-content:space-between; font-size:11px; padding:3px 0; border-bottom:1px solid var(--border); }
-  .m-row .l { color:var(--text2); }
-  .m-row .v { color:var(--text); text-align:right; }
-  .m-row a { color:var(--ice); text-decoration:none; }
-  .m-row a:hover { text-decoration:underline; }
+  .chd .st {
+    font-size:8px; font-weight:600; padding:2px 7px; border-radius:8px;
+    text-transform:uppercase; letter-spacing:.3px; flex-shrink:0;
+  }
+  .st-green { background:var(--emerald-bg); color:var(--emerald); }
+  .st-gold { background:var(--gold-bg); color:var(--gold); }
+  .st-ice { background:var(--ice-bg); color:var(--ice); }
+  .st-amber { background:var(--amber-bg); color:var(--amber); }
+  .st-crimson { background:var(--crimson-bg); color:var(--crimson); }
 
-  .sec-tit { font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:.4px; margin:10px 0 5px; }
-  .sec-tit:first-child { margin-top:0; }
+  .chd .ar {
+    width:20px; height:20px; border-radius:5px; background:var(--surface2); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    font-size:10px; color:var(--text3); transition:transform .25s;
+  }
+  .chd .ar.on { transform:rotate(180deg); color:var(--gold); }
 
-  .chip { display:inline-flex; font-size:9px; padding:2px 7px; border-radius:8px; background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
+  .cbd { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .cbd.on { max-height:4000px; }
+  .cbd-in { padding:0 10px 10px; border-top:1px solid var(--border); }
+  .cbd-in > * { padding-top:6px; }
+
+  .stt { font-size:9px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:.4px; margin:8px 0 4px; }
+  .stt:first-child { margin-top:0; }
+
+  .mr { display:flex; justify-content:space-between; font-size:10px; padding:2px 0; border-bottom:1px solid var(--border); }
+  .mr .l { color:var(--text2); }
+  .mr .v { color:var(--text); text-align:right; }
+  .mr a { color:var(--ice); text-decoration:none; }
+
+  .chip { display:inline-flex; font-size:9px; padding:1px 6px; border-radius:6px; background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
 
   .cl { list-style:none; }
-  .cl li {
-    font-size:11px; padding:4px 0; border-bottom:1px solid var(--border);
-    display:flex; gap:5px; align-items:baseline;
-  }
+  .cl li { font-size:10px; padding:3px 0; border-bottom:1px solid var(--border); display:flex; gap:4px; align-items:baseline; }
   .cl li:last-child { border-bottom:none; }
-  .ch { font-family:'SF Mono','Cascadia Code',monospace; color:var(--gold); font-size:9px; flex-shrink:0; }
-  .cd { color:var(--text3); font-size:9px; flex-shrink:0; }
+  .ch { font-family:'SF Mono','Cascadia Code',monospace; color:var(--gold); font-size:8px; flex-shrink:0; }
+  .ct { color:var(--text3); font-size:8px; flex-shrink:0; }
   .cm { color:var(--text); }
 
-  .badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:600; padding:2px 7px; border-radius:8px; }
+  .badge { display:inline-flex; align-items:center; gap:2px; font-size:8px; font-weight:600; padding:1px 6px; border-radius:6px; }
   .bd-green { background:var(--emerald-bg); color:var(--emerald); }
   .bd-gold { background:var(--gold-bg); color:var(--gold); }
   .bd-ice { background:var(--ice-bg); color:var(--ice); }
   .bd-amber { background:var(--amber-bg); color:var(--amber); }
   .bd-crimson { background:var(--crimson-bg); color:var(--crimson); }
 
-  .dot { display:inline-block; width:5px; height:5px; border-radius:50%; }
+  .dot { display:inline-block; width:4px; height:4px; border-radius:50%; }
   .d-green { background:var(--emerald); }
   .d-gold { background:var(--gold); }
   .d-ice { background:var(--ice); }
   .d-crimson { background:var(--crimson); }
   .d-amber { background:var(--amber); }
 
-  .obj-item { display:flex; align-items:flex-start; gap:8px; padding:5px 0; border-bottom:1px solid var(--border); font-size:11px; }
-  .obj-item:last-child { border-bottom:none; }
-  .obj-item .cb {
-    width:16px; height:16px; border-radius:4px; border:1.5px solid var(--border2);
+  .oi { display:flex; align-items:flex-start; gap:6px; padding:4px 0; border-bottom:1px solid var(--border); font-size:10px; }
+  .oi:last-child { border-bottom:none; }
+  .oi .cb {
+    width:14px; height:14px; border-radius:3px; border:1.5px solid var(--border2);
     flex-shrink:0; cursor:pointer; display:flex; align-items:center; justify-content:center;
-    margin-top:1px; font-size:9px; color:transparent; background:var(--surface2);
+    margin-top:1px; font-size:8px; color:transparent; background:var(--surface2);
     -webkit-tap-highlight-color:transparent;
   }
-  .obj-item .cb.checked { background:var(--emerald); border-color:var(--emerald); color:#fff; }
-  .obj-item .cb.v2 { border-color:var(--amber); }
-  .obj-item .cb.v2.checked { background:var(--gold); border-color:var(--gold); }
-  .obj-item .txt { flex:1; line-height:1.4; }
-  .obj-item .txt .skill { font-size:9px; color:var(--text3); }
+  .oi .cb.chk { background:var(--emerald); border-color:var(--emerald); color:#fff; }
+  .oi .cb.v2 { border-color:var(--amber); }
+  .oi .cb.v2.chk { background:var(--gold); border-color:var(--gold); }
+  .oi .tx { flex:1; line-height:1.4; }
+  .oi .tx .sk { font-size:8px; color:var(--text3); }
 
-  .debt-item,.wf-item { font-size:11px; padding:7px 10px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:4px; border-left:3px solid var(--border); }
-  .risk-item { font-size:11px; padding:7px 10px; background:var(--crimson-bg); border-radius:var(--radius-sm); margin-bottom:4px; border-left:3px solid var(--crimson); }
-  .debt-item .tag { font-size:9px; }
-  .inc-item { font-size:11px; padding:7px 10px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:4px; border-left:3px solid var(--border); }
-  .inc-item .dt { color:var(--ice); font-weight:600; }
+  .di,.wi { font-size:10px; padding:6px 8px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:3px; border-left:3px solid var(--border); }
+  .ri { font-size:10px; padding:6px 8px; background:var(--crimson-bg); border-radius:var(--radius-sm); margin-bottom:3px; border-left:3px solid var(--crimson); }
+  .di .tg { font-size:8px; }
+  .ii { font-size:10px; padding:6px 8px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:3px; border-left:3px solid var(--border); }
+  .ii .dt { color:var(--ice); font-weight:600; }
 
-  .dep-list { list-style:none; }
-  .dep-list li { font-size:11px; padding:3px 0; display:flex; gap:5px; align-items:center; }
-  .dep-list li::before { content:'\2717'; color:var(--crimson); font-size:10px; }
+  .dp-list { list-style:none; }
+  .dp-list li { font-size:10px; padding:2px 0; display:flex; gap:4px; align-items:center; }
+  .dp-list li::before { content:'\2717'; color:var(--crimson); font-size:9px; }
 
-  .wf-step {
-    background:var(--surface2); border-radius:var(--radius-sm); padding:9px 11px; margin-bottom:6px;
-    border-left:3px solid var(--gold);
-  }
-  .wf-step .num { font-size:9px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.5px; }
-  .wf-step .title { font-size:12px; font-weight:600; margin:1px 0; }
-  .wf-step .body { font-size:11px; color:var(--text2); line-height:1.5; }
-  .wf-cmd {
-    background:var(--surface3); border-radius:5px; padding:7px 9px; margin:5px 0;
-    font-family:'SF Mono','Cascadia Code',monospace; font-size:10px; color:var(--gold); overflow-x:auto;
-  }
-  .wf-menu-item {
-    display:flex; align-items:center; gap:7px;
-    padding:7px 9px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:4px;
-    font-size:11px;
-  }
-  .wf-menu-item .n { width:20px; height:20px; border-radius:5px; background:var(--gold-bg); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
-  .wf-menu-item .d { flex:1; }
-  .wf-menu-item .sc { font-size:9px; color:var(--text3); font-family:'SF Mono','Cascadia Code',monospace; }
+  .ws { background:var(--surface2); border-radius:var(--radius-sm); padding:7px 9px; margin-bottom:5px; border-left:3px solid var(--gold); }
+  .ws .num { font-size:8px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.4px; }
+  .ws .tt { font-size:11px; font-weight:600; margin:1px 0; }
+  .ws .bd { font-size:10px; color:var(--text2); line-height:1.5; }
+
+  .wmi { display:flex; align-items:center; gap:6px; padding:6px 8px; background:var(--surface2); border-radius:var(--radius-sm); margin-bottom:3px; font-size:10px; }
+  .wmi .n { width:18px; height:18px; border-radius:4px; background:var(--gold-bg); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; flex-shrink:0; }
 
   .nav-bar {
     position:fixed; bottom:0; left:0; right:0; z-index:100;
     background:var(--surface); border-top:1px solid var(--border);
-    display:flex; padding:5px 6px; gap:3px;
+    display:flex; padding:4px 5px; gap:2px;
     max-width:640px; margin:0 auto;
   }
   .nav-bar a {
     flex:1; display:flex; flex-direction:column; align-items:center;
-    padding:5px 4px; border-radius:6px; text-decoration:none;
-    font-size:9px; color:var(--text3); gap:1px;
+    padding:4px 3px; border-radius:5px; text-decoration:none;
+    font-size:8px; color:var(--text3); gap:1px;
     -webkit-tap-highlight-color:transparent;
   }
-  .nav-bar a .ni { font-size:16px; }
+  .nav-bar a .ni { font-size:14px; }
   .nav-bar a.active { color:var(--gold); background:var(--gold-bg); }
   .nav-bar a:active { background:var(--surface2); }
 
   .hidden { display:none !important; }
-  .mt-1 { margin-top:4px; }
-  .mt-2 { margin-top:8px; }
-  .mb-2 { margin-bottom:8px; }
-  .text-xs { font-size:10px; }
+  .text-xs { font-size:9px; }
   .text-muted { color:var(--text2); }
   .text-gold { color:var(--gold); }
   .text-ice { color:var(--ice); }
@@ -209,19 +201,25 @@
   .text-amber { color:var(--amber); }
   .text-crimson { color:var(--crimson); }
   .fw-600 { font-weight:600; }
-  .gap-2 { gap:4px; }
+  .mb-1 { margin-bottom:3px; }
 
-  .obj-grid { display:grid; gap:4px; }
-  .obj-card {
-    background:var(--surface2); border-radius:var(--radius-sm); padding:8px 10px;
-    border-left:3px solid var(--border);
-  }
+  /* heatmap */
+  .hm { display:flex; gap:2px; flex-wrap:wrap; margin:4px 0; }
+  .hm-cell { width:8px; height:8px; border-radius:2px; }
+  .hm-labels { display:flex; gap:2px; font-size:7px; color:var(--text3); margin-top:2px; }
+  .hm-labels span { width:8px; text-align:center; }
+  .hm-wrap { overflow-x:auto; }
+
+  .dc-item { background:var(--surface2); border-radius:var(--radius-sm); padding:5px 8px; margin-bottom:3px; border-left:3px solid var(--border); font-size:10px; }
+  .dc-item .dt { color:var(--gold); font-weight:600; }
+
+  .obj-card { background:var(--surface2); border-radius:var(--radius-sm); padding:6px 8px; border-left:3px solid var(--border); margin-bottom:4px; }
   .obj-card .oc-tit { font-size:11px; font-weight:600; }
-  .obj-card .oc-body { font-size:10px; color:var(--text2); margin-top:2px; line-height:1.5; }
+  .obj-card .oc-bd { font-size:9px; color:var(--text2); margin-top:1px; line-height:1.5; }
 
   @media (min-width:640px) {
-    .app { max-width:800px; padding:24px 20px 100px; }
-    .nav-bar { max-width:800px; left:50%; transform:translateX(-50%); border-radius:12px 12px 0 0; }
+    .app { max-width:800px; padding:20px 16px 90px; }
+    .nav-bar { max-width:800px; left:50%; transform:translateX(-50%); border-radius:10px 10px 0 0; }
   }
   @media (min-width:1024px) {
     .app { max-width:1100px; }
@@ -233,520 +231,542 @@
 <div class="app">
 
   <div class="header">
-    <h1>ULTRAGEN CONTROL PANEL</h1>
-    <div class="sub">Ecosistema Headless CMS &middot; <strong>2026-06-27</strong></div>
+    <h1>ULTRAGEN CP</h1>
+    <div class="sub">2026-06-27 &middot; <span class="text-muted">4 proyectos &middot; 12 skills</span></div>
   </div>
 
-  <div class="status-bar">
-    <span class="d-green dot"></span> <strong class="text-green">4</strong><span>proyectos</span>
-    <span class="d-gold dot"></span> <strong class="text-gold">12</strong><span>skills</span>
-    <span class="d-ice dot"></span> <strong class="text-ice">5</strong><span>repos</span>
-    <span>&#8226;</span><span>Workspace:</span><strong>main</strong>
+  <div class="bar">
+    <span class="d-green dot"></span> 4 proyectos
+    <span class="d-gold dot"></span> 12 skills
+    <span class="d-ice dot"></span> 5 repos
+    <span>&#8226;</span> main
   </div>
 
-  <div class="seg-control">
-    <select id="projectFilter">
-      <option value="all">Todos los proyectos</option>
+  <div class="seg">
+    <select id="pf">
+      <option value="all">Todos</option>
       <option value="manager">ultragen_manager</option>
       <option value="simple">ultragen_site_simple</option>
       <option value="desktop">ultragen_site_desktop</option>
       <option value="social">social_monserrat</option>
-      <option value="workflow">&#9881; Flujo de Trabajo</option>
+      <option value="opencode">.opencode (skills)</option>
+      <option value="workflow">&#9881; Flujo</option>
     </select>
-    <button class="btn-all" id="expandAllBtn" onclick="toggleExpandAll()">&#9660; Todo</button>
+    <button class="btn" id="expBtn" onclick="togAll()">&#9660;</button>
   </div>
 
-  <!-- MISION (siempre visible) -->
-  <div class="card" data-project="all">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <div class="info">
-        <div class="name">&#9733; Misi&oacute;n del Sistema</div>
-        <div class="line2">Objetivo general &mdash; fijo, no transable</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- MISION -->
+  <div class="card" data-p="all">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-gold" style="background:var(--gold-bg);color:var(--gold)">MISI&Oacute;N</span>
+      <div class="info"><div class="nm">Objetivo General</div><div class="l2">Fijo &mdash; criterios de &eacute;xito del ecosistema</div></div>
+      <span class="st st-green">activo</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd open">
-      <div class="card-bd-inner">
+    <div class="cbd on">
+      <div class="cbd-in">
         <div class="obj-card" style="border-left-color:var(--gold)">
           <div class="oc-tit">Ultragen Manager &mdash; Headless CMS</div>
-          <div class="oc-body">Desarrollar, mantener y escalar el ecosistema Ultragen Manager como plataforma Headless CMS para la publicaci&oacute;n y consumo de la narrativa interactiva de Monserrat, garantizando coherencia t&eacute;cnica, continuidad del lore y capacidad de recuperaci&oacute;n ante cualquier interrupci&oacute;n.</div>
+          <div class="oc-bd">Desarrollar, mantener y escalar el ecosistema como plataforma Headless CMS para la narrativa interactiva de Monserrat, garantizando coherencia t&eacute;cnica, continuidad del lore y capacidad de recuperaci&oacute;n.</div>
         </div>
-        <div class="sec-tit">Criterios de &Eacute;xito</div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">BD local (SQLite) y nube (Neon PostgreSQL) sincronizadas</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Frontends consumen API de Render sin errores</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Agentes futuros reconstruyen contexto en &lt; 15 min leyendo esta memoria</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Toda decisi&oacute;n de arquitectura registrada con fecha y justificaci&oacute;n</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">SQLite &harr; Neon sincronizadas</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Frontends consumen API Render sin errores</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Agentes reconstruyen contexto en &lt; 15 min</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Decisiones registradas con fecha y justificaci&oacute;n</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ====== MANAGER ====== -->
-  <div class="card" data-project="manager">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-green">backend</span>
-      <div class="info">
-        <div class="name">ultragen_manager</div>
-        <div class="line2">Django 5.2.8 &middot; Render &middot; Neon &middot; React 19 admin</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- MANAGER -->
+  <div class="card" data-p="manager">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-bk">BACKEND</span>
+      <div class="info"><div class="nm">ultragen_manager</div><div class="l2">Django 5.2.8 &middot; Render &middot; Neon &middot; React 19 admin</div></div>
+      <span class="st st-green">activo</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <p class="text-xs text-muted"><strong style="color:var(--text)">Objetivo:</strong> CMS headless. Sincronizar SQLite &harr; Neon. Servir API REST a los frontends.</p>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos</div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">API REST funcional con todos los endpoints</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">SQLite local operativa</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Neon PostgreSQL sincronizada</div></div>
+        <div class="oi"><div class="cb"></div><div class="tx">Admin panel React con CRUD completos <span class="sk">local dev</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Migraci&oacute;n local &rarr; nube automatizada</div></div>
 
-        <div class="sec-tit">Objetivos del proyecto <span class="chip">tachar al completar</span></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">API REST funcional con todos los endpoints narrativos</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">SQLite local operativa con datos de desarrollo</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Neon PostgreSQL en producci&oacute;n sincronizada</div></div>
-        <div class="obj-item"><div class="cb" data-cb></div><div class="txt">Admin panel React con todos los CRUD funcionales <span class="skill">En desarrollo local</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Migraciones autom&aacute;ticas local &rarr; nube</div></div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; <strong>Integraci&oacute;n diarios site_desktop</strong><br><span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
 
-        <div class="sec-tit">Configuraci&oacute;n</div>
-        <div class="m-row"><span class="l">Deploy</span><span class="v">Render.com (Docker/Gunicorn)</span></div>
-        <div class="m-row"><span class="l">API</span><span class="v"><a href="https://ultragen-2026-core.onrender.com" target="_blank">ultragen-2026-core.onrender.com</a></span></div>
-        <div class="m-row"><span class="l">GitHub</span><span class="v"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">ultragen-2026-core</a> <span class="text-green">limpio</span></span></div>
-        <div class="m-row"><span class="l">BD Nube</span><span class="v"><span class="text-green">Neon operativa</span></span></div>
-        <div class="m-row"><span class="l">BD Local</span><span class="v"><span class="text-green">SQLite operativa</span></span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta psicologo/SKILL.md</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Sin secci&oacute;n tareas en sub-skills</div>
 
-        <div class="sec-tit">Scripts</div>
-        <div class="wf-menu-item"><span class="n">&#9654;</span><span class="d">Migrar datos &rarr; Neon</span><span class="sc">MANAGER_CLIC_PARA_MIGRAR_DATOS.bat</span></div>
-        <div class="wf-menu-item"><span class="n">&#9654;</span><span class="d">Subir a GitHub (trigger Render)</span><span class="sc">MANAGER_CLIC_PARA_SUBIR_GITHUB.bat</span></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">17/06</span> Modelo Dispositivo unificado en JSON field</div>
+        <div class="dc-item"><span class="dt">20/06</span> HashRouter en site_desktop (vs BrowserRouter + 404)</div>
+        <div class="dc-item"><span class="dt">20/06</span> No auto-deploy; preguntar siempre</div>
+        <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
+        <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo como memoria del PM</div>
+        <div class="dc-item"><span class="dt">22/06</span> Base Conocimiento Navegable</div>
 
-        <div class="sec-tit">&#218;ltimos commits</div>
+        <div class="stt">&#128200; Actividad reciente</div>
+        <div class="hm-wrap" id="hm-manager"></div>
+
+        <div class="stt">Config</div>
+        <div class="mr"><span class="l">GitHub</span><span class="v"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">ultragen-2026-core</a> <span class="text-green">limpio</span></span></div>
+        <div class="mr"><span class="l">API</span><span class="v"><a href="https://ultragen-2026-core.onrender.com" target="_blank">onrender.com</a></span></div>
+        <div class="mr"><span class="l">BD Nube</span><span class="v"><span class="text-green">Neon operativa</span></span></div>
+
+        <div class="stt">&#218;ltimos commits</div>
         <ul class="cl">
-          <li><span class="ch">f753af6</span><span class="cd">25/06</span><span class="cm">Actualizaci&oacute;n administrador</span></li>
-          <li><span class="ch">bd0341b</span><span class="cd">—</span><span class="cm">Add orientacion, AVIF/HEIF, reorder mixin</span></li>
-          <li><span class="ch">46cdb4f</span><span class="cd">—</span><span class="cm">fix: remove explicit Content-Type FormData</span></li>
-          <li><span class="ch">4dec53a</span><span class="cd">24/06</span><span class="cm">data migration: hero_hack + perfil_hack</span></li>
-          <li><span class="ch">df97038</span><span class="cd">22/06</span><span class="cm">Documentar incidente SOCIAL_publicar_web</span></li>
+          <li><span class="ch">f753af6</span><span class="ct">25/06</span><span class="cm">Actualizaci&oacute;n admin</span></li>
+          <li><span class="ch">bd0341b</span><span class="ct">—</span><span class="cm">AVIF/HEIF, reorder mixin</span></li>
+          <li><span class="ch">46cdb4f</span><span class="ct">—</span><span class="cm">fix FormData Content-Type</span></li>
+          <li><span class="ch">4dec53a</span><span class="ct">24/06</span><span class="cm">data migration hack</span></li>
+          <li><span class="ch">df97038</span><span class="ct">22/06</span><span class="cm">Documentar incidente social</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ====== SITE SIMPLE ====== -->
-  <div class="card" data-project="simple">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-green">desplegado</span>
-      <div class="info">
-        <div class="name">ultragen_site_simple</div>
-        <div class="line2">React 19 &middot; Vite 7 &middot; Firebase &middot; GH Pages</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- SITE SIMPLE -->
+  <div class="card" data-p="simple">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-fe">FRONTEND</span>
+      <div class="info"><div class="nm">ultragen_site_simple</div><div class="l2">React 19 &middot; Vite 7 &middot; Firebase &middot; GH Pages</div></div>
+      <span class="st st-green">desplegado</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <p class="text-xs text-muted"><strong style="color:var(--text)">Objetivo:</strong> Lector web minimalista de novelas. Consume API de Render.</p>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos</div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Consume API Render correctamente</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Interfaz limpia responsive</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Firebase configurado operativo</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Deploy GH Pages funcional</div></div>
+        <div class="oi"><div class="cb"></div><div class="tx">Filtros ordenamiento prompts VIP <span class="sk">agregado reciente</span></div></div>
 
-        <div class="sec-tit">Objetivos del proyecto <span class="chip">tachar al completar</span></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Consumir API de Render correctamente</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Interfaz limpia y responsive</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Firebase configurado y operativo</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Despliegue autom&aacute;tico en GH Pages funcional</div></div>
-        <div class="obj-item"><div class="cb" data-cb></div><div class="txt">Filtros de ordenamiento en prompts VIP <span class="skill">agregado reciente</span></div></div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
 
-        <div class="sec-tit">Configuraci&oacute;n</div>
-        <div class="m-row"><span class="l">Deploy</span><span class="v">GitHub Pages</span></div>
-        <div class="m-row"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">ultragen-2026-site-simple</a></span></div>
-        <div class="m-row"><span class="l">Branch</span><span class="v">main <span class="text-green">limpio</span></span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
 
-        <div class="sec-tit">Scripts</div>
-        <div class="wf-menu-item"><span class="n">&#9654;</span><span class="d">Publicar en GH Pages</span><span class="sc">SITE_CLIC_PARA_PUBLICAR_WEB.bat</span></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">—</span> (depende del backend; sin decisiones propias)</div>
 
-        <div class="sec-tit">&#218;ltimos commits</div>
+        <div class="stt">&#128200; Actividad reciente</div>
+        <div class="hm-wrap" id="hm-simple"></div>
+
+        <div class="stt">Config</div>
+        <div class="mr"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">site-simple</a></span></div>
+
+        <div class="stt">&#218;ltimos commits</div>
         <ul class="cl">
-          <li><span class="ch">71fdce1</span><span class="cd">20/06</span><span class="cm">Actualizaci&oacute;n autom&aacute;tica</span></li>
-          <li><span class="ch">08cc266</span><span class="cd">—</span><span class="cm">feat: VIP Prompts grid &rarr; list</span></li>
-          <li><span class="ch">4515021</span><span class="cd">—</span><span class="cm">feat: filtros de ordenamiento prompts VIP</span></li>
+          <li><span class="ch">71fdce1</span><span class="ct">20/06</span><span class="cm">Actualizaci&oacute;n autom&aacute;tica</span></li>
+          <li><span class="ch">08cc266</span><span class="ct">—</span><span class="cm">VIP Prompts grid &rarr; list</span></li>
+          <li><span class="ch">4515021</span><span class="ct">—</span><span class="cm">Filtros ordenamiento prompts</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ====== SITE DESKTOP ====== -->
-  <div class="card" data-project="desktop">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-amber">en integraci&oacute;n</span>
-      <div class="info">
-        <div class="name">ultragen_site_desktop</div>
-        <div class="line2">React 19 &middot; Tailwind 4 &middot; Framer Motion &middot; GH Pages</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- SITE DESKTOP -->
+  <div class="card" data-p="desktop">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-fe">FRONTEND</span>
+      <div class="info"><div class="nm">ultragen_site_desktop</div><div class="l2">React 19 &middot; Tailwind 4 &middot; Framer Motion &middot; GH Pages</div></div>
+      <span class="st st-amber">integrando</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <p class="text-xs text-muted"><strong style="color:var(--text)">Objetivo:</strong> Experiencia inmersiva con animaciones, integraci&oacute;n de diarios reales v&iacute;a API.</p>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos</div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">HashRouter en GH Pages funcional</div></div>
+        <div class="oi"><div class="cb" style="border-color:var(--amber)"></div><div class="tx"><span class="text-amber fw-600">Integrar diarios reales v&iacute;a API</span> <span class="sk">En progreso</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Animaciones Framer Motion</div></div>
+        <div class="oi"><div class="cb"></div><div class="tx"><span class="text-crimson fw-600">Reemplazar hardcode DiariosModal.jsx</span> <span class="sk">Deuda D3 &middot; Alta</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Deploy GH Pages funcional</div></div>
 
-        <div class="sec-tit">Objetivos del proyecto <span class="chip">tachar al completar</span></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">HashRouter funcionando en GH Pages</div></div>
-        <div class="obj-item"><div class="cb" data-cb style="border-color:var(--amber)"></div><div class="txt"><span class="text-amber fw-600">Integrar diarios reales v&iacute;a API</span> <span class="skill">En progreso &middot; Distribuci&oacute;n de Contenido</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Animaciones con Framer Motion implementadas</div></div>
-        <div class="obj-item"><div class="cb" data-cb></div><div class="txt"><span class="text-crimson fw-600">Reemplazar datos hardcodeados en DiariosModal.jsx</span> <span class="skill">Deuda D3 · Alta</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Despliegue en GH Pages funcional</div></div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; <strong>Integraci&oacute;n diarios reales</strong><br><span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
 
-        <div class="sec-tit">Configuraci&oacute;n</div>
-        <div class="m-row"><span class="l">Deploy</span><span class="v">GitHub Pages</span></div>
-        <div class="m-row"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">ultragen-2026-site-desktop</a></span></div>
-        <div class="m-row"><span class="l">Branch</span><span class="v">main <span class="text-green">limpio</span></span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
 
-        <div class="sec-tit">Scripts</div>
-        <div class="wf-menu-item"><span class="n">&#9654;</span><span class="d">Publicar en GH Pages</span><span class="sc">SITE_DESKTOP_CLIC_PARA_PUBLICAR_WEB.bat</span></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">20/06</span> Migrar a HashRouter para compatibilidad GH Pages</div>
 
-        <div class="sec-tit">&#218;ltimos commits</div>
+        <div class="stt">&#128200; Actividad reciente</div>
+        <div class="hm-wrap" id="hm-desktop"></div>
+
+        <div class="stt">Config</div>
+        <div class="mr"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">site-desktop</a></span></div>
+
+        <div class="stt">&#218;ltimos commits</div>
         <ul class="cl">
-          <li><span class="ch">a694616</span><span class="cd">—</span><span class="cm">Integrar sistema de diarios reales en desktop</span></li>
-          <li><span class="ch">606a553</span><span class="cd">20/06</span><span class="cm">Actualizaci&oacute;n autom&aacute;tica desktop</span></li>
-          <li><span class="ch">232f1a4</span><span class="cd">—</span><span class="cm">Inicio de versionado portal desktop</span></li>
+          <li><span class="ch">a694616</span><span class="ct">—</span><span class="cm">Integrar diarios reales desktop</span></li>
+          <li><span class="ch">606a553</span><span class="ct">20/06</span><span class="cm">Actualizaci&oacute;n desktop</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ====== SOCIAL MONSERRAT ====== -->
-  <div class="card" data-project="social">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-green">desplegado</span>
-      <div class="info">
-        <div class="name">social_monserrat</div>
-        <div class="line2">React 19 &middot; Vite 8 &middot; GH Pages &middot; Easter eggs</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- SOCIAL MONSERRAT -->
+  <div class="card" data-p="social">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-fe">FRONTEND</span>
+      <div class="info"><div class="nm">social_monserrat</div><div class="l2">React 19 &middot; Vite 8 &middot; GH Pages &middot; Easter eggs</div></div>
+      <span class="st st-green">desplegado</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <p class="text-xs text-muted"><strong style="color:var(--text)">Objetivo:</strong> Perfil social ficticio de Monserrat con guestbook, favoritos, coffee support.</p>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos</div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Guestbook newest-first funcional</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Favoritos tags ES/EN con estilo antd</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Coffee support section</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Easter egg 5 clics avatar + acertijos</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">VITE_API_URL con /api corregido</div></div>
+        <div class="oi"><div class="cb"></div><div class="tx">Hacer push del cambio pendiente <span class="sk">1 archivo modificado</span></div></div>
 
-        <div class="sec-tit">Objetivos del proyecto <span class="chip">tachar al completar</span></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Guestbook funcional con orden newest-first</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Favoritos con tags ES/EN y estilos antd-style</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Coffee support section</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">Easter egg: 5 clics avatar abre ficha + acertijos</div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">VITE_API_URL con /api (incidente resuelto)</div></div>
-        <div class="obj-item"><div class="cb" data-cb></div><div class="txt">Hacer push del &uacute;ltimo cambio pendiente <span class="skill">1 archivo modificado</span></div></div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
 
-        <div class="sec-tit">Configuraci&oacute;n</div>
-        <div class="m-row"><span class="l">Deploy</span><span class="v">GitHub Pages</span></div>
-        <div class="m-row"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/social" target="_blank">monserratultragen.github.io/social</a></span></div>
-        <div class="m-row"><span class="l">Branch</span><span class="v">main <span class="text-amber">1 archivo modificado</span></span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>(deuda saldada &mdash; incidente VITE_API_URL resuelto)</em></div>
 
-        <div class="sec-tit">Scripts</div>
-        <div class="wf-menu-item"><span class="n">&#9654;</span><span class="d">Publicar en GH Pages</span><span class="sc">SOCIAL_CLIC_PARA_PUBLICAR_WEB.bat</span></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">22/06</span> Corregir VITE_API_URL con /api en .env.production y script</div>
 
-        <div class="sec-tit">&#218;ltimos commits</div>
+        <div class="stt">&#128200; Actividad reciente</div>
+        <div class="hm-wrap" id="hm-social"></div>
+
+        <div class="stt">Config</div>
+        <div class="mr"><span class="l">URL</span><span class="v"><a href="https://monserratultragen.github.io/social" target="_blank">github.io/social</a></span></div>
+        <div class="mr"><span class="l">Branch</span><span class="v">main <span class="text-amber">1 archivo modificado</span></span></div>
+
+        <div class="stt">&#218;ltimos commits</div>
         <ul class="cl">
-          <li><span class="ch">697bf15</span><span class="cd">—</span><span class="cm">Easter egg: 5 clics avatar + portal acertijos</span></li>
-          <li><span class="ch">65a2531</span><span class="cd">27/06</span><span class="cm">Actualizaci&oacute;n autom&aacute;tica social</span></li>
-          <li><span class="ch">bc1aa2e</span><span class="cd">—</span><span class="cm">guestbook: styled sign btn, newest-first</span></li>
+          <li><span class="ch">697bf15</span><span class="ct">—</span><span class="cm">Easter egg 5 clics + acertijos</span></li>
+          <li><span class="ch">65a2531</span><span class="ct">27/06</span><span class="cm">Actualizaci&oacute;n social</span></li>
+          <li><span class="ch">bc1aa2e</span><span class="ct">—</span><span class="cm">Guestbook newest-first</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ====== OBJETIVOS GLOBALES (S1-S12) ====== -->
-  <div class="card" data-project="all">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-gold">skills</span>
-      <div class="info">
-        <div class="name">Objetivos Secundarios S1&ndash;S12</div>
-        <div class="line2">Archivo temporal &mdash; marca cada uno seg&uacute;n avance</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- .opencode (SKILLS) -->
+  <div class="card" data-p="opencode">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-ag">AGENTE</span>
+      <div class="info"><div class="nm">.opencode / skills</div><div class="l2">12 skills de agente &middot; skill overlays &middot; mandato</div></div>
+      <span class="st st-gold">configurado</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <p class="text-xs text-muted">Cada objetivo pertenece a una skill. Tacha los completados para retomar exactamente donde quedaste.</p>
-        <div class="sec-tit">&#10003; Activos (8)</div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S1 &mdash; Sincronizaci&oacute;n local&rarr;nube <span class="skill">Registro de Datos</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S2 &mdash; Compatibilidad API frontends <span class="skill">Distribuci&oacute;n de Contenido</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S3 &mdash; Narrativa NTR/Cuckold coherente <span class="skill">Escritor</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S4 &mdash; Coherencia hist&oacute;rica global <span class="skill">Director</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S5 &mdash; Evoluci&oacute;n psicol&oacute;gica veros&iacute;mil <span class="skill">Psic&oacute;logo</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S6 &mdash; Custodiar datos 3 tel&eacute;fonos <span class="skill">M&oacute;viles</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S7 &mdash; Despliegues sin downtime <span class="skill">Despliegue</span></div></div>
-        <div class="obj-item"><div class="cb checked" data-cb>&#10003;</div><div class="txt">S8 &mdash; Trazabilidad y memoria operativa <span class="skill">Product Manager</span></div></div>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos</div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">12 skills definidos en <code>.opencode/skills/</code></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Cada skill con SKILL.md, objetivos y dependencias</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">PM con memoria operativa completa (8 archivos)</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Valeria como canal &uacute;nico de comunicaci&oacute;n</div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Base Conocimiento Navegable (INDICE + RELACIONES)</div></div>
+        <div class="oi"><div class="cb"></div><div class="tx">Estandarizar secci&oacute;n tareas en todos los SKILL.md <span class="sk">Deuda D2</span></div></div>
 
-        <div class="sec-tit">&#9679; Creados (4)</div>
-        <div class="obj-item"><div class="cb v2" data-cb></div><div class="txt">S9 &mdash; Presentaciones corporativas <span class="skill">Tablets</span></div></div>
-        <div class="obj-item"><div class="cb v2" data-cb></div><div class="txt">S10 &mdash; Mural de pistas visuales <span class="skill">Tablero</span></div></div>
-        <div class="obj-item"><div class="cb v2" data-cb></div><div class="txt">S11 &mdash; Jerarqu&iacute;a narrativa <span class="skill">Diarios</span></div></div>
-        <div class="obj-item"><div class="cb v2" data-cb></div><div class="txt">S12 &mdash; Mercado Umbral (dark web) <span class="skill">Laptop</span></div></div>
-      </div>
-    </div>
-  </div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Estandarizar secci&oacute;n tareas en SKILL.md <span class="tg badge bd-gold">Baja</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Corregir ruta en psicologo/SKILL.md <span class="tg badge bd-amber">Media</span></div>
 
-  <!-- ====== TRABAJO ACTIVO ====== -->
-  <div class="card" data-project="all">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-amber">1 en progreso</span>
-      <div class="info">
-        <div class="name">Trabajo Activo &amp; Deuda</div>
-        <div class="line2">Tareas, riesgos y dependencias del ecosistema</div>
-      </div>
-      <div class="arrow">&#9660;</div>
-    </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <div class="sec-tit">&#9654; En progreso</div>
-        <div class="wf-item" style="border-left-color:var(--ice)">&#8635; <strong>Integraci&oacute;n de diarios reales en site_desktop</strong><br><span class="text-muted">Distribuci&oacute;n de Contenido &middot; Inicio: 20/06/2026</span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta psicologo/SKILL.md:39</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n tareas en sub-skills</div>
 
-        <div class="sec-tit">&#9744; Pendientes</div>
-        <div class="debt-item" style="border-left-color:var(--amber)"><span class="tag badge bd-amber">Media</span> Corregir ruta <code>documentacion/</code> &rarr; <code>references/</code> en psicologo/SKILL.md</div>
-        <div class="debt-item" style="border-left-color:var(--text3)"><span class="tag badge bd-gold">Baja</span> Estandarizar secci&oacute;n de tareas en todos los SKILL.md</div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
+        <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
+        <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
 
-        <div class="sec-tit">&#9888; Deuda operacional</div>
-        <div class="debt-item" style="border-left-color:var(--crimson)"><span class="tag badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx &mdash; reemplazar con API</div>
-        <div class="debt-item" style="border-left-color:var(--amber)"><span class="tag badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta en psicologo/SKILL.md</div>
-        <div class="debt-item" style="border-left-color:var(--text3)"><span class="tag badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n de tareas en sub-skills</div>
+        <div class="stt">&#128200; Actividad reciente</div>
+        <div class="hm-wrap" id="hm-opencode"></div>
 
-        <div class="sec-tit">&#9888; Riesgos</div>
-        <div class="risk-item">Neon Free Tier: l&iacute;mite conexiones concurrentes. Mitigado por cargador inteligente.</div>
-        <div class="risk-item">Render: redespliegue tarda ~2-4 min tras push. A veces webhook falla.</div>
-        <div class="risk-item">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe. Real en <code>references/</code>.</div>
-        <div class="risk-item">social_monserrat tiene cambios sin pushear (1 archivo modificado).</div>
+        <div class="stt">Skills</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Director</strong><span class="text-muted">Narrativa</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Escritor</strong><span class="text-muted">Drama NTR</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Psic&oacute;logo</strong><span class="text-muted">Perfiles</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Diarios</strong><span class="text-muted">Jerarqu&iacute;a</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>M&oacute;viles</strong><span class="text-muted">3 tel&eacute;fonos</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Tablets</strong><span class="text-muted">Presentaciones</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Tablero</strong><span class="text-muted">Pistas</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Laptop</strong><span class="text-muted">Mercado Umbral</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Despliegue</strong><span class="text-muted">Deploy</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Reg. Datos</strong><span class="text-muted">Sync BD</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>Dist. Cont.</strong><span class="text-muted">API monitor</span></div>
+          <div class="wmi" style="flex-direction:column;align-items:flex-start;gap:1px;padding:5px 7px"><strong>PM/Valeria</strong><span class="text-muted">Coordinaci&oacute;n</span></div>
+        </div>
 
-        <div class="sec-tit">&#128279; Dependencias cr&iacute;ticas</div>
-        <ul class="dep-list">
-          <li>Migraci&oacute;n depende de SQLite local actualizado antes del dump</li>
-          <li>Despliegue frontend depende de API en Render operativa</li>
-          <li>Nueva skill requiere registro en 06_deuda_operacional.md del PM</li>
+        <div class="stt">&#218;ltimos commits (workspace ra&iacute;z)</div>
+        <ul class="cl">
+          <li><span class="ch">53160af</span><span class="ct">22/06</span><span class="cm">Fix SOCIAL_publicar_web.ps1</span></li>
+          <li><span class="ch">202cb98</span><span class="ct">20/06</span><span class="cm">Actualizar documentaci&oacute;n scripts</span></li>
+          <li><span class="ch">4beed0a</span><span class="ct">20/06</span><span class="cm">Scripts deploy desktop + backup</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ====== INCIDENTES + DECISIONES ====== -->
-  <div class="card" data-project="all">
-    <div class="card-hd" onclick="toggleCard(this)">
-      <span class="badge-status badge-s-ice">historial</span>
-      <div class="info">
-        <div class="name">Incidentes &amp; Decisiones</div>
-        <div class="line2">3 incidentes resueltos &middot; 6 decisiones de arquitectura</div>
-      </div>
-      <div class="arrow">&#9660;</div>
+  <!-- GLOBAL: Trabajo Activo + S1-S12 -->
+  <div class="card" data-p="all">
+    <div class="chd" onclick="tog(this)">
+      <span class="type type-sc" style="background:var(--amber-bg);color:var(--amber)">GLOBAL</span>
+      <div class="info"><div class="nm">Estado Global &middot; S1&ndash;S12</div><div class="l2">8 activos &middot; 4 creados &middot; 1 en progreso</div></div>
+      <span class="st st-amber">en progreso</span>
+      <div class="ar">&#9660;</div>
     </div>
-    <div class="card-bd">
-      <div class="card-bd-inner">
-        <div class="sec-tit">&#9888; Incidentes</div>
-        <div class="inc-item"><span class="dt">20/06</span> site_desktop no cargaba en GH Pages <span class="badge bd-green">Resuelto</span><br><span class="text-muted">BrowserRouter incompatible &rarr; HashRouter</span></div>
-        <div class="inc-item"><span class="dt">20/06</span> Timeout migraci&oacute;n Neon <span class="badge bd-green">Resuelto</span><br><span class="text-muted">Free Tier cierra conexiones &rarr; MANAGER_LOAD_STABLE.py</span></div>
-        <div class="inc-item"><span class="dt">22/06</span> social_monserrat sin datos (2 veces) <span class="badge bd-green">Resuelto</span><br><span class="text-muted">Render + VITE_API_URL sin /api + script sobreescrib&iacute;a env</span></div>
+    <div class="cbd">
+      <div class="cbd-in">
+        <div class="stt">&#9733; Objetivos S1&ndash;S12 <span class="chip">tachar al completar</span></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S1 &mdash; Sincronizaci&oacute;n local&rarr;nube <span class="sk">Registro Datos</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S2 &mdash; Compatibilidad API frontends <span class="sk">Dist. Contenido</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S3 &mdash; Narrativa NTR coherente <span class="sk">Escritor</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S4 &mdash; Coherencia hist&oacute;rica global <span class="sk">Director</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S5 &mdash; Evoluci&oacute;n psicol&oacute;gica <span class="sk">Psic&oacute;logo</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S6 &mdash; Custodiar 3 tel&eacute;fonos <span class="sk">M&oacute;viles</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S7 &mdash; Despliegues sin downtime <span class="sk">Despliegue</span></div></div>
+        <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S8 &mdash; Trazabilidad operativa <span class="sk">Product Manager</span></div></div>
+        <div class="oi"><div class="cb v2"></div><div class="tx">S9 &mdash; Presentaciones corporativas <span class="sk">Tablets</span></div></div>
+        <div class="oi"><div class="cb v2"></div><div class="tx">S10 &mdash; Mural de pistas visuales <span class="sk">Tablero</span></div></div>
+        <div class="oi"><div class="cb v2"></div><div class="tx">S11 &mdash; Jerarqu&iacute;a narrativa <span class="sk">Diarios</span></div></div>
+        <div class="oi"><div class="cb v2"></div><div class="tx">S12 &mdash; Mercado Umbral <span class="sk">Laptop</span></div></div>
 
-        <div class="sec-tit">&#128221; Decisiones</div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">17/06</span><div class="txt">Unificaci&oacute;n modelo Dispositivo en JSON field <span class="skill">vs modelos separados</span></div></div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">20/06</span><div class="txt">HashRouter en site_desktop <span class="skill">vs BrowserRouter + 404</span></div></div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">20/06</span><div class="txt">No desplegar autom&aacute;ticamente <span class="skill">vs auto-deploy</span></div></div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">21/06</span><div class="txt">Eliminar prefijos z_ / agente_ en skills <span class="skill">vs mantener</span></div></div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">21/06</span><div class="txt">Protocolo Operativo (mandato.md) <span class="skill">vs solo SKILL.md</span></div></div>
-        <div class="obj-item"><span class="id" style="font-weight:700;color:var(--gold);width:38px;flex-shrink:0">22/06</span><div class="txt">Base Conocimiento Navegable <span class="skill">vs lectura exhaustiva</span></div></div>
+        <div class="stt">&#9654; En progreso</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales site_desktop &middot; <span class="text-muted">20/06</span></div>
+
+        <div class="stt">&#9744; Pendientes globales</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">—</span> Pushear social_monserrat (1 archivo)</div>
+
+        <div class="stt">&#9888; Riesgos</div>
+        <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado.</div>
+        <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
+        <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe.</div>
       </div>
     </div>
   </div>
 
-  <!-- ====== PESTAÑA FLUJO ====== -->
-  <div id="workflowTab" class="hidden">
+  <!-- FLUJO TAB -->
+  <div id="wfTab" class="hidden">
 
     <div class="card">
-      <div class="card-hd" onclick="toggleCard(this)">
-        <span class="badge-status badge-s-gold">valeria</span>
-        <div class="info">
-          <div class="name">Protocolo Valeria</div>
-          <div class="line2">Asistente del Product Manager &mdash; canal &uacute;nico de comunicaci&oacute;n</div>
-        </div>
-        <div class="arrow">&#9660;</div>
+      <div class="chd" onclick="tog(this)">
+        <span class="type type-bk">VALERIA</span>
+        <div class="info"><div class="nm">Protocolo de Comunicaci&oacute;n</div><div class="l2">Asistente del PM &mdash; canal &uacute;nico</div></div>
+        <span class="st st-gold">reglas</span>
+        <div class="ar">&#9660;</div>
       </div>
-      <div class="card-bd open">
-        <div class="card-bd-inner">
-          <p class="text-xs text-muted">Toda comunicaci&oacute;n con el ecosistema se canaliza a trav&eacute;s de <strong style="color:var(--gold)">Valeria</strong>. Habla con ella en lenguaje natural.</p>
-          <div class="sec-tit">Reglas</div>
-          <div class="wf-step" style="border-left-color:var(--gold)"><div class="body">1. Toda respuesta inicia con prefijo <strong>Valeria:</strong></div></div>
-          <div class="wf-step" style="border-left-color:var(--gold)"><div class="body">2. Tono profesional, eficiente, directo y amable</div></div>
-          <div class="wf-step" style="border-left-color:var(--gold)"><div class="body">3. Ante solicitudes de respaldo/despliegue presenta 7 opciones numeradas y espera tu selecci&oacute;n</div></div>
-          <div class="sec-tit">Ejemplos</div>
-          <div class="wf-cmd">&ldquo;Valeria, necesito migrar datos a Neon y publicar site desktop&rdquo;</div>
-          <div class="wf-cmd">&ldquo;Valeria, backup completo a Google Drive&rdquo;</div>
-          <div class="wf-cmd">&ldquo;Valeria, sube todo: datos, backend y los 3 frontends&rdquo;</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-hd" onclick="toggleCard(this)">
-        <span class="badge-status badge-s-gold">mandato</span>
-        <div class="info">
-          <div class="name">Mandato &mdash; 8 Fases</div>
-          <div class="line2">Protocolo Operativo del Coordinador (product-manager skill)</div>
-        </div>
-        <div class="arrow">&#9660;</div>
-      </div>
-      <div class="card-bd open">
-        <div class="card-bd-inner">
-          <p class="text-xs text-muted">El <strong>mandato.md</strong> es la constituci&oacute;n operativa. As&iacute; procesa tus &oacute;rdenes el agente:</p>
-          <div class="wf-step"><div class="num">Fase 1</div><div class="title">Reconstrucci&oacute;n de Contexto</div><div class="body">Objetivo Principal &rarr; Secundarios &rarr; Estado &rarr; Decisiones &rarr; Conocimiento &rarr; Incidentes &rarr; Deuda &rarr; Skills</div></div>
-          <div class="wf-step"><div class="num">Fase 2</div><div class="title">Detecci&oacute;n de Trabajo Activo</div><div class="body">Identifica objetivos en progreso, bloqueados, pendientes y dependencias cr&iacute;ticas.</div></div>
-          <div class="wf-step"><div class="num">Fase 3</div><div class="title">Comprensi&oacute;n de la Solicitud</div><div class="body">Clasifica tu orden: nuevo objetivo, modificaci&oacute;n, correcci&oacute;n, investigaci&oacute;n, etc.</div></div>
-          <div class="wf-step"><div class="num">Fase 4</div><div class="title">Selecci&oacute;n de Capacidades</div><div class="body">Revisa el cat&aacute;logo de skills y decide cu&aacute;l ejecuta. No necesitas intervenir.</div></div>
-          <div class="wf-step"><div class="num">Fase 5</div><div class="title">Detecci&oacute;n de Vac&iacute;os</div><div class="body">Si falta informaci&oacute;n, documentaci&oacute;n, skill o referencia, lo registra.</div></div>
-          <div class="wf-step"><div class="num">Fase 6</div><div class="title">Ejecuci&oacute;n</div><div class="body">Actualiza avances, mantiene coherencia con objetivos y decisiones previas.</div></div>
-          <div class="wf-step"><div class="num">Fase 7</div><div class="title">Cierre Operativo</div><div class="body">Eval&uacute;a: &iquest;Qu&eacute; cambi&oacute;? &iquest;Qu&eacute; se aprendi&oacute;? &iquest;Qu&eacute; qued&oacute; pendiente?</div></div>
-          <div class="wf-step"><div class="num">Fase 8</div><div class="title">Evoluci&oacute;n del Ecosistema</div><div class="body">Busca automatizaciones, nuevas skills, simplificaci&oacute;n, consolidaci&oacute;n.</div></div>
+      <div class="cbd on">
+        <div class="cbd-in">
+          <div class="ws" style="border-left-color:var(--gold)"><div class="body">1. Toda respuesta inicia con <strong>Valeria:</strong></div></div>
+          <div class="ws" style="border-left-color:var(--gold)"><div class="body">2. Tono profesional, eficiente, directo</div></div>
+          <div class="ws" style="border-left-color:var(--gold)"><div class="body">3. Ante solicitudes de deploy presenta 7 opciones; espera selecci&oacute;n num&eacute;rica</div></div>
+          <div class="stt">Ejemplos</div>
+          <div class="ws" style="border-left-color:var(--ice);padding:6px 10px"><div class="bd" style="font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:10px">"Valeria, migra datos a Neon y publica site desktop"</div></div>
+          <div class="ws" style="border-left-color:var(--ice);padding:6px 10px"><div class="bd" style="font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:10px">"Valeria, backup completo a Google Drive"</div></div>
+          <div class="ws" style="border-left-color:var(--ice);padding:6px 10px"><div class="bd" style="font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:10px">"Valeria, sube todo: datos, backend y los 3 frontends"</div></div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-hd" onclick="toggleCard(this)">
-        <span class="badge-status badge-s-green">despliegue</span>
-        <div class="info">
-          <div class="name">Men&uacute; de Despliegue</div>
-          <div class="line2">7 opciones &mdash; responde con n&uacute;meros (&ldquo;1,3,5&rdquo; o &ldquo;todas&rdquo;)</div>
-        </div>
-        <div class="arrow">&#9660;</div>
+      <div class="chd" onclick="tog(this)">
+        <span class="type type-bk">MANDATO</span>
+        <div class="info"><div class="nm">8 Fases del Coordinador</div><div class="l2">Protocolo Operativo &mdash; c&oacute;mo procesa tus &oacute;rdenes</div></div>
+        <span class="st st-gold">constituci&oacute;n</span>
+        <div class="ar">&#9660;</div>
       </div>
-      <div class="card-bd open">
-        <div class="card-bd-inner">
-          <div class="wf-menu-item"><span class="n">1</span><div class="d"><strong>Migrar datos Local a Neon</strong><br><span class="sc">SQLite &rarr; dump &rarr; MANAGER_LOAD_STABLE.py &rarr; Neon PostgreSQL</span></div></div>
-          <div class="wf-menu-item"><span class="n">2</span><div class="d"><strong>Subir Backend a GitHub</strong><br><span class="sc">git add/commit/push &rarr; Render redespliega autom&aacute;ticamente</span></div></div>
-          <div class="wf-menu-item"><span class="n">3</span><div class="d"><strong>Publicar Web Simple</strong><br><span class="sc">npm run build &rarr; gh-pages &rarr; ultragen-2026-site-simple</span></div></div>
-          <div class="wf-menu-item"><span class="n">4</span><div class="d"><strong>Publicar Web Desktop</strong><br><span class="sc">npm run build &rarr; gh-pages &rarr; ultragen-2026-site-desktop</span></div></div>
-          <div class="wf-menu-item"><span class="n">5</span><div class="d"><strong>Publicar Social Monserrat</strong><br><span class="sc">npm run build &rarr; gh-pages &rarr; github.io/social</span></div></div>
-          <div class="wf-menu-item"><span class="n">6</span><div class="d"><strong>Copia ZIP a Google Drive</strong><br><span class="sc">Empaqueta scripts, docs, banners, im&aacute;genes, utilidades</span></div></div>
-          <div class="wf-menu-item"><span class="n">7</span><div class="d"><strong>Versionar Workspace Ra&iacute;z</strong><br><span class="sc">Git add/commit/push del monorepo completo</span></div></div>
+      <div class="cbd on">
+        <div class="cbd-in">
+          <div class="ws"><div class="num">Fase 1</div><div class="tt">Reconstrucci&oacute;n de Contexto</div><div class="bd">Objetivo Principal &rarr; Secundarios &rarr; Estado &rarr; Decisiones &rarr; Conocimiento &rarr; Incidentes &rarr; Deuda &rarr; Skills</div></div>
+          <div class="ws"><div class="num">Fase 2</div><div class="tt">Detecci&oacute;n de Trabajo Activo</div><div class="bd">Identifica objetivos en progreso, bloqueados, pendientes, dependencias cr&iacute;ticas.</div></div>
+          <div class="ws"><div class="num">Fase 3</div><div class="tt">Comprensi&oacute;n de la Solicitud</div><div class="bd">Clasifica tu orden: nuevo objetivo, modificaci&oacute;n, correcci&oacute;n, investigaci&oacute;n, etc.</div></div>
+          <div class="ws"><div class="num">Fase 4</div><div class="tt">Selecci&oacute;n de Capacidades</div><div class="bd">Busca la skill adecuada. No necesitas intervenir.</div></div>
+          <div class="ws"><div class="num">Fase 5</div><div class="tt">Detecci&oacute;n de Vac&iacute;os</div><div class="bd">Si falta informaci&oacute;n, skill o referencia, lo registra.</div></div>
+          <div class="ws"><div class="num">Fase 6</div><div class="tt">Ejecuci&oacute;n</div><div class="bd">Actualiza avances, mantiene coherencia con objetivos y decisiones previas.</div></div>
+          <div class="ws"><div class="num">Fase 7</div><div class="tt">Cierre Operativo</div><div class="bd">Eval&uacute;a: &iquest;Qu&eacute; cambi&oacute;? &iquest;Qu&eacute; se aprendi&oacute;? &iquest;Qu&eacute; qued&oacute; pendiente?</div></div>
+          <div class="ws"><div class="num">Fase 8</div><div class="tt">Evoluci&oacute;n del Ecosistema</div><div class="bd">Busca automatizaciones, nuevas skills, simplificaci&oacute;n, consolidaci&oacute;n.</div></div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-hd" onclick="toggleCard(this)">
-        <span class="badge-status badge-s-ice">repos</span>
-        <div class="info">
-          <div class="name">Estado de Repos &amp; Push</div>
-          <div class="line2">Sincronizaci&oacute;n con GitHub</div>
-        </div>
-        <div class="arrow">&#9660;</div>
+      <div class="chd" onclick="tog(this)">
+        <span class="type type-fe">DEPLOY</span>
+        <div class="info"><div class="nm">Men&uacute; de Despliegue</div><div class="l2">7 opciones &mdash; responde "1,3,5" o "todas"</div></div>
+        <span class="st st-green">operativo</span>
+        <div class="ar">&#9660;</div>
       </div>
-      <div class="card-bd open">
-        <div class="card-bd-inner" style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:11px">
-            <tr style="border-bottom:1px solid var(--border)"><th style="padding:5px 4px;text-align:left;color:var(--text2);font-size:9px;text-transform:uppercase;letter-spacing:.3px">Proyecto</th><th style="padding:5px 4px;text-align:left;color:var(--text2);font-size:9px;text-transform:uppercase;letter-spacing:.3px">Push</th><th style="padding:5px 4px;text-align:left;color:var(--text2);font-size:9px;text-transform:uppercase;letter-spacing:.3px">Git</th></tr>
-            <tr><td style="padding:4px;border-bottom:1px solid var(--border)">ultragen_manager</td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
-            <tr><td style="padding:4px;border-bottom:1px solid var(--border)">site_simple</td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
-            <tr><td style="padding:4px;border-bottom:1px solid var(--border)">site_desktop</td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
-            <tr><td style="padding:4px;border-bottom:1px solid var(--border)">social_monserrat</td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="badge bd-amber">&#9888; pend</span></td><td style="padding:4px;border-bottom:1px solid var(--border)"><span class="text-amber">1 archivo modificado</span></td></tr>
-            <tr><td style="padding:4px">workspace ra&iacute;z</td><td style="padding:4px"><span class="badge bd-crimson">&#10007; no remote</span></td><td style="padding:4px"><span class="text-amber">untracked + modified</span></td></tr>
+      <div class="cbd on">
+        <div class="cbd-in">
+          <div class="wmi"><span class="n">1</span><div><strong>Migrar datos Local a Neon</strong><br><span class="text-muted">SQLite &rarr; dump &rarr; MANAGER_LOAD_STABLE.py &rarr; Neon</span></div></div>
+          <div class="wmi"><span class="n">2</span><div><strong>Subir Backend a GitHub</strong><br><span class="text-muted">git push &rarr; Render redespliega autom&aacute;ticamente</span></div></div>
+          <div class="wmi"><span class="n">3</span><div><strong>Publicar Web Simple</strong><br><span class="text-muted">build + gh-pages &rarr; ultragen-2026-site-simple</span></div></div>
+          <div class="wmi"><span class="n">4</span><div><strong>Publicar Web Desktop</strong><br><span class="text-muted">build + gh-pages &rarr; ultragen-2026-site-desktop</span></div></div>
+          <div class="wmi"><span class="n">5</span><div><strong>Publicar Social Monserrat</strong><br><span class="text-muted">build + gh-pages &rarr; github.io/social</span></div></div>
+          <div class="wmi"><span class="n">6</span><div><strong>Copia ZIP a Google Drive</strong><br><span class="text-muted">Empaqueta scripts, docs, banners, utilidades</span></div></div>
+          <div class="wmi"><span class="n">7</span><div><strong>Versionar Workspace Ra&iacute;z</strong><br><span class="text-muted">git add/commit/push del monorepo</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="chd" onclick="tog(this)">
+        <span class="type type-fe">REPOS</span>
+        <div class="info"><div class="nm">Estado de Repos</div><div class="l2">Push status &middot; Git status</div></div>
+        <span class="st st-ice">5 repos</span>
+        <div class="ar">&#9660;</div>
+      </div>
+      <div class="cbd on">
+        <div class="cbd-in" style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:10px">
+            <tr style="border-bottom:1px solid var(--border)"><th style="padding:4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Repo</th><th style="padding:4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Push</th><th style="padding:4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Estado</th></tr>
+            <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">ultragen_manager</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
+            <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">site_simple</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
+            <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">site_desktop</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">&#10003; ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td></tr>
+            <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">social_monserrat</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-amber">&#9888; pend</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-amber">1 archivo</span></td></tr>
+            <tr><td style="padding:3px 4px">workspace ra&iacute;z</td><td style="padding:3px 4px"><span class="badge bd-crimson">&#10007; no remote</span></td><td style="padding:3px 4px"><span class="text-amber">untracked</span></td></tr>
           </table>
         </div>
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-hd" onclick="toggleCard(this)">
-        <span class="badge-status badge-s-gold">skills</span>
-        <div class="info">
-          <div class="name">Equipo: 12 Skills</div>
-          <div class="line2">Agentes especializados que ejecutan las &oacute;rdenes en cascada</div>
-        </div>
-        <div class="arrow">&#9660;</div>
-      </div>
-      <div class="card-bd open">
-        <div class="card-bd-inner">
-          <p class="text-xs text-muted">El PM delega seg&uacute;n el mapa del equipo. Cada skill tiene su SKILL.md en <code>.opencode/skills/</code>.</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px">
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Director</strong><span class="text-xs text-muted">Narrativa, ejecuta lector_diarios.py</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Escritor</strong><span class="text-xs text-muted">Narrativa NTR/drama psicol&oacute;gico</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Psic&oacute;logo</strong><span class="text-xs text-muted">Perfiles psicol&oacute;gicos</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Diarios</strong><span class="text-xs text-muted">Jerarqu&iacute;a narrativa</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>M&oacute;viles</strong><span class="text-xs text-muted">3 dispositivos de Monserrat</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Tablets</strong><span class="text-xs text-muted">Presentaciones corporativas</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Tablero</strong><span class="text-xs text-muted">Mural de pistas visuales</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Laptop</strong><span class="text-xs text-muted">Mercado Umbral (dark web)</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Despliegue</strong><span class="text-xs text-muted">Migraci&oacute;n, deploy y backup</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Registro Datos</strong><span class="text-xs text-muted">Sincronizaci&oacute;n BD local&harr;nube</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>Dist. Contenido</strong><span class="text-xs text-muted">Monitoreo API consumers</span></div>
-            <div class="wf-menu-item" style="flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px"><strong>PM / Valeria</strong><span class="text-xs text-muted">Coordinadora del ecosistema</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <div class="nav-bar" id="navBar">
-    <a href="#" class="active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
-      <span class="ni">&#9632;</span>Dashboard
-    </a>
-    <a href="#" data-tab="workflow" onclick="switchTab('workflow',this)">
-      <span class="ni">&#9881;</span>Flujo
-    </a>
-    <a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">
-      <span class="ni">&#128279;</span>Repo
-    </a>
+  <div class="nav-bar">
+    <a href="#" class="active" data-t="db" onclick="sw('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
+    <a href="#" data-t="wf" onclick="sw('wf',this)"><span class="ni">&#9881;</span>Flujo</a>
+    <a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank"><span class="ni">&#128279;</span>Repo</a>
   </div>
 </div>
 
 <script>
-let allExpanded = false;
+// ====== HEATMAP DATA ======
+const H = {
+  manager: {
+    "2026-06-25":1,"2026-06-24":4,"2026-06-23":1,"2026-06-22":6,"2026-06-20":2,
+    "2026-04-20":1,"2026-03-21":1,"2026-03-19":1,"2026-03-18":1,"2026-03-17":3,
+    "2026-03-15":1,"2026-03-14":3,"2026-03-13":1,"2026-03-10":2,"2026-03-09":2,
+    "2026-03-02":1,"2026-02-28":1,"2026-02-24":1,"2026-02-23":5,"2026-02-22":3,
+    "2026-02-18":1,"2026-02-16":2,"2026-02-15":7,"2026-02-13":4,"2026-02-12":2,"2026-02-11":1
+  },
+  simple: {
+    "2026-06-20":1,"2026-04-21":1,"2026-04-20":1,"2026-03-21":1,"2026-03-18":1,
+    "2026-03-17":5,"2026-03-16":1,"2026-03-15":1,"2026-03-13":1,"2026-03-12":1,
+    "2026-03-09":5,"2026-03-07":1,"2026-03-06":1,"2026-03-02":1,"2026-02-28":2,
+    "2026-02-26":1,"2026-02-24":1,"2026-02-23":4,"2026-02-11":1
+  },
+  desktop: {"2026-06-20":3,"2026-06-19":1},
+  social: {"2026-06-27":11,"2026-06-26":9,"2026-06-24":1,"2026-06-23":5,"2026-06-22":10},
+  opencode: {"2026-06-22":1,"2026-06-20":2,"2026-06-19":2}
+};
 
-document.querySelectorAll('.card-hd').forEach(el => {
+function buildHeatmap(containerId, data) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  const d = new Date(2026,5,27); // Jun 27 2026 (month is 0-indexed)
+  const cells = [];
+  const levels = ['#161616','#1f1c12','#2f2818','#4a3d20','#7a6830','#b8942e','#c8a951'];
+  const maxVal = Math.max(1, ...Object.values(data));
+  for (let i = 83; i >= 0; i--) {
+    const dt = new Date(d);
+    dt.setDate(dt.getDate() - i);
+    const key = dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+    const v = data[key] || 0;
+    const lvl = v === 0 ? 0 : v >= maxVal ? 6 : Math.ceil((v / maxVal) * 5) + 1;
+    cells.push({lvl, title: key + ': ' + v + (v===1?' commit':' commits')});
+  }
+  let html = '<div class="hm">';
+  cells.forEach((c, i) => {
+    if (i > 0 && i % 12 === 0) html += '<br>';
+    html += '<div class="hm-cell" style="background:'+levels[c.lvl]+'" title="'+c.title+'"></div>';
+  });
+  html += '</div><div class="hm-labels">';
+  // month labels
+  const months = ['Jun','May','Apr','Mar','Feb'];
+  months.forEach(m => html += '<span style="width:auto;margin-right:4px">'+m+'</span>');
+  html += '</div>';
+  c.innerHTML = html;
+}
+
+buildHeatmap('hm-manager', H.manager);
+buildHeatmap('hm-simple', H.simple);
+buildHeatmap('hm-desktop', H.desktop);
+buildHeatmap('hm-social', H.social);
+buildHeatmap('hm-opencode', H.opencode);
+
+// ====== UI ======
+let allExp = false;
+
+document.querySelectorAll('.chd').forEach(el => {
   el.addEventListener('click', function() {
-    const detail = this.nextElementSibling;
-    const arrow = this.querySelector('.arrow');
-    const isOpen = detail.classList.contains('open');
-    if (isOpen) {
-      detail.classList.remove('open');
-      arrow.classList.remove('open');
-    } else {
-      detail.classList.add('open');
-      arrow.classList.add('open');
-    }
+    const bd = this.nextElementSibling;
+    const ar = this.querySelector('.ar');
+    const on = bd.classList.contains('on');
+    if (on) { bd.classList.remove('on'); ar.classList.remove('on'); }
+    else { bd.classList.add('on'); ar.classList.add('on'); }
   });
 });
 
-document.querySelectorAll('[data-cb]').forEach(el => {
+document.querySelectorAll('.cb').forEach(el => {
   el.addEventListener('click', function(e) {
     e.stopPropagation();
-    this.classList.toggle('checked');
-    this.textContent = this.classList.contains('checked') ? '\u2713' : '';
+    this.classList.toggle('chk');
+    this.textContent = this.classList.contains('chk') ? '\u2713' : '';
   });
 });
 
-function toggleExpandAll() {
-  allExpanded = !allExpanded;
-  document.querySelectorAll('.card-bd').forEach(d => {
-    const arrow = d.previousElementSibling.querySelector('.arrow');
-    if (allExpanded) { d.classList.add('open'); if (arrow) arrow.classList.add('open'); }
-    else { d.classList.remove('open'); if (arrow) arrow.classList.remove('open'); }
+function togAll() {
+  allExp = !allExp;
+  document.querySelectorAll('.cbd').forEach(bd => {
+    const ar = bd.previousElementSibling.querySelector('.ar');
+    if (allExp) { bd.classList.add('on'); if(ar) ar.classList.add('on'); }
+    else { bd.classList.remove('on'); if(ar) ar.classList.remove('on'); }
   });
-  const btn = document.getElementById('expandAllBtn');
-  btn.textContent = allExpanded ? '\u25B2 Todo' : '\u25BC Todo';
-  btn.classList.toggle('on', allExpanded);
+  const btn = document.getElementById('expBtn');
+  btn.textContent = allExp ? '\u25B2' : '\u25BC';
+  btn.classList.toggle('on', allExp);
 }
 
-function switchTab(tab, el) {
+function sw(tab, el) {
   document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.card[data-project], #workflowTab').forEach(c => {
-    if (c.id === 'workflowTab') c.classList.toggle('hidden', tab !== 'workflow');
-    else c.classList.toggle('hidden', tab !== 'dashboard');
+  const db = !document.getElementById('wfTab').classList.contains('hidden');
+  document.querySelectorAll('.card[data-p], #wfTab').forEach(c => {
+    if (c.id === 'wfTab') c.classList.toggle('hidden', tab !== 'wf');
+    else c.classList.toggle('hidden', tab !== 'db');
   });
-  if (tab === 'workflow') document.getElementById('workflowTab').classList.remove('hidden');
-  document.getElementById('expandAllBtn').classList.toggle('hidden', tab !== 'dashboard');
+  if (tab === 'wf') document.getElementById('wfTab').classList.remove('hidden');
+  document.getElementById('expBtn').classList.toggle('hidden', tab !== 'db');
 }
 
-document.getElementById('projectFilter').addEventListener('change', function() {
-  const val = this.value;
-  if (val === 'workflow') {
-    document.querySelectorAll('.card[data-project]').forEach(c => c.classList.add('hidden'));
-    document.getElementById('workflowTab').classList.remove('hidden');
+document.getElementById('pf').addEventListener('change', function() {
+  const v = this.value;
+  if (v === 'workflow') {
+    document.querySelectorAll('.card[data-p]').forEach(c => c.classList.add('hidden'));
+    document.getElementById('wfTab').classList.remove('hidden');
     document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-    document.querySelector('.nav-bar a[data-tab="workflow"]').classList.add('active');
-    document.getElementById('expandAllBtn').classList.add('hidden');
+    document.querySelector('.nav-bar a[data-t="wf"]').classList.add('active');
+    document.getElementById('expBtn').classList.add('hidden');
     return;
   }
-  document.getElementById('workflowTab').classList.add('hidden');
+  document.getElementById('wfTab').classList.add('hidden');
   document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-  document.querySelector('.nav-bar a[data-tab="dashboard"]').classList.add('active');
-  document.getElementById('expandAllBtn').classList.remove('hidden');
-  document.querySelectorAll('.card[data-project]').forEach(c => {
-    c.classList.toggle('hidden', val !== 'all' && c.dataset.project !== 'all' && c.dataset.project !== val);
+  document.querySelector('.nav-bar a[data-t="db"]').classList.add('active');
+  document.getElementById('expBtn').classList.remove('hidden');
+  document.querySelectorAll('.card[data-p]').forEach(c => {
+    c.classList.toggle('hidden', v !== 'all' && c.dataset.p !== 'all' && c.dataset.p !== v);
   });
 });
 </script>
