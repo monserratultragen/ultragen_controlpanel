@@ -139,6 +139,20 @@
   .cycle .step{padding:2px 5px;border-radius:3px;background:var(--surface3);color:var(--text)}
   .cycle .arr{color:var(--gold)}
 
+  .ci{background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;padding:5px 7px;border-left:3px solid var(--border)}
+  .ci-phr{font-size:10px;font-weight:500;color:var(--text);margin-bottom:2px}
+  .ci-row{display:flex;align-items:center;gap:4px}
+  .ci-path{font-family:'SF Mono','Cascadia Code',monospace;font-size:8px;color:var(--text2);word-break:break-all;flex:1}
+  .cp{width:20px;height:20px;border-radius:4px;background:var(--surface3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all .2s;-webkit-tap-highlight-color:transparent}
+  .cp:active{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+  .cp-icon{font-size:11px}
+
+  .rp{display:flex;justify-content:space-between;align-items:center;padding:6px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;border-left:3px solid var(--border)}
+  .rp-nm{font-size:10px;font-weight:600}
+  .rp-lk{font-size:9px;display:flex;gap:6px}
+  .rp-lk a{color:var(--ice);text-decoration:none}
+  .rp-lk a:active{text-decoration:underline}
+
   @media (min-width:640px){.app{max-width:800px;padding:20px 16px 90px}.nav-bar{max-width:800px;left:50%;transform:translateX(-50%);border-radius:10px 10px 0 0}}
   @media (min-width:1024px){.app{max-width:1100px}.nav-bar{max-width:1100px}}
 </style>
@@ -168,25 +182,6 @@
   <button class="btn" id="expBtn" onclick="togAll()">&#9660;</button>
 </div>
 
-<!-- ==================== MISION ==================== -->
-<div class="card" data-p="all">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-gold">MISI&Oacute;N</span>
-    <div class="inf"><div class="nm">Objetivo General del Ecosistema</div><div class="l2">Fijo &mdash; criterios de &eacute;xito</div></div>
-    <span class="st st-green">activo</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd on">
-    <div class="cbd-in">
-      <div class="obj-card" style="border-left-color:var(--gold)"><div class="oc-tit">Ultragen Manager &mdash; Headless CMS</div><div class="oc-bd">Desarrollar, mantener y escalar el ecosistema como plataforma Headless CMS para la narrativa interactiva de Monserrat, garantizando coherencia t&eacute;cnica, continuidad del lore y capacidad de recuperaci&oacute;n.</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">SQLite &harr; Neon sincronizadas</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Frontends consumen API Render sin errores</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Agentes reconstruyen contexto en &lt; 15 min</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Decisiones registradas con fecha y justificaci&oacute;n</div></div>
-    </div>
-  </div>
-</div>
-
 <!-- ==================== MANAGER ==================== -->
 <div class="card" data-p="manager">
   <div class="chd" onclick="tog(this)">
@@ -197,11 +192,6 @@
   </div>
   <div class="cbd">
     <div class="cbd-in">
-      <div class="stt">&#9733; Objetivos</div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">API REST funcional con todos los endpoints</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">SQLite local operativa &mdash; Neon sincronizada</div></div>
-      <div class="oi"><div class="cb"></div><div class="tx">Admin panel React con CRUD completos <span class="sk">local dev</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Migraci&oacute;n local &rarr; nube automatizada</div></div>
       <div class="stt">&#9654; Trabajo activo</div>
       <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
       <div class="stt">&#9888; Deuda</div>
@@ -234,11 +224,6 @@
   </div>
   <div class="cbd">
     <div class="cbd-in">
-      <div class="stt">&#9733; Objetivos</div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Consume API Render correctamente</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Interfaz limpia responsive</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Firebase configurado &middot; Deploy GH Pages funcional</div></div>
-      <div class="oi"><div class="cb"></div><div class="tx">Filtros ordenamiento prompts VIP <span class="sk">agregado reciente</span></div></div>
       <div class="stt">&#9654; Trabajo activo</div>
       <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
       <div class="stt">&#9888; Deuda</div>
@@ -261,12 +246,6 @@
   </div>
   <div class="cbd">
     <div class="cbd-in">
-      <div class="stt">&#9733; Objetivos</div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">HashRouter en GH Pages funcional</div></div>
-      <div class="oi"><div class="cb" style="border-color:var(--amber)"></div><div class="tx"><span class="text-amber fw-600">Integrar diarios reales v&iacute;a API</span> <span class="sk">En progreso</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Animaciones Framer Motion implementadas</div></div>
-      <div class="oi"><div class="cb"></div><div class="tx"><span class="text-crimson fw-600">Reemplazar hardcode DiariosModal.jsx</span> <span class="sk">Deuda D3 &middot; Alta</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Deploy GH Pages funcional</div></div>
       <div class="stt">&#9654; Trabajo activo</div>
       <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
       <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
@@ -290,11 +269,6 @@
   </div>
   <div class="cbd">
     <div class="cbd-in">
-      <div class="stt">&#9733; Objetivos</div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Guestbook newest-first &middot; Favoritos tags ES/EN</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Coffee support &middot; Easter egg 5 clics + acertijos</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">VITE_API_URL con /api corregido</div></div>
-      <div class="oi"><div class="cb"></div><div class="tx">Hacer push del cambio pendiente <span class="sk">1 archivo modificado</span></div></div>
       <div class="stt">&#9654; Trabajo activo</div>
       <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
       <div class="stt">&#9888; Deuda</div>
@@ -318,66 +292,174 @@
   <div class="cbd on">
     <div class="cbd-in">
 
-      <div class="stt">&#9889; LO QUE T&Uacute; PUEDES ORDENAR (ya existe en el mandato)</div>
-      <p class="text-xs text-muted mb-1">Habla con <strong>Valeria</strong> en lenguaje natural. Ella interpreta tu orden y la ejecuta en 8 fases. T&uacute; solo dices qu&eacute; quieres.</p>
+      <div class="stt">&#9888; Deuda</div>
+      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta psicologo/SKILL.md:39</div>
+      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n tareas en sub-skills</div>
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128679; &Oacute;RDENES DE DESARROLLO</div>
-        <div class="cmd-item"><span class="cmd-num">D1</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, inicia el backend"</div><div class="cmd-desc">Arranca Django local (python manage.py runserver)</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">D2</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, inicia el frontend [manager|simple|desktop|social]"</div><div class="cmd-desc">Arranca el dev server de Vite correspondiente</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">D3</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, inicia todo el entorno"</div><div class="cmd-desc">Ejecuta INICIAR_DESARROLLO.bat (backend + 4 frontends)</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">D4</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, activa la skill [nombre]"</div><div class="cmd-desc">Carga la skill (Director, Escritor, Psic&oacute;logo, etc.) y su protocolo</div></div></div>
-      </div>
+      <div class="stt">&#128221; Decisiones</div>
+      <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
+      <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
+      <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128640; &Oacute;RDENES DE DESPLIEGUE (men&uacute; de 7 opciones)</div>
-        <p class="text-xs text-muted mb-1">Cuando pidas respaldo o despliegue, Valeria te muestra estas 7 opciones numeradas. Respondes: <strong>"1,3,5"</strong> o <strong>"todas"</strong>.</p>
-        <div class="cmd-item"><span class="cmd-num">1</span><div class="cmd-body"><div class="cmd-phrase">"1" o "Migrar datos"</div><div class="cmd-desc">SQLite &rarr; dump &rarr; MANAGER_LOAD_STABLE.py &rarr; Neon PostgreSQL</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">2</span><div class="cmd-body"><div class="cmd-phrase">"2" o "Subir backend"</div><div class="cmd-desc">git add/commit/push &rarr; Render redespliega</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">3</span><div class="cmd-body"><div class="cmd-phrase">"3" o "Publicar simple"</div><div class="cmd-desc">npm run build + deploy &rarr; site-simple</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">4</span><div class="cmd-body"><div class="cmd-phrase">"4" o "Publicar desktop"</div><div class="cmd-desc">npm run build + deploy &rarr; site-desktop</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">5</span><div class="cmd-body"><div class="cmd-phrase">"5" o "Publicar social"</div><div class="cmd-desc">npm run build + deploy &rarr; github.io/social</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">6</span><div class="cmd-body"><div class="cmd-phrase">"6" o "ZIP a Drive"</div><div class="cmd-desc">Empaqueta y copia a Google Drive</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">7</span><div class="cmd-body"><div class="cmd-phrase">"7" o "Versionar workspace"</div><div class="cmd-desc">git add/commit/push del monorepo ra&iacute;z</div></div></div>
-      </div>
+      <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
+      <div class="hm-wrap" id="hm-opencode"></div>
+    </div>
+  </div>
+</div>
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128214; &Oacute;RDENES DE CONSULTA</div>
-        <div class="cmd-item"><span class="cmd-num">C1</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, &iquest;cu&aacute;l es el estado actual?"</div><div class="cmd-desc">Lee 02_estado_general.md y te resume todo</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C2</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, &iquest;qu&eacute; tareas est&aacute;n pendientes?"</div><div class="cmd-desc">Lee 07_trabajo_activo.md y las enumera</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C3</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, &iquest;cu&aacute;l es la deuda operacional?"</div><div class="cmd-desc">Lee 06_deuda_operacional.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C4</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, mu&eacute;strame los objetivos S1-S12"</div><div class="cmd-desc">Lee 01_objetivos_secundarios.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C5</span><div class="cmd-body"><div class="cmd-phrase">"Valeria, &iquest;qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div><div class="cmd-desc">Revisa incidentes y estado de repos</div></div></div>
-      </div>
+<!-- ==================== TRABAJO ACTIVO ==================== -->
+<div class="card" data-p="all">
+  <div class="chd" onclick="tog(this)">
+    <span class="tp tp-amber">TRABAJO</span>
+    <div class="inf"><div class="nm">Trabajo Activo &middot; Riesgos</div><div class="l2">Por proyecto &middot; lo que est&aacute; en marcha</div></div>
+    <span class="st st-amber">en progreso</span>
+    <div class="ar">&#9660;</div>
+  </div>
+  <div class="cbd on">
+    <div class="cbd-in">
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128260; CICLO DE MANTENIMIENTO (para que no se olvide nada)</div>
-        <div class="cycle">
-          <span class="step">1. Trabajas</span>
-          <span class="arr">&rarr;</span>
-          <span class="step">2. "Valeria, guarda cambios [proyecto]"</span>
-          <span class="arr">&rarr;</span>
-          <span class="step">3. "Valeria, despliega [opciones]"</span>
-          <span class="arr">&rarr;</span>
-          <span class="step">4. "Valeria, actualiza el control panel"</span>
-          <span class="arr">&rarr;</span>
-          <span class="step">5. Vuelve a 1</span>
+      <div class="stt">&#9654; ultragen_manager</div>
+      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+
+      <div class="stt">&#9654; ultragen_site_simple</div>
+      <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
+
+      <div class="stt">&#9654; ultragen_site_desktop</div>
+      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+      <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
+
+      <div class="stt">&#9654; social_monserrat</div>
+      <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
+
+      <div class="stt">&#9654; .opencode / skills</div>
+      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
+      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
+
+      <div class="stt">&#9888; Riesgos globales</div>
+      <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
+      <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
+      <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe (D1).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FLUJO (CENTRO DE MANDO) ==================== -->
+<div id="wfTab" class="hidden">
+
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-gold">MANDO</span>
+      <div class="inf"><div class="nm">Centro de Mando &mdash; INSTRUCCIONES</div><div class="l2">Cada orden tiene su archivo destino &mdash; copia la ruta</div></div>
+      <span class="st st-gold">jefe</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <p class="text-xs text-muted mb-1">T&uacute; eres el <strong style="color:var(--gold)">Jefe</strong>. Dale la orden a Valeria en lenguaje natural. Cada instrucci&oacute;n incluye la ruta absoluta del archivo que ejecuta. Usa el bot&oacute;n <span class="cp-icon">&#128203;</span> para copiar la ruta al portapapeles.</p>
+
+        <div class="stt">&#128679; 1. DESARROLLO LOCAL</div>
+        <div class="ci">
+          <div class="ci-phr">"Inicia el backend" o "Arranca Django"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\django_app\manage.py runserver</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\django_app\\manage.py runserver")' title="Copiar ruta">&#128203;</button></div>
         </div>
-        <div class="di" style="border-left-color:var(--gold);margin-top:4px">
-          <strong>&#9889; &iquest;C&oacute;mo actualizar este Control Panel?</strong><br>
-          <span class="text-muted">Simplemente dile a Valeria: <strong>"actualiza el control panel"</strong>. Ella har&aacute; git add, commit y push de ultragen_controlpanel &rarr; GitHub Pages lo redespliega autom&aacute;ticamente.</span>
+        <div class="ci">
+          <div class="ci-phr">"Inicia [manager|simple|desktop|social]"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\[ultragen_manager|ultragen_site_simple|ultragen_site_desktop|social_monserrat]\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\")' title="Copiar ruta base">&#128203;</button></div>
         </div>
-      </div>
+        <div class="ci">
+          <div class="ci-phr">"Inicia todo" o "Entorno completo"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\documentacion\INICIAR_DESARROLLO.bat</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\documentacion\\INICIAR_DESARROLLO.bat")' title="Copiar ruta">&#128203;</button></div>
+        </div>
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128221; LO QUE DICE EL MANDATO (8 fases)</div>
-        <p class="text-xs text-muted mb-1">El <strong>mandato.md</strong> es la constituci&oacute;n. Cuando ordenas algo, Valeria ejecuta estas 8 fases autom&aacute;ticamente:</p>
-        <div class="di" style="border-left-color:var(--gold)"><strong>F1</strong> Reconstruye contexto &rarr; <strong>F2</strong> Detecta trabajo activo &rarr; <strong>F3</strong> Clasifica tu orden &rarr; <strong>F4</strong> Elige skill &rarr; <strong>F5</strong> Detecta vac&iacute;os &rarr; <strong>F6</strong> Ejecuta &rarr; <strong>F7</strong> Cierra operativamente &rarr; <strong>F8</strong> Evoluciona el ecosistema</div>
-      </div>
+        <div class="stt">&#128640; 2. DESPLIEGUE (men&uacute; de 7)</div>
+        <div class="ci">
+          <div class="ci-phr"><strong>1</strong> &mdash; Migrar datos Local &rarr; Neon</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>2</strong> &mdash; Subir Backend a GitHub</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>3</strong> &mdash; Publicar Web Simple</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>4</strong> &mdash; Publicar Web Desktop</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>5</strong> &mdash; Publicar Social Monserrat</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>6</strong> &mdash; ZIP a Google Drive</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_crear_zip_drive.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\WORKSPACE_crear_zip_drive.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>7</strong> &mdash; Versionar Workspace Ra&iacute;z</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
 
-      <div class="cmd-group">
-        <div class="cmd-tit">&#128295; 12 SKILLS INVOCABLES</div>
-        <p class="text-xs text-muted mb-1">Cada skill es un especialista. Ord&eacute;nale a Valeria: <strong>"activa [skill]"</strong> o simplemente pide la tarea y ella delega.</p>
+        <div class="stt">&#128214; 3. CONSULTAS (memoria del PM)</div>
+        <div class="ci">
+          <div class="ci-phr">C1 &mdash; "&iquest;Cu&aacute;l es el estado actual?"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\02_estado_general.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\02_estado_general.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">C2 &mdash; "&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\07_trabajo_activo.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\07_trabajo_activo.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">C3 &mdash; "&iquest;Cu&aacute;l es la deuda operacional?"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\06_deuda_operacional.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\06_deuda_operacional.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">C4 &mdash; "Mu&eacute;strame los objetivos"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\01_objetivos_secundarios.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\01_objetivos_secundarios.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">C5 &mdash; "&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\05_incidentes.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\05_incidentes.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+
+        <div class="stt">&#128295; 4. INVOCAR SKILLS</div>
+        <div class="ci">
+          <div class="ci-phr">S1 &mdash; "Activa [Director|Escritor|Psic&oacute;logo|...]"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\[director|escritor|psicologo|...]\SKILL.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\.opencode\\skills\\")' title="Copiar ruta skills">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">S2 &mdash; "Ejecuta [tarea]" directamente</div>
+          <div class="ci-row"><span class="ci-path">Valeria elige la skill sola (Fase 4 del mandato)</span></div>
+        </div>
+
+        <div class="stt">&#128260; 5. CICLO DE MANTENIMIENTO</div>
+        <div class="ci">
+          <div class="ci-phr">"Actualiza el control panel"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_controlpanel")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr">"Guarda cambios [proyecto]"</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\[proyecto]\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\")' title="Copiar ruta base">&#128203;</button></div>
+        </div>
+
+        <div class="stt">&#128221; EL MANDATO (8 fases)</div>
+        <div class="ci">
+          <div class="ci-phr">Constituci&oacute;n de Valeria &mdash; c&oacute;mo procesa tus &oacute;rdenes</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\mandato.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\mandato.md")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="di" style="border-left-color:var(--gold);padding:5px 7px;font-size:9px;margin-top:4px">
+          <strong>F1</strong> Reconstruye contexto (8 docs) &rarr;
+          <strong>F2</strong> Detecta trabajo activo &rarr;
+          <strong>F3</strong> Clasifica tu orden &rarr;
+          <strong>F4</strong> Selecciona skill &rarr;
+          <strong>F5</strong> Detecta vac&iacute;os &rarr;
+          <strong>F6</strong> Ejecuta &rarr;
+          <strong>F7</strong> Cierre: &iquest;qu&eacute; cambi&oacute;? &iquest;qu&eacute; qued&oacute;? &rarr;
+          <strong>F8</strong> Evoluciona: &iquest;automatizar? &iquest;nueva skill?
+        </div>
+
+        <div class="stt">&#128295; 12 SKILLS</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Director</strong> &mdash; Narrativa</div>
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Escritor</strong> &mdash; Drama NTR</div>
@@ -392,124 +474,6 @@
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Dist. Cont.</strong> &mdash; API monitor</div>
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>PM/Valeria</strong> &mdash; Coordinaci&oacute;n</div>
         </div>
-      </div>
-
-      <div class="stt">&#9733; Objetivos del proyecto skills</div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">12 skills definidos en <code>.opencode/skills/</code></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">PM con memoria completa (8 archivos + mandato)</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Valeria como canal &uacute;nico de comunicaci&oacute;n</div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">Base Conocimiento Navegable (INDICE + RELACIONES)</div></div>
-      <div class="oi"><div class="cb"></div><div class="tx">Estandarizar secci&oacute;n tareas en todos los SKILL.md <span class="sk">Deuda D2</span></div></div>
-      <div class="oi"><div class="cb"></div><div class="tx">Corregir ruta en psicologo/SKILL.md <span class="sk">Deuda D1</span></div></div>
-
-      <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
-      <div class="hm-wrap" id="hm-opencode"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== GLOBAL ==================== -->
-<div class="card" data-p="all">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-amber">GLOBAL</span>
-    <div class="inf"><div class="nm">S1&ndash;S12 &middot; Trabajo Activo &middot; Riesgos</div><div class="l2">8 activos &middot; 4 creados &middot; 1 en progreso</div></div>
-    <span class="st st-amber">en progreso</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9733; Objetivos S1&ndash;S12 <span class="chip">tachar al completar</span></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S1 Sincronizaci&oacute;n local&rarr;nube <span class="sk">Reg. Datos</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S2 Compatibilidad API frontends <span class="sk">Dist. Contenido</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S3 Narrativa NTR coherente <span class="sk">Escritor</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S4 Coherencia hist&oacute;rica <span class="sk">Director</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S5 Evoluci&oacute;n psicol&oacute;gica <span class="sk">Psic&oacute;logo</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S6 Custodiar 3 tel&eacute;fonos <span class="sk">M&oacute;viles</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S7 Despliegues sin downtime <span class="sk">Despliegue</span></div></div>
-      <div class="oi"><div class="cb chk">&#10003;</div><div class="tx">S8 Trazabilidad operativa <span class="sk">PM/Valeria</span></div></div>
-      <div class="oi"><div class="cb v2"></div><div class="tx">S9 Presentaciones corporativas <span class="sk">Tablets</span></div></div>
-      <div class="oi"><div class="cb v2"></div><div class="tx">S10 Mural pistas visuales <span class="sk">Tablero</span></div></div>
-      <div class="oi"><div class="cb v2"></div><div class="tx">S11 Jerarqu&iacute;a narrativa <span class="sk">Diarios</span></div></div>
-      <div class="oi"><div class="cb v2"></div><div class="tx">S12 Mercado Umbral <span class="sk">Laptop</span></div></div>
-      <div class="stt">&#9654; En progreso</div>
-      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">20/06</span></div>
-      <div class="stt">&#9744; Pendientes globales</div>
-      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
-      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
-      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">—</span> Pushear social_monserrat (1 archivo)</div>
-      <div class="stt">&#9888; Riesgos</div>
-      <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
-      <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
-      <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe (D1).</div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== FLUJO (CENTRO DE MANDO) ==================== -->
-<div id="wfTab" class="hidden">
-
-  <div class="card">
-    <div class="chd" onclick="tog(this)">
-      <span class="tp tp-gold">MANDO</span>
-      <div class="inf"><div class="nm">Centro de Mando &mdash; TUS PODERES</div><div class="l2">Todo lo que puedes ordenar como jefe del ecosistema</div></div>
-      <span class="st st-gold">jefe</span>
-      <div class="ar">&#9660;</div>
-    </div>
-    <div class="cbd on">
-      <div class="cbd-in">
-        <p class="text-xs text-muted mb-1">T&uacute; eres el <strong style="color:var(--gold)">Jefe</strong>. Valeria es tu ejecutora. Le hablas en lenguaje natural y ella lo procesa en 8 fases (mandato.md). Todo lo que puedes pedir est&aacute; aqu&iacute;:</p>
-
-        <div class="stt">&#128679; 1. DESARROLLO LOCAL</div>
-        <div class="cmd-item"><span class="cmd-num">D1</span><div class="cmd-body"><div class="cmd-phrase">"Inicia el backend" o "Arranca Django"</div><div class="cmd-desc"><code>cd ultragen_manager/django_app && python manage.py runserver</code></div></div></div>
-        <div class="cmd-item"><span class="cmd-num">D2</span><div class="cmd-body"><div class="cmd-phrase">"Inicia [manager|simple|desktop|social]"</div><div class="cmd-desc"><code>cd [proyecto] && npm run dev</code></div></div></div>
-        <div class="cmd-item"><span class="cmd-num">D3</span><div class="cmd-body"><div class="cmd-phrase">"Inicia todo" o "Entorno completo"</div><div class="cmd-desc">Ejecuta INICIAR_DESARROLLO.bat (backend + 4 frontends simult&aacute;neos)</div></div></div>
-
-        <div class="stt">&#128640; 2. DESPLIEGUE (men&uacute; de 7)</div>
-        <p class="text-xs text-muted mb-1">Cuando pidas "despliegue" o "backup", Valeria te muestra estas 7 opciones. Responde: <strong>"1,3,5"</strong> o <strong>"todas"</strong>.</p>
-        <div class="cmd-item"><span class="cmd-num">1</span><div class="cmd-body"><div class="cmd-phrase">Migrar datos Local &rarr; Neon</div><div class="cmd-desc">Exporta SQLite, migra esquema, carga inteligente en Neon PostgreSQL</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">2</span><div class="cmd-body"><div class="cmd-phrase">Subir Backend a GitHub</div><div class="cmd-desc">git push &rarr; Render detecta y redespliega autom&aacute;ticamente</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">3</span><div class="cmd-body"><div class="cmd-phrase">Publicar Web Simple</div><div class="cmd-desc">build + gh-pages &rarr; monserratultragen.github.io/ultragen-2026-site-simple</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">4</span><div class="cmd-body"><div class="cmd-phrase">Publicar Web Desktop</div><div class="cmd-desc">build + gh-pages &rarr; monserratultragen.github.io/ultragen-2026-site-desktop</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">5</span><div class="cmd-body"><div class="cmd-phrase">Publicar Social Monserrat</div><div class="cmd-desc">build + gh-pages &rarr; monserratultragen.github.io/social</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">6</span><div class="cmd-body"><div class="cmd-phrase">ZIP a Google Drive</div><div class="cmd-desc">Empaqueta scripts, docs, banners, im&aacute;genes, utilidades &rarr; G:\Mi unidad\</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">7</span><div class="cmd-body"><div class="cmd-phrase">Versionar Workspace Ra&iacute;z</div><div class="cmd-desc">git add/commit/push del monorepo C:\ultragen2026</div></div></div>
-
-        <div class="stt">&#128214; 3. CONSULTAS</div>
-        <div class="cmd-item"><span class="cmd-num">C1</span><div class="cmd-body"><div class="cmd-phrase">"&iquest;Cu&aacute;l es el estado actual?"</div><div class="cmd-desc">Resume 02_estado_general.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C2</span><div class="cmd-body"><div class="cmd-phrase">"&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div><div class="cmd-desc">Enumera 07_trabajo_activo.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C3</span><div class="cmd-body"><div class="cmd-phrase">"&iquest;Cu&aacute;l es la deuda?"</div><div class="cmd-desc">Lee 06_deuda_operacional.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C4</span><div class="cmd-body"><div class="cmd-phrase">"Mu&eacute;strame los objetivos"</div><div class="cmd-desc">Lee 01_objetivos_secundarios.md</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">C5</span><div class="cmd-body"><div class="cmd-phrase">"&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div><div class="cmd-desc">Revisa 05_incidentes.md + estado repos</div></div></div>
-
-        <div class="stt">&#128295; 4. INVOCAR SKILLS</div>
-        <div class="cmd-item"><span class="cmd-num">S1</span><div class="cmd-body"><div class="cmd-phrase">"Activa [Director|Escritor|Psic&oacute;logo|...]"</div><div class="cmd-desc">Carga la skill completa con su SKILL.md y referencias</div></div></div>
-        <div class="cmd-item"><span class="cmd-num">S2</span><div class="cmd-body"><div class="cmd-phrase">"Ejecuta [tarea]" directamente</div><div class="cmd-desc">Valeria elige la skill adecuada sola (Fase 4 del mandato)</div></div></div>
-
-        <div class="stt">&#128260; 5. CICLO DE MANTENIMIENTO (no olvidar)</div>
-        <div class="cycle" style="margin-bottom:4px">
-          <span class="step">Trabajas</span><span class="arr">&rarr;</span>
-          <span class="step">"Guarda cambios"</span><span class="arr">&rarr;</span>
-          <span class="step">"Despliega"</span><span class="arr">&rarr;</span>
-          <span class="step">"Actualiza CP"</span><span class="arr">&rarr;</span>
-          <span class="step">Repite</span>
-        </div>
-        <div class="di" style="border-left-color:var(--gold)">
-          <strong>&#9889; &iquest;C&oacute;mo se actualiza este Control Panel?</strong><br>
-          <span class="text-muted">Dile a Valeria: <strong>"actualiza el control panel"</strong>. Ella har&aacute;: <code>git add/commit/push</code> en ultragen_controlpanel &rarr; GitHub Pages redespliega solo. As&iacute; de simple. No se te olvida porque est&aacute; escrito aqu&iacute;.</span>
-        </div>
-
-        <div class="stt">&#128221; EL MANDATO (8 fases que Valeria ejecuta por cada orden tuya)</div>
-        <div class="di" style="border-left-color:var(--gold);padding:5px 7px;font-size:9px">
-          <strong>F1</strong> Reconstruye contexto (8 docs) &rarr;
-          <strong>F2</strong> Detecta trabajo activo &rarr;
-          <strong>F3</strong> Clasifica tu orden &rarr;
-          <strong>F4</strong> Selecciona skill &rarr;
-          <strong>F5</strong> Detecta vac&iacute;os &rarr;
-          <strong>F6</strong> Ejecuta &rarr;
-          <strong>F7</strong> Cierre: &iquest;qu&eacute; cambi&oacute;? &iquest;qu&eacute; qued&oacute;? &rarr;
-          <strong>F8</strong> Evoluciona: &iquest;automatizar? &iquest;nueva skill?
-        </div>
-        <div class="text-xs text-muted mt-1">El mandato est&aacute; en <code>ultragen_manager/skills/product_manager/mandato.md</code> (151 l&iacute;neas). Esto es su resumen ejecutivo.</div>
       </div>
     </div>
   </div>
@@ -533,20 +497,32 @@
   <div class="card">
     <div class="chd" onclick="tog(this)">
       <span class="tp tp-ice">REPOS</span>
-      <div class="inf"><div class="nm">Estado de Repos</div><div class="l2">Push status &middot; Git status &middot; 5 repos</div></div>
-      <span class="st st-ice">monitoreo</span>
+      <div class="inf"><div class="nm">Repositorios &amp; Deploys</div><div class="l2">Cada proyecto con su repo y despliegue</div></div>
+      <span class="st st-ice">5 proyectos</span>
       <div class="ar">&#9660;</div>
     </div>
     <div class="cbd on">
-      <div class="cbd-in" style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:10px">
-          <tr style="border-bottom:1px solid var(--border)"><th style="padding:3px 4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Repo</th><th style="padding:3px 4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Push</th><th style="padding:3px 4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Git</th><th style="padding:3px 4px;text-align:left;color:var(--text2);font-size:8px;text-transform:uppercase">Script</th></tr>
-          <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">manager</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-xs text-muted">MANAGER_CLIC_SUBIR.bat</span></td></tr>
-          <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">simple</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-xs text-muted">SITE_CLIC_PUBLICAR.bat</span></td></tr>
-          <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">desktop</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-green">ok</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-green">limpio</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-xs text-muted">SITE_DESKTOP_CLIC.bat</span></td></tr>
-          <tr><td style="padding:3px 4px;border-bottom:1px solid var(--border)">social</td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="badge bd-amber">pend</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-amber">1 archivo</span></td><td style="padding:3px 4px;border-bottom:1px solid var(--border)"><span class="text-xs text-muted">SOCIAL_CLIC.bat</span></td></tr>
-          <tr><td style="padding:3px 4px">control panel</td><td style="padding:3px 4px"><span class="badge bd-green">ok</span></td><td style="padding:3px 4px"><span class="text-green">en s&iacute;ncrono</span></td><td style="padding:3px 4px"><span class="text-xs text-muted">"Actualiza CP"</span></td></tr>
-        </table>
+      <div class="cbd-in">
+        <div class="rp">
+          <div class="rp-nm">ultragen_manager</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://ultragen-2026-core.onrender.com" target="_blank">Render</a></div>
+        </div>
+        <div class="rp">
+          <div class="rp-nm">ultragen_site_simple</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-site-simple" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">GH Pages</a></div>
+        </div>
+        <div class="rp">
+          <div class="rp-nm">ultragen_site_desktop</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-site-desktop" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">GH Pages</a></div>
+        </div>
+        <div class="rp">
+          <div class="rp-nm">social_monserrat</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/social" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/social" target="_blank">GH Pages</a></div>
+        </div>
+        <div class="rp">
+          <div class="rp-nm">ultragen_controlpanel</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank">GH Pages</a></div>
+        </div>
       </div>
     </div>
   </div>
@@ -555,7 +531,7 @@
 <div class="nav-bar">
   <a href="#" class="active" data-t="db" onclick="sw('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
   <a href="#" data-t="wf" onclick="sw('wf',this)"><span class="ni">&#9881;</span>Mando</a>
-  <a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank"><span class="ni">&#128279;</span>Repo</a>
+  <a href="#" data-t="repo" onclick="sw('wf',this);setTimeout(function(){document.querySelector('#wfTab .card:nth-child(3)')?.scrollIntoView({behavior:'smooth'})},100)"><span class="ni">&#128279;</span>Repo</a>
 </div>
 </div>
 
