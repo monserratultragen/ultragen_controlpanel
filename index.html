@@ -3,520 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ultragen Control Panel</title>
+<title>Ultragen CP</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#0c0c0c;--surface:#161616;--surface2:#1e1e1e;--surface3:#282828;
-    --border:#2a2a2a;--border2:#383838;
-    --text:#e0e0e0;--text2:#888;--text3:#555;
-    --gold:#c8a951;--gold-bg:rgba(200,169,81,.1);
-    --ice:#4fc3f7;--ice-bg:rgba(79,195,247,.1);
-    --crimson:#d32f2f;--crimson-bg:rgba(211,47,47,.1);
-    --emerald:#4caf50;--emerald-bg:rgba(76,175,80,.1);
-    --amber:#ffc107;--amber-bg:rgba(255,193,7,.1);
-    --radius:10px;--radius-sm:6px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{font-size:15px}
-  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:0;min-height:100vh}
-  .app{max-width:640px;margin:0 auto;padding:12px 10px 70px}
+:root{--bg:#0c0c0c;--surface:#161616;--surface2:#1e1e1e;--surface3:#282828;--border:#2a2a2a;--border2:#383838;--text:#e0e0e0;--text2:#888;--text3:#555;--gold:#c8a951;--gold-bg:rgba(200,169,81,.1);--ice:#4fc3f7;--ice-bg:rgba(79,195,247,.1);--crimson:#d32f2f;--crimson-bg:rgba(211,47,47,.1);--emerald:#4caf50;--emerald-bg:rgba(76,175,80,.1);--amber:#ffc107;--amber-bg:rgba(255,193,7,.1);--radius:12px;--radius-sm:8px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.app{max-width:480px;margin:0 auto;padding:0 12px 80px;position:relative}
 
-  .hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:2px}
-  .hdr h1{font-size:14px;font-weight:700;color:var(--gold);letter-spacing:-.2px}
-  .hdr .sub{font-size:10px;color:var(--text2)}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 0 4px}
+.hdr-l{display:flex;align-items:baseline;gap:8px}
+.hdr h1{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
+.hdr .sub{font-size:10px;color:var(--text2)}
+.hdr .stats{font-size:9px;color:var(--text3);background:var(--surface);border-radius:20px;padding:3px 10px;border:1px solid var(--border);white-space:nowrap}
 
-  .bar{display:flex;gap:3px;flex-wrap:wrap;font-size:9px;padding:4px 8px;background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border);margin:7px 0;color:var(--text2)}
-  .bar strong{color:var(--text);font-weight:500}
+.screen{display:none}
+.screen.active{display:block}
 
-  .seg{display:flex;gap:3px;margin-bottom:7px}
-  .seg select{flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:6px 9px;border-radius:var(--radius-sm);font-size:11px;font-weight:500;outline:none;cursor:pointer;font-family:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:26px}
-  .seg select option{background:var(--surface2);color:var(--text)}
-  .seg .btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:5px 9px;border-radius:var(--radius-sm);font-size:10px;font-weight:500;cursor:pointer;white-space:nowrap}
-  .seg .btn.on{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 0 12px}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 14px 14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:all .2s;aspect-ratio:1;box-shadow:0 4px 16px rgba(0,0,0,.2);position:relative;overflow:hidden}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;opacity:.6}
+.dash-card.tp-card-gold::before{background:var(--gold)}
+.dash-card.tp-card-ice::before{background:var(--ice)}
+.dash-card.tp-card-amber::before{background:var(--amber)}
+.dash-card.tp-card-green::before{background:var(--emerald)}
+.dash-card:active{transform:scale(.95);background:var(--surface2)}
+.dash-tp{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:6px;display:inline-block;width:fit-content;margin-bottom:4px}
+.dash-tp.tp-gold{background:var(--gold-bg);color:var(--gold)}
+.dash-tp.tp-ice{background:var(--ice-bg);color:var(--ice)}
+.dash-tp.tp-amber{background:var(--amber-bg);color:var(--amber)}
+.dash-tp.tp-green{background:var(--emerald-bg);color:var(--emerald)}
+.dash-nm{font-size:15px;font-weight:800;line-height:1.2;flex:1;display:flex;align-items:center;letter-spacing:-.3px}
+.dash-tech{font-size:10px;color:var(--text2);line-height:1.3}
+.dash-st{font-size:9px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-block;width:fit-content;text-transform:uppercase;letter-spacing:.4px}
+.st-green{background:var(--emerald-bg);color:var(--emerald)}
+.st-gold{background:var(--gold-bg);color:var(--gold)}
+.st-ice{background:var(--ice-bg);color:var(--ice)}
+.st-amber{background:var(--amber-bg);color:var(--amber)}
+.st-crimson{background:var(--crimson-bg);color:var(--crimson)}
 
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;overflow:hidden}
-  .chd{display:flex;align-items:center;gap:7px;padding:8px 9px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
-  .chd .tp{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 5px;border-radius:3px;flex-shrink:0}
-  .tp-gold{background:var(--gold-bg);color:var(--gold)}
-  .tp-ice{background:var(--ice-bg);color:var(--ice)}
-  .tp-green{background:var(--emerald-bg);color:var(--emerald)}
-  .tp-amber{background:var(--amber-bg);color:var(--amber)}
-  .tp-crimson{background:var(--crimson-bg);color:var(--crimson)}
-  .chd .inf{flex:1;min-width:0}
-  .chd .inf .nm{font-size:11px;font-weight:600}
-  .chd .inf .l2{font-size:9px;color:var(--text2);margin-top:0}
-  .chd .st{font-size:8px;font-weight:600;padding:1px 6px;border-radius:6px;text-transform:uppercase;letter-spacing:.2px;flex-shrink:0}
-  .st-green{background:var(--emerald-bg);color:var(--emerald)}
-  .st-gold{background:var(--gold-bg);color:var(--gold)}
-  .st-ice{background:var(--ice-bg);color:var(--ice)}
-  .st-amber{background:var(--amber-bg);color:var(--amber)}
-  .st-crimson{background:var(--crimson-bg);color:var(--crimson)}
-  .chd .ar{width:18px;height:18px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--text3);transition:transform .25s}
-  .chd .ar.on{transform:rotate(180deg);color:var(--gold)}
+.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 16px 90px}
+.detail-overlay.open{transform:translateX(0)}
+.detail-hdr{display:flex;align-items:center;gap:12px;padding:14px 0 8px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border);margin-bottom:6px}
+.back-btn{width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.back-btn:active{background:var(--surface3);transform:scale(.92)}
+.detail-title{font-size:17px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
+.detail-body{padding-top:6px}
 
-  .cbd{max-height:0;overflow:hidden;transition:max-height .35s ease}
-  .cbd.on{max-height:5000px}
-  .cbd-in{padding:0 9px 9px;border-top:1px solid var(--border)}
-  .cbd-in>*{padding-top:5px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;overflow:hidden}
+.chd{display:flex;align-items:center;gap:7px;padding:10px 10px;cursor:pointer;user-select:none}
+.chd .tp{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 5px;border-radius:3px;flex-shrink:0}
+.chd .inf{flex:1;min-width:0}
+.chd .inf .nm{font-size:11px;font-weight:600}
+.chd .inf .l2{font-size:9px;color:var(--text2)}
+.chd .st{font-size:8px;font-weight:600;padding:1px 6px;border-radius:6px;text-transform:uppercase;letter-spacing:.2px;flex-shrink:0}
+.chd .ar{width:18px;height:18px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--text3);transition:transform .25s}
+.chd .ar.on{transform:rotate(180deg);color:var(--gold)}
+.cbd{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.cbd.on{max-height:5000px}
+.cbd-in{padding:0 10px 10px;border-top:1px solid var(--border)}
+.cbd-in>*{padding-top:5px}
+.stt{font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;margin:8px 0 4px}
+.stt:first-child{margin-top:0}
 
-  .stt{font-size:8px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;margin:7px 0 3px}
-  .stt:first-child{margin-top:0}
+.mr{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border)}
+.mr .l{color:var(--text2)}
+.mr .v{color:var(--text);text-align:right}
+.mr a{color:var(--ice);text-decoration:none}
 
-  .mr{display:flex;justify-content:space-between;font-size:10px;padding:2px 0;border-bottom:1px solid var(--border)}
-  .mr .l{color:var(--text2)}
-  .mr .v{color:var(--text);text-align:right}
-  .mr a{color:var(--ice);text-decoration:none}
-  .chip{display:inline-flex;font-size:8px;padding:1px 5px;border-radius:5px;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.di,.wi{font-size:10px;padding:6px 8px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
+.ri{font-size:10px;padding:6px 8px;background:var(--crimson-bg);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--crimson)}
+.di .tg{font-size:8px}
+.badge{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:600;padding:1px 5px;border-radius:5px}
+.bd-green{background:var(--emerald-bg);color:var(--emerald)}
+.bd-gold{background:var(--gold-bg);color:var(--gold)}
+.bd-ice{background:var(--ice-bg);color:var(--ice)}
+.bd-amber{background:var(--amber-bg);color:var(--amber)}
+.bd-crimson{background:var(--crimson-bg);color:var(--crimson)}
+.dc-item{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 8px;margin-bottom:2px;border-left:3px solid var(--border);font-size:9px}
+.dc-item .dt{color:var(--gold);font-weight:600}
+.hm{display:flex;gap:2px;flex-wrap:wrap;margin:4px 0}
+.hm-cell{width:8px;height:8px;border-radius:1px}
+.hm-labels{display:flex;gap:2px;font-size:7px;color:var(--text3);margin-top:2px}
+.cl{list-style:none}
+.cl li{font-size:9px;padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:4px;align-items:baseline}
+.cl li:last-child{border-bottom:none}
+.ch{font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:8px;flex-shrink:0}
+.ct{color:var(--text3);font-size:8px;flex-shrink:0}
+.dot{display:inline-block;width:4px;height:4px;border-radius:50%}
+.d-green{background:var(--emerald)}
+.oi{display:flex;align-items:flex-start;gap:5px;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px}
+.oi:last-child{border-bottom:none}
+.oi .cb{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:7px;color:transparent;background:var(--surface2)}
+.oi .cb.chk{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.oi .cb.v2{border-color:var(--amber)}
+.oi .cb.v2.chk{background:var(--gold);border-color:var(--gold)}
+.oi .tx{flex:1;line-height:1.4}
+.oi .tx .sk{font-size:8px;color:var(--text3)}
+.obj-card{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 7px;border-left:3px solid var(--border);margin-bottom:3px}
+.obj-card .oc-tit{font-size:10px;font-weight:600}
+.obj-card .oc-bd{font-size:9px;color:var(--text2);margin-top:1px;line-height:1.5}
+.cycle{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);font-size:9px}
+.cycle .step{padding:2px 5px;border-radius:3px;background:var(--surface3);color:var(--text)}
+.cycle .arr{color:var(--gold)}
+.cmd-group{margin-bottom:6px}
+.cmd-group .cmd-tit{font-size:10px;font-weight:600;color:var(--gold);margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.cmd-item{display:flex;align-items:flex-start;gap:6px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;font-size:10px;border-left:3px solid var(--border)}
+.cmd-item .cmd-num{width:16px;height:16px;border-radius:3px;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px}
+.cmd-item .cmd-body{flex:1}
+.cmd-item .cmd-body .cmd-phrase{font-family:'SF Mono','Cascadia Code',monospace;font-size:9px;color:var(--gold);margin:1px 0}
+.cmd-item .cmd-body .cmd-desc{color:var(--text2)}
+.ii{font-size:10px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
+.ii .dt{color:var(--ice);font-weight:600}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px}
 
-  .cl{list-style:none}
-  .cl li{font-size:9px;padding:2px 0;border-bottom:1px solid var(--border);display:flex;gap:4px;align-items:baseline}
-  .cl li:last-child{border-bottom:none}
-  .ch{font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:8px;flex-shrink:0}
-  .ct{color:var(--text3);font-size:8px;flex-shrink:0}
+.mando-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
+.mando-hd{display:flex;align-items:center;gap:8px;padding:12px;cursor:pointer;user-select:none}
+.mando-hd .mando-icon{font-size:16px;flex-shrink:0}
+.mando-hd .mando-label{flex:1;font-size:12px;font-weight:600}
+.mando-hd .mando-ar{font-size:10px;color:var(--text3);transition:transform .25s}
+.mando-hd .mando-ar.on{transform:rotate(180deg);color:var(--gold)}
+.mando-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.mando-bd.on{max-height:5000px}
+.mando-bd-in{padding:0 12px 12px;border-top:1px solid var(--border)}
 
-  .badge{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:600;padding:1px 5px;border-radius:5px}
-  .bd-green{background:var(--emerald-bg);color:var(--emerald)}
-  .bd-gold{background:var(--gold-bg);color:var(--gold)}
-  .bd-ice{background:var(--ice-bg);color:var(--ice)}
-  .bd-amber{background:var(--amber-bg);color:var(--amber)}
-  .bd-crimson{background:var(--crimson-bg);color:var(--crimson)}
-  .dot{display:inline-block;width:4px;height:4px;border-radius:50%}
-  .d-green{background:var(--emerald)}
+.repo-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:8px}
+.repo-nm{font-size:13px;font-weight:700;margin-bottom:10px}
+.repo-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.repo-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 0;border-radius:var(--radius-sm);font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s}
+.repo-btn:active{transform:scale(.97)}
+.repo-btn.gh{background:var(--ice-bg);border:1px solid rgba(79,195,247,.3);color:var(--ice)}
+.repo-btn.deploy{background:var(--gold-bg);border:1px solid rgba(200,169,81,.3);color:var(--gold)}
 
-  .oi{display:flex;align-items:flex-start;gap:5px;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px}
-  .oi:last-child{border-bottom:none}
-  .oi .cb{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:7px;color:transparent;background:var(--surface2);-webkit-tap-highlight-color:transparent}
-  .oi .cb.chk{background:var(--emerald);border-color:var(--emerald);color:#fff}
-  .oi .cb.v2{border-color:var(--amber)}
-  .oi .cb.v2.chk{background:var(--gold);border-color:var(--gold)}
-  .oi .tx{flex:1;line-height:1.4}
-  .oi .tx .sk{font-size:8px;color:var(--text3)}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:12px 0 14px;max-width:480px;margin:0 auto;box-shadow:0 -4px 20px rgba(0,0,0,.4)}
+.nav-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;text-decoration:none;font-size:11px;color:var(--text3);gap:3px;border-radius:10px;margin:0 4px;transition:all .2s;font-weight:600;letter-spacing:.2px}
+.nav-bar a .ni{font-size:24px;line-height:1}
+.nav-bar a.active{color:var(--gold);background:var(--gold-bg)}
+.nav-bar a:active{background:var(--surface2)}
 
-  .di,.wi{font-size:10px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
-  .ri{font-size:10px;padding:5px 7px;background:var(--crimson-bg);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--crimson)}
-  .di .tg{font-size:8px}
-  .ii{font-size:10px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
-  .ii .dt{color:var(--ice);font-weight:600}
-
-  /* COMMAND TREE */
-  .cmd-group{margin-bottom:6px}
-  .cmd-group .cmd-tit{font-size:10px;font-weight:600;color:var(--gold);margin-bottom:3px;display:flex;align-items:center;gap:4px}
-  .cmd-item{display:flex;align-items:flex-start;gap:6px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;font-size:10px;border-left:3px solid var(--border)}
-  .cmd-item .cmd-num{width:16px;height:16px;border-radius:3px;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px}
-  .cmd-item .cmd-body{flex:1}
-  .cmd-item .cmd-body .cmd-phrase{font-family:'SF Mono','Cascadia Code',monospace;font-size:9px;color:var(--gold);margin:1px 0}
-  .cmd-item .cmd-body .cmd-desc{color:var(--text2)}
-
-  .nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:4px 5px;gap:2px;max-width:640px;margin:0 auto}
-  .nav-bar a{flex:1;display:flex;flex-direction:column;align-items:center;padding:4px 3px;border-radius:5px;text-decoration:none;font-size:8px;color:var(--text3);gap:1px;-webkit-tap-highlight-color:transparent}
-  .nav-bar a .ni{font-size:13px}
-  .nav-bar a.active{color:var(--gold);background:var(--gold-bg)}
-  .nav-bar a:active{background:var(--surface2)}
-
-  .hidden{display:none!important}
-  .text-xs{font-size:9px}
-  .text-muted{color:var(--text2)}
-  .text-gold{color:var(--gold)}
-  .text-green{color:var(--emerald)}
-  .text-amber{color:var(--amber)}
-  .text-crimson{color:var(--crimson)}
-  .text-ice{color:var(--ice)}
-  .fw-600{font-weight:600}
-
-  .hm{display:flex;gap:2px;flex-wrap:wrap;margin:3px 0}
-  .hm-cell{width:7px;height:7px;border-radius:1px}
-  .hm-labels{display:flex;gap:2px;font-size:7px;color:var(--text3);margin-top:2px}
-  .hm-labels span{width:auto;margin-right:4px}
-
-  .dc-item{background:var(--surface2);border-radius:var(--radius-sm);padding:4px 7px;margin-bottom:2px;border-left:3px solid var(--border);font-size:9px}
-  .dc-item .dt{color:var(--gold);font-weight:600}
-  .obj-card{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 7px;border-left:3px solid var(--border);margin-bottom:3px}
-  .obj-card .oc-tit{font-size:10px;font-weight:600}
-  .obj-card .oc-bd{font-size:9px;color:var(--text2);margin-top:1px;line-height:1.5}
-
-  .cycle{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);font-size:9px}
-  .cycle .step{padding:2px 5px;border-radius:3px;background:var(--surface3);color:var(--text)}
-  .cycle .arr{color:var(--gold)}
-
-  .ci{background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;padding:5px 7px;border-left:3px solid var(--border)}
-  .ci-phr{font-size:10px;font-weight:500;color:var(--text);margin-bottom:2px}
-  .ci-row{display:flex;align-items:center;gap:4px}
-  .ci-path{font-family:'SF Mono','Cascadia Code',monospace;font-size:8px;color:var(--text2);word-break:break-all;flex:1}
-  .cp{width:20px;height:20px;border-radius:4px;background:var(--surface3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all .2s;-webkit-tap-highlight-color:transparent}
-  .cp:active{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
-  .cp-icon{font-size:11px}
-
-  .rp{display:flex;justify-content:space-between;align-items:center;padding:6px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;border-left:3px solid var(--border)}
-  .rp-nm{font-size:10px;font-weight:600}
-  .rp-lk{font-size:9px;display:flex;gap:6px}
-  .rp-lk a{color:var(--ice);text-decoration:none}
-  .rp-lk a:active{text-decoration:underline}
-
-  .cg{margin-bottom:6px}
-  .cg-hd{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--gold);cursor:pointer;padding:2px 0;user-select:none;-webkit-tap-highlight-color:transparent}
-  .cg-hd .cg-ar{font-size:8px;color:var(--text3);transition:transform .25s;display:inline-block}
-  .cg-hd .cg-ar.on{transform:rotate(90deg);color:var(--gold)}
-  .cg-bd{max-height:0;overflow:hidden;transition:max-height .3s}
-  .cg-bd.on{max-height:2000px}
-  .cg-bd-in{padding:3px 0 0 12px;border-left:1px solid var(--border);margin-left:4px}
-  .cg-bd-in .ci{border-left-color:var(--gold)}
-
-  @media (min-width:640px){.app{max-width:800px;padding:20px 16px 90px}.nav-bar{max-width:800px;left:50%;transform:translateX(-50%);border-radius:10px 10px 0 0}}
-  @media (min-width:1024px){.app{max-width:1100px}.nav-bar{max-width:1100px}}
+.hidden{display:none!important}
+.text-xs{font-size:9px}
+.text-muted{color:var(--text2)}
+.text-gold{color:var(--gold)}
+.text-green{color:var(--emerald)}
+.text-amber{color:var(--amber)}
+.text-crimson{color:var(--crimson)}
+.text-ice{color:var(--ice)}
+.fw-600{font-weight:600}
 </style>
 </head>
 <body>
 <div class="app">
 
 <div class="hdr">
-  <h1>ULTRAGEN CP</h1>
-  <div class="sub">2026-06-27 &middot; <span class="text-muted">jefe: t&uacute; mandas, Valeria ejecuta</span></div>
-</div>
-
-<div class="bar">
-  <span class="d-green dot"></span> 5 proyectos &middot; 12 skills &middot; 6 repos &middot; 8 comandos de deploy &middot; 8 fases
-</div>
-
-<div class="seg">
-  <select id="pf">
-    <option value="all">Tablero general</option>
-    <option value="manager">ultragen_manager</option>
-    <option value="simple">ultragen_site_simple</option>
-    <option value="desktop">ultragen_site_desktop</option>
-    <option value="prompts">ultragen_prompts</option>
-    <option value="social">social_monserrat</option>
-    <option value="opencode">.opencode &mdash; TUS PODERES</option>
-    <option value="workflow">&#9881; Centro de Mando</option>
-  </select>
-  <button class="btn" id="expBtn" onclick="togAll()">&#9660;</button>
-</div>
-
-<!-- ==================== MANAGER ==================== -->
-<div class="card" data-p="manager">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-gold">BACKEND</span>
-    <div class="inf"><div class="nm">ultragen_manager</div><div class="l2">Django 5.2.8 &middot; Render &middot; Neon</div></div>
-    <span class="st st-green">activo</span>
-    <div class="ar">&#9660;</div>
+  <div class="hdr-l">
+    <h1>ULTRAGEN CP</h1>
+    <div class="sub">2026-06-27</div>
   </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9654; Trabajo activo</div>
-      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
-      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta psicologo/SKILL.md</div>
-      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Sin secci&oacute;n tareas en sub-skills</div>
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">17/06</span> Modelo Dispositivo unificado en JSON field</div>
-      <div class="dc-item"><span class="dt">20/06</span> HashRouter en site_desktop (vs BrowserRouter + 404)</div>
-      <div class="dc-item"><span class="dt">20/06</span> No auto-deploy; preguntar siempre</div>
-      <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
-      <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo como memoria del PM</div>
-      <div class="dc-item"><span class="dt">22/06</span> Base Conocimiento Navegable</div>
-      <div class="stt">&#128200; Actividad &middot; <span class="text-muted">&uacute;ltimos 84 d&iacute;as</span></div>
-      <div class="hm-wrap" id="hm-manager"></div>
-      <div class="stt">Config</div>
-      <div class="mr"><span class="l">GitHub</span><span class="v"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">ultragen-2026-core</a> <span class="text-green">limpio</span></span></div>
-      <div class="mr"><span class="l">API</span><span class="v"><a href="https://ultragen-2026-core.onrender.com" target="_blank">onrender.com</a></span></div>
+  <div class="stats">5 proyectos</div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="screen-db" class="screen active">
+  <div class="dash-grid" id="dashGrid"></div>
+</div>
+
+<!-- ===== MANDO ===== -->
+<div id="screen-wf" class="screen">
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128640;</span>
+      <span class="mando-label">1. Despliegue</span>
+      <span class="mando-ar">&#9660;</span>
+    </div>
+    <div class="mando-bd">
+      <div class="mando-bd-in">
+        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; el agente te presenta todas las opciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')">&#128203;</button></div></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== SITE SIMPLE ==================== -->
-<div class="card" data-p="simple">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-ice">FRONTEND</span>
-    <div class="inf"><div class="nm">ultragen_site_simple</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages</div></div>
-    <span class="st st-green">desplegado</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9654; Trabajo activo</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">—</span> (depende del backend; sin decisiones propias)</div>
-      <div class="stt">&#128200; Actividad</div>
-      <div class="hm-wrap" id="hm-simple"></div>
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128214;</span>
+      <span class="mando-label">2. Consultas (memoria del PM)</span>
+      <span class="mando-ar">&#9660;</span>
+    </div>
+    <div class="mando-bd">
+      <div class="mando-bd-in">
+        <div class="ci"><div class="ci-phr">C1 &mdash; "&iquest;Cu&aacute;l es el estado actual?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\02_estado_general.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\02_estado_general.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">C2 &mdash; "&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\07_trabajo_activo.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\07_trabajo_activo.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">C3 &mdash; "&iquest;Cu&aacute;l es la deuda operacional?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\06_deuda_operacional.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\06_deuda_operacional.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">C4 &mdash; "Mu&eacute;strame los objetivos"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\01_objetivos_secundarios.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\01_objetivos_secundarios.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">C5 &mdash; "&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\05_incidentes.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\05_incidentes.md')">&#128203;</button></div></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== SITE DESKTOP ==================== -->
-<div class="card" data-p="desktop">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-ice">FRONTEND</span>
-    <div class="inf"><div class="nm">ultragen_site_desktop</div><div class="l2">React 19 &middot; Tailwind 4 &middot; Framer Motion</div></div>
-    <span class="st st-amber">integrando</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9654; Trabajo activo</div>
-      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-      <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">20/06</span> Migrar a HashRouter para compatibilidad GH Pages</div>
-      <div class="stt">&#128200; Actividad</div>
-      <div class="hm-wrap" id="hm-desktop"></div>
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128295;</span>
+      <span class="mando-label">3. Invocar Skills</span>
+      <span class="mando-ar">&#9660;</span>
+    </div>
+    <div class="mando-bd">
+      <div class="mando-bd-in">
+        <div class="ci"><div class="ci-phr">"Activa Director" &mdash; Narrativa</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\director\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\director\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Escritor" &mdash; Drama NTR</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\escritor\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\escritor\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Psic&oacute;logo" &mdash; Perfiles</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\psicologo\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\psicologo\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Diarios" &mdash; Jerarqu&iacute;a</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\diarios\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\diarios\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa M&oacute;viles" &mdash; 3 tel&eacute;fonos</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\moviles\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\moviles\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Tablets" &mdash; Presentaciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablets\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablets\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Tablero" &mdash; Pistas visuales</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablero\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablero\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Laptop" &mdash; Mercado Umbral</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\laptop\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\laptop\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; Deploy/Backup</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Reg. Datos" &mdash; Sync BD</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\registro-datos\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\registro-datos\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Dist. Cont." &mdash; API monitor</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\distribucion-contenido\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\distribucion-contenido\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa PM/Valeria" &mdash; Coordinaci&oacute;n</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\product-manager\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\product-manager\\SKILL.md')">&#128203;</button></div></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== SOCIAL ==================== -->
-<div class="card" data-p="social">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-ice">FRONTEND</span>
-    <div class="inf"><div class="nm">social_monserrat</div><div class="l2">React 19 &middot; Vite 8 &middot; Easter eggs</div></div>
-    <span class="st st-green">desplegado</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9654; Trabajo activo</div>
-      <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Deuda saldada &mdash; incidente VITE_API_URL resuelto</em></div>
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">22/06</span> Corregir VITE_API_URL con /api en .env.production y script</div>
-      <div class="stt">&#128200; Actividad</div>
-      <div class="hm-wrap" id="hm-social"></div>
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128260;</span>
+      <span class="mando-label">4. Ciclo de Mantenimiento</span>
+      <span class="mando-ar">&#9660;</span>
     </div>
-  </div>
-</div>
-
-<!-- ==================== PROMPTS ==================== -->
-<div class="card" data-p="prompts">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-amber">FRONTEND</span>
-    <div class="inf"><div class="nm">ultragen_prompts</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages &middot; Gestor de Prompts</div></div>
-    <span class="st st-green">desplegado</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd">
-    <div class="cbd-in">
-      <div class="stt">&#9654; Trabajo activo</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas (reci&eacute;n creado)</em></div>
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">27/06</span> Proyecto separado de site_simple; password gate con clave maestra</div>
-      <div class="stt">&#128200; Actividad</div>
-      <div class="hm-wrap" id="hm-prompts"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== .OPENCODE / SKILLS ==================== -->
-<div class="card" data-p="opencode">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-green">AGENTE</span>
-    <div class="inf"><div class="nm">.opencode / Skills &mdash; TUS PODERES</div><div class="l2">12 skills invocables &middot; mandato &middot; t&uacute; eres el jefe</div></div>
-    <span class="st st-gold">jefe</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd on">
-    <div class="cbd-in">
-
-      <div class="stt">&#9888; Deuda</div>
-      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta psicologo/SKILL.md:39</div>
-      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n tareas en sub-skills</div>
-
-      <div class="stt">&#128221; Decisiones</div>
-      <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
-      <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
-      <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
-
-      <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
-      <div class="hm-wrap" id="hm-opencode"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== TRABAJO ACTIVO ==================== -->
-<div class="card" data-p="all">
-  <div class="chd" onclick="tog(this)">
-    <span class="tp tp-amber">TRABAJO</span>
-    <div class="inf"><div class="nm">Trabajo Activo &middot; Riesgos</div><div class="l2">Por proyecto &middot; lo que est&aacute; en marcha</div></div>
-    <span class="st st-amber">en progreso</span>
-    <div class="ar">&#9660;</div>
-  </div>
-  <div class="cbd on">
-    <div class="cbd-in">
-
-      <div class="stt">&#9654; ultragen_manager</div>
-      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-
-      <div class="stt">&#9654; ultragen_site_simple</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
-
-      <div class="stt">&#9654; ultragen_site_desktop</div>
-      <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-      <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
-
-      <div class="stt">&#9654; social_monserrat</div>
-      <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
-
-      <div class="stt">&#9654; ultragen_prompts</div>
-      <div class="di" style="border-left-color:var(--text3)"><em>Reci&eacute;n creado &mdash; monitorear</em></div>
-
-      <div class="stt">&#9654; .opencode / skills</div>
-      <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
-      <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
-
-      <div class="stt">&#9888; Riesgos globales</div>
-      <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
-      <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
-      <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe (D1).</div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== FLUJO (CENTRO DE MANDO) ==================== -->
-<div id="wfTab" class="hidden">
-
-  <div class="card">
-    <div class="chd" onclick="tog(this)">
-      <span class="tp tp-gold">MANDO</span>
-      <div class="inf"><div class="nm">Centro de Mando &mdash; INSTRUCCIONES</div><div class="l2">Cada orden tiene su archivo destino &mdash; copia la ruta</div></div>
-      <span class="st st-gold">jefe</span>
-      <div class="ar">&#9660;</div>
-    </div>
-    <div class="cbd on">
-      <div class="cbd-in">
-        <p class="text-xs text-muted mb-1">T&uacute; eres el <strong style="color:var(--gold)">Jefe</strong>. Dale la orden a Valeria en lenguaje natural. Cada instrucci&oacute;n incluye la ruta absoluta del archivo que ejecuta. Usa el bot&oacute;n <span class="cp-icon">&#128203;</span> para copiar la ruta al portapapeles.</p>
-
-        <div class="stt">&#128679; 1. DESARROLLO LOCAL</div>
-        <div class="ci">
-          <div class="ci-phr">"Inicia el backend" o "Arranca Django"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\django_app\manage.py runserver</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\django_app\\manage.py runserver")' title="Copiar ruta">&#128203;</button></div>
-        </div>
+    <div class="mando-bd">
+      <div class="mando-bd-in">
+        <div class="ci"><div class="ci-phr">"Actualiza el control panel"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_controlpanel')">&#128203;</button></div></div>
         <div class="cg">
-          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Inicia [proyecto]" &mdash; expande para ver cada uno</div>
+          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Guarda cambios [proyecto]"</div>
           <div class="cg-bd">
             <div class="cg-bd-in">
-              <div class="ci"><div class="ci-phr">ultragen_manager (backend)</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_site_simple\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_site_simple\\')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_site_desktop\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_site_desktop\\')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\social_monserrat\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\social_monserrat\\')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_manager</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\ (npm run deploy)</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">Workspace ra&iacute;z</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1')">&#128203;</button></div></div>
             </div>
           </div>
         </div>
-        <div class="ci">
-          <div class="ci-phr">"Inicia todo" o "Entorno completo"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\documentacion\INICIAR_DESARROLLO.bat</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\documentacion\\INICIAR_DESARROLLO.bat")' title="Copiar ruta">&#128203;</button></div>
-        </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="stt">&#128640; 2. DESPLIEGUE (men&uacute; de 8)</div>
-        <div class="ci">
-          <div class="ci-phr"><strong>1</strong> &mdash; Migrar datos Local &rarr; Neon</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1")' title="Copiar ruta">&#128203;</button></div>
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128221;</span>
+      <span class="mando-label">5. El Mandato (8 fases)</span>
+      <span class="mando-ar">&#9660;</span>
+    </div>
+    <div class="mando-bd">
+      <div class="mando-bd-in">
+        <div class="ci"><div class="ci-phr">Constituci&oacute;n de Valeria</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\mandato.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\mandato.md')">&#128203;</button></div></div>
+        <div class="cycle" style="margin-top:4px">
+          <span class="step">F1 Reconstruye</span><span class="arr">&rarr;</span>
+          <span class="step">F2 Detecta</span><span class="arr">&rarr;</span>
+          <span class="step">F3 Clasifica</span><span class="arr">&rarr;</span>
+          <span class="step">F4 Skill</span><span class="arr">&rarr;</span>
+          <span class="step">F5 Vac&iacute;os</span><span class="arr">&rarr;</span>
+          <span class="step">F6 Ejecuta</span><span class="arr">&rarr;</span>
+          <span class="step">F7 Cierre</span><span class="arr">&rarr;</span>
+          <span class="step">F8 Evoluci&oacute;n</span>
         </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>2</strong> &mdash; Subir Backend a GitHub</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>3</strong> &mdash; Publicar Web Simple</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>4</strong> &mdash; Publicar Web Desktop</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>5</strong> &mdash; Publicar Social Monserrat</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>6</strong> &mdash; ZIP a Google Drive</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_crear_zip_drive.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\WORKSPACE_crear_zip_drive.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>7</strong> &mdash; Versionar Workspace Ra&iacute;z</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr"><strong>8</strong> &mdash; Publicar Prompts (npm run deploy)</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_prompts\\")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-
-        <div class="stt">&#128214; 3. CONSULTAS (memoria del PM)</div>
-        <div class="ci">
-          <div class="ci-phr">C1 &mdash; "&iquest;Cu&aacute;l es el estado actual?"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\02_estado_general.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\02_estado_general.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr">C2 &mdash; "&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\07_trabajo_activo.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\07_trabajo_activo.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr">C3 &mdash; "&iquest;Cu&aacute;l es la deuda operacional?"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\06_deuda_operacional.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\06_deuda_operacional.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr">C4 &mdash; "Mu&eacute;strame los objetivos"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\01_objetivos_secundarios.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\01_objetivos_secundarios.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr">C5 &mdash; "&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\05_incidentes.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\05_incidentes.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-
-        <div class="stt">&#128295; 4. INVOCAR SKILLS</div>
-        <div class="ci">
-          <div class="ci-phr">S1 &mdash; "Activa [Director|Escritor|Psic&oacute;logo|...]"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\[director|escritor|psicologo|...]\SKILL.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\.opencode\\skills\\")' title="Copiar ruta skills">&#128203;</button></div>
-        </div>
-        <div class="ci">
-          <div class="ci-phr">S2 &mdash; "Ejecuta [tarea]" directamente</div>
-          <div class="ci-row"><span class="ci-path">Valeria elige la skill sola (Fase 4 del mandato)</span></div>
-        </div>
-
-        <div class="stt">&#128260; 5. CICLO DE MANTENIMIENTO</div>
-        <div class="ci">
-          <div class="ci-phr">"Actualiza el control panel"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_controlpanel")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="cg">
-          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Guarda cambios [proyecto]" &mdash; expande</div>
-          <div class="cg-bd">
-            <div class="cg-bd-in">
-              <div class="ci"><div class="ci-phr">ultragen_manager</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\ (npm run deploy)</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')" title="Copiar ruta">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">Workspace ra&iacute;z</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1')" title="Copiar ruta">&#128203;</button></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stt">&#128221; EL MANDATO (8 fases)</div>
-        <div class="ci">
-          <div class="ci-phr">Constituci&oacute;n de Valeria &mdash; c&oacute;mo procesa tus &oacute;rdenes</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\mandato.md</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\mandato.md")' title="Copiar ruta">&#128203;</button></div>
-        </div>
-        <div class="di" style="border-left-color:var(--gold);padding:5px 7px;font-size:9px;margin-top:4px">
-          <strong>F1</strong> Reconstruye contexto (8 docs) &rarr;
-          <strong>F2</strong> Detecta trabajo activo &rarr;
-          <strong>F3</strong> Clasifica tu orden &rarr;
-          <strong>F4</strong> Selecciona skill &rarr;
-          <strong>F5</strong> Detecta vac&iacute;os &rarr;
-          <strong>F6</strong> Ejecuta &rarr;
-          <strong>F7</strong> Cierre: &iquest;qu&eacute; cambi&oacute;? &iquest;qu&eacute; qued&oacute;? &rarr;
-          <strong>F8</strong> Evoluciona: &iquest;automatizar? &iquest;nueva skill?
-        </div>
-
-        <div class="stt">&#128295; 12 SKILLS</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+        <div class="stt">12 Skills</div>
+        <div class="grid-2">
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Director</strong> &mdash; Narrativa</div>
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Escritor</strong> &mdash; Drama NTR</div>
           <div class="di" style="padding:4px 6px;border-left-color:var(--gold)"><strong>Psic&oacute;logo</strong> &mdash; Perfiles</div>
@@ -534,69 +289,271 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="chd" onclick="tog(this)">
-      <span class="tp tp-gold">VALERIA</span>
-      <div class="inf"><div class="nm">Protocolo Valeria</div><div class="l2">Asistente del PM &mdash; canal &uacute;nico de comunicaci&oacute;n</div></div>
-      <span class="st st-gold">reglas</span>
-      <div class="ar">&#9660;</div>
+  <div class="mando-group">
+    <div class="mando-hd" onclick="togMando(this)">
+      <span class="mando-icon">&#128221;</span>
+      <span class="mando-label">6. Protocolo Valeria</span>
+      <span class="mando-ar">&#9660;</span>
     </div>
-    <div class="cbd on">
-      <div class="cbd-in">
+    <div class="mando-bd">
+      <div class="mando-bd-in">
         <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">1. Toda respuesta inicia con <strong>Valeria:</strong></div></div>
         <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">2. Tono profesional, eficiente, directo y amable</div></div>
         <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">3. Ante solicitudes de deploy presenta las 8 opciones y espera tu selecci&oacute;n num&eacute;rica</div></div>
       </div>
     </div>
   </div>
-
 </div>
 
-<!-- ==================== REPOS TAB (standalone) ==================== -->
-<div id="repoTab" class="hidden">
+<!-- ===== REPO ===== -->
+<div id="screen-repo" class="screen">
+  <div class="repo-item">
+    <div class="repo-nm">ultragen_manager</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://ultragen-2026-core.onrender.com" target="_blank">&#128640; Render</a>
+    </div>
+  </div>
+  <div class="repo-item">
+    <div class="repo-nm">ultragen_site_simple</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-simple" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">&#128640; GH Pages</a>
+    </div>
+  </div>
+  <div class="repo-item">
+    <div class="repo-nm">ultragen_site_desktop</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-desktop" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">&#128640; GH Pages</a>
+    </div>
+  </div>
+  <div class="repo-item">
+    <div class="repo-nm">social_monserrat</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/social" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/social" target="_blank">&#128640; GH Pages</a>
+    </div>
+  </div>
+  <div class="repo-item">
+    <div class="repo-nm">ultragen_prompts</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_prompts" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_prompts" target="_blank">&#128640; GH Pages</a>
+    </div>
+  </div>
+  <div class="repo-item">
+    <div class="repo-nm">ultragen_controlpanel</div>
+    <div class="repo-btns">
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">&#128279; GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank">&#128640; GH Pages</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DETAIL OVERLAY ===== -->
+<div id="detailOverlay" class="detail-overlay">
+  <div class="detail-hdr">
+    <button class="back-btn" onclick="closeDetail()">&larr;</button>
+    <span class="detail-title" id="detailTitle"></span>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="nav-bar">
+  <a href="#" class="active" data-t="db" onclick="switchTab('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
+  <a href="#" data-t="wf" onclick="switchTab('wf',this)"><span class="ni">&#9881;</span>Mando</a>
+  <a href="#" data-t="repo" onclick="switchTab('repo',this)"><span class="ni">&#128279;</span>Repo</a>
+</div>
+</div>
+
+<!-- ===== HIDDEN DETAIL CONTENTS ===== -->
+<div id="detail-contents" class="hidden">
+
+<div id="detail-manager">
   <div class="card">
     <div class="chd" onclick="tog(this)">
-      <span class="tp tp-ice">REPOS</span>
-      <div class="inf"><div class="nm">Repositorios &amp; Deploys</div><div class="l2">Cada proyecto con su repo y despliegue</div></div>
-      <span class="st st-ice">6 proyectos</span>
+      <span class="tp tp-gold">BACKEND</span>
+      <div class="inf"><div class="nm">ultragen_manager</div><div class="l2">Django 5.2.8 &middot; Render &middot; Neon</div></div>
+      <span class="st st-green">activo</span>
       <div class="ar">&#9660;</div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="rp">
-          <div class="rp-nm">ultragen_manager</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://ultragen-2026-core.onrender.com" target="_blank">Render</a></div>
-        </div>
-        <div class="rp">
-          <div class="rp-nm">ultragen_site_simple</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-site-simple" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">GH Pages</a></div>
-        </div>
-        <div class="rp">
-          <div class="rp-nm">ultragen_site_desktop</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen-2026-site-desktop" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">GH Pages</a></div>
-        </div>
-        <div class="rp">
-          <div class="rp-nm">social_monserrat</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/social" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/social" target="_blank">GH Pages</a></div>
-        </div>
-        <div class="rp">
-          <div class="rp-nm">ultragen_prompts</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen_prompts" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen_prompts" target="_blank">GH Pages</a></div>
-        </div>
-        <div class="rp">
-          <div class="rp-nm">ultragen_controlpanel</div>
-          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank">GH Pages</a></div>
-        </div>
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta psicologo/SKILL.md</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Sin secci&oacute;n tareas en sub-skills</div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">17/06</span> Modelo Dispositivo unificado en JSON field</div>
+        <div class="dc-item"><span class="dt">20/06</span> HashRouter en site_desktop (vs BrowserRouter + 404)</div>
+        <div class="dc-item"><span class="dt">20/06</span> No auto-deploy; preguntar siempre</div>
+        <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
+        <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo como memoria del PM</div>
+        <div class="dc-item"><span class="dt">22/06</span> Base Conocimiento Navegable</div>
+        <div class="stt">&#128200; Actividad &middot; <span class="text-muted">&uacute;ltimos 84 d&iacute;as</span></div>
+        <div class="hm-wrap" id="hm-manager"></div>
+        <div class="stt">Config</div>
+        <div class="mr"><span class="l">GitHub</span><span class="v"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">ultragen-2026-core</a> <span class="text-green">limpio</span></span></div>
+        <div class="mr"><span class="l">API</span><span class="v"><a href="https://ultragen-2026-core.onrender.com" target="_blank">onrender.com</a></span></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="nav-bar">
-  <a href="#" class="active" data-t="db" onclick="sw('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
-  <a href="#" data-t="wf" onclick="sw('wf',this)"><span class="ni">&#9881;</span>Mando</a>
-  <a href="#" data-t="repo" onclick="sw('repo',this)"><span class="ni">&#128279;</span>Repo</a>
+<div id="detail-simple">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-ice">FRONTEND</span>
+      <div class="inf"><div class="nm">ultragen_site_simple</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages</div></div>
+      <span class="st st-green">desplegado</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">&mdash;</span> (depende del backend; sin decisiones propias)</div>
+        <div class="stt">&#128200; Actividad</div>
+        <div class="hm-wrap" id="hm-simple"></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div id="detail-desktop">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-ice">FRONTEND</span>
+      <div class="inf"><div class="nm">ultragen_site_desktop</div><div class="l2">React 19 &middot; Tailwind 4 &middot; Framer Motion</div></div>
+      <span class="st st-amber">integrando</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">20/06</span> Migrar a HashRouter para compatibilidad GH Pages</div>
+        <div class="stt">&#128200; Actividad</div>
+        <div class="hm-wrap" id="hm-desktop"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-social">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-ice">FRONTEND</span>
+      <div class="inf"><div class="nm">social_monserrat</div><div class="l2">React 19 &middot; Vite 8 &middot; Easter eggs</div></div>
+      <span class="st st-green">desplegado</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Deuda saldada &mdash; incidente VITE_API_URL resuelto</em></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">22/06</span> Corregir VITE_API_URL con /api en .env.production y script</div>
+        <div class="stt">&#128200; Actividad</div>
+        <div class="hm-wrap" id="hm-social"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-prompts">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-amber">FRONTEND</span>
+      <div class="inf"><div class="nm">ultragen_prompts</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages &middot; Gestor de Prompts</div></div>
+      <span class="st st-green">desplegado</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas (reci&eacute;n creado)</em></div>
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">27/06</span> Proyecto separado de site_simple; password gate con clave maestra</div>
+        <div class="stt">&#128200; Actividad</div>
+        <div class="hm-wrap" id="hm-prompts"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-opencode">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-green">AGENTE</span>
+      <div class="inf"><div class="nm">.opencode / Skills &mdash; TUS PODERES</div><div class="l2">12 skills invocables &middot; mandato &middot; t&uacute; eres el jefe</div></div>
+      <span class="st st-gold">jefe</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9888; Deuda</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta psicologo/SKILL.md:39</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n tareas en sub-skills</div>
+        <div class="stt">&#128221; Decisiones</div>
+        <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
+        <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
+        <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
+        <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
+        <div class="hm-wrap" id="hm-opencode"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="detail-trabajo">
+  <div class="card">
+    <div class="chd" onclick="tog(this)">
+      <span class="tp tp-amber">TRABAJO</span>
+      <div class="inf"><div class="nm">Trabajo Activo &middot; Riesgos</div><div class="l2">Por proyecto &middot; lo que est&aacute; en marcha</div></div>
+      <span class="st st-amber">en progreso</span>
+      <div class="ar">&#9660;</div>
+    </div>
+    <div class="cbd on">
+      <div class="cbd-in">
+        <div class="stt">&#9654; ultragen_manager</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="stt">&#9654; ultragen_site_simple</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
+        <div class="stt">&#9654; ultragen_site_desktop</div>
+        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
+        <div class="stt">&#9654; social_monserrat</div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
+        <div class="stt">&#9654; ultragen_prompts</div>
+        <div class="di" style="border-left-color:var(--text3)"><em>Reci&eacute;n creado &mdash; monitorear</em></div>
+        <div class="stt">&#9654; .opencode / skills</div>
+        <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
+        <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
+        <div class="stt">&#9888; Riesgos globales</div>
+        <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
+        <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
+        <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe (D1).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -626,65 +583,99 @@ function buildHeatmap(id, data) {
   html += '</div><div class="hm-labels"><span>Jun</span><span>May</span><span>Apr</span><span>Mar</span><span>Feb</span></div>';
   c.innerHTML = html;
 }
-buildHeatmap('hm-manager',H.manager); buildHeatmap('hm-simple',H.simple);
-buildHeatmap('hm-desktop',H.desktop); buildHeatmap('hm-social',H.social); buildHeatmap('hm-opencode',H.opencode); buildHeatmap('hm-prompts',H.prompts);
 
-let allExp = false;
-document.querySelectorAll('.chd').forEach(el => {
-  el.addEventListener('click', function() {
-    const bd = this.nextElementSibling;
-    const ar = this.querySelector('.ar');
-    const on = bd.classList.contains('on');
-    if (on) { bd.classList.remove('on'); ar.classList.remove('on'); } else { bd.classList.add('on'); ar.classList.add('on'); }
+const PROYECTOS = [
+  {id:'manager',tp:'BACKEND',tpClass:'tp-gold',nm:'ultragen_manager',tech:'Django 5.2.8 &middot; Render &middot; Neon',st:'activo',stClass:'st-green'},
+  {id:'simple',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_simple',tech:'React 19 &middot; Vite 7 &middot; GH Pages',st:'desplegado',stClass:'st-green'},
+  {id:'desktop',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_desktop',tech:'React 19 &middot; Tailwind 4',st:'integrando',stClass:'st-amber'},
+  {id:'social',tp:'FRONTEND',tpClass:'tp-ice',nm:'social_monserrat',tech:'React 19 &middot; Vite 8',st:'desplegado',stClass:'st-green'},
+  {id:'prompts',tp:'FRONTEND',tpClass:'tp-amber',nm:'ultragen_prompts',tech:'React 19 &middot; Vite 7',st:'desplegado',stClass:'st-green'},
+  {id:'opencode',tp:'AGENTE',tpClass:'tp-gold',nm:'.opencode / Skills',tech:'12 skills &middot; mandato',st:'jefe',stClass:'st-gold'},
+  {id:'trabajo',tp:'TRABAJO',tpClass:'tp-amber',nm:'Trabajo Activo',tech:'Riesgos &middot; por proyecto',st:'en progreso',stClass:'st-amber'}
+];
+
+function renderDashboard() {
+  const grid = document.getElementById('dashGrid');
+  PROYECTOS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'dash-card tp-card-'+p.tpClass.replace('tp-','');
+    card.onclick = function(){ showDetail(p.id); };
+    card.innerHTML =
+      '<span class="dash-tp '+p.tpClass+'">'+p.tp+'</span>'+
+      '<div class="dash-nm">'+p.nm+'</div>'+
+      '<div class="dash-tech">'+p.tech+'</div>'+
+      '<span class="dash-st '+p.stClass+'">'+p.st+'</span>';
+    grid.appendChild(card);
   });
-});
-document.querySelectorAll('.cb').forEach(el => {
-  el.addEventListener('click', function(e) { e.stopPropagation(); this.classList.toggle('chk'); this.textContent = this.classList.contains('chk')?'\u2713':''; });
-});
-function togAll() {
-  allExp = !allExp;
-  document.querySelectorAll('.cbd').forEach(bd => { const ar=bd.previousElementSibling.querySelector('.ar'); if(allExp){bd.classList.add('on');if(ar)ar.classList.add('on')}else{bd.classList.remove('on');if(ar)ar.classList.remove('on')} });
-  const btn = document.getElementById('expBtn');
-  btn.textContent = allExp ? '\u25B2' : '\u25BC';
-  btn.classList.toggle('on', allExp);
 }
-function togCg(el) {
-  const ar = el.querySelector('.cg-ar');
+
+function showDetail(id) {
+  const src = document.getElementById('detail-'+id);
+  if (!src) return;
+  const body = document.getElementById('detailBody');
+  body.innerHTML = src.innerHTML;
+  const title = document.getElementById('detailTitle');
+  const p = PROYECTOS.find(x => x.id === id);
+  title.textContent = p ? p.nm : id;
+  const ol = document.getElementById('detailOverlay');
+  ol.classList.add('open');
+  ol.scrollTop = 0;
+  // rebuild heatmaps in the cloned content
+  if (id==='manager') buildHeatmap('hm-manager',H.manager);
+  if (id==='simple') buildHeatmap('hm-simple',H.simple);
+  if (id==='desktop') buildHeatmap('hm-desktop',H.desktop);
+  if (id==='social') buildHeatmap('hm-social',H.social);
+  if (id==='opencode') buildHeatmap('hm-opencode',H.opencode);
+  if (id==='prompts') buildHeatmap('hm-prompts',H.prompts);
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.screen').forEach(s => {
+    if (s.id === 'screen-'+tab) s.classList.add('active');
+    else s.classList.remove('active');
+  });
+  if (document.getElementById('detailOverlay').classList.contains('open')) closeDetail();
+}
+
+function tog(el) {
   const bd = el.nextElementSibling;
+  const ar = el.querySelector('.ar');
   if (!bd) return;
   const on = bd.classList.contains('on');
   bd.classList.toggle('on');
   if (ar) ar.classList.toggle('on');
 }
-function sw(tab, el) {
-  document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-  if (el) el.classList.add('active');
-  document.querySelectorAll('.card[data-p], #wfTab, #repoTab').forEach(c => {
-    if (c.id === 'wfTab') c.classList.toggle('hidden', tab !== 'wf');
-    else if (c.id === 'repoTab') c.classList.toggle('hidden', tab !== 'repo');
-    else c.classList.toggle('hidden', tab !== 'db');
-  });
-  if (tab === 'wf') document.getElementById('wfTab').classList.remove('hidden');
-  if (tab === 'repo') document.getElementById('repoTab').classList.remove('hidden');
-  document.getElementById('expBtn').classList.toggle('hidden', tab !== 'db');
+
+function togMando(el) {
+  const bd = el.nextElementSibling;
+  const ar = el.querySelector('.mando-ar');
+  if (!bd) return;
+  bd.classList.toggle('on');
+  if (ar) ar.classList.toggle('on');
 }
-document.getElementById('pf').addEventListener('change', function() {
-  const v = this.value;
-  if(v==='workflow') {
-    document.querySelectorAll('.card[data-p], #repoTab').forEach(c=>c.classList.add('hidden'));
-    document.getElementById('wfTab').classList.remove('hidden');
-    document.querySelectorAll('.nav-bar a').forEach(a=>a.classList.remove('active'));
-    document.querySelector('.nav-bar a[data-t="wf"]').classList.add('active');
-    document.getElementById('expBtn').classList.add('hidden');
-    return;
-  }
-  document.getElementById('wfTab').classList.add('hidden');
-  document.getElementById('repoTab').classList.add('hidden');
-  document.querySelectorAll('.nav-bar a').forEach(a=>a.classList.remove('active'));
-  document.querySelector('.nav-bar a[data-t="db"]').classList.add('active');
-  document.getElementById('expBtn').classList.remove('hidden');
-  document.querySelectorAll('.card[data-p]').forEach(c => { c.classList.toggle('hidden', v!=='all' && c.dataset.p!=='all' && c.dataset.p!==v); });
-});
+
+function togCg(el) {
+  const ar = el.querySelector('.cg-ar');
+  const bd = el.nextElementSibling;
+  if (!bd) return;
+  bd.classList.toggle('on');
+  if (ar) ar.classList.toggle('on');
+}
+
+// init
+renderDashboard();
+buildHeatmap('hm-manager',H.manager);
+buildHeatmap('hm-simple',H.simple);
+buildHeatmap('hm-desktop',H.desktop);
+buildHeatmap('hm-social',H.social);
+buildHeatmap('hm-opencode',H.opencode);
+buildHeatmap('hm-prompts',H.prompts);
 </script>
 </body>
 </html>
