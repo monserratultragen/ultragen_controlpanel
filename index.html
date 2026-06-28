@@ -6,65 +6,65 @@
 <title>Ultragen CP</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c0c0c;--surface:#161616;--surface2:#1e1e1e;--surface3:#282828;--border:#2a2a2a;--border2:#383838;--text:#e0e0e0;--text2:#888;--text3:#555;--gold:#c8a951;--gold-bg:rgba(200,169,81,.1);--ice:#4fc3f7;--ice-bg:rgba(79,195,247,.1);--crimson:#d32f2f;--crimson-bg:rgba(211,47,47,.1);--emerald:#4caf50;--emerald-bg:rgba(76,175,80,.1);--amber:#ffc107;--amber-bg:rgba(255,193,7,.1);--radius:12px;--radius-sm:8px}
+:root{--bg:#0c0c0c;--surface:#161616;--surface2:#1e1e1e;--surface3:#282828;--border:#2a2a2a;--border2:#383838;--text:#e0e0e0;--text2:#888;--text3:#555;--gold:#c8a951;--gold-bg:rgba(200,169,81,.1);--gold-dark:#8a7030;--gold-dark-bg:rgba(138,112,48,.15);--ice:#4fc3f7;--ice-bg:rgba(79,195,247,.1);--emerald:#4caf50;--emerald-bg:rgba(76,175,80,.1);--amber:#d4893a;--amber-bg:rgba(212,137,58,.1);--radius:10px;--radius-sm:6px}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{font-size:16px}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-.app{max-width:480px;margin:0 auto;padding:0 12px 80px;position:relative}
+.app{max-width:480px;margin:0 auto;padding:0 10px 72px;position:relative}
 
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 0 4px}
-.hdr-l{display:flex;align-items:baseline;gap:8px}
-.hdr h1{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
-.hdr .sub{font-size:10px;color:var(--text2)}
-.hdr .stats{font-size:9px;color:var(--text3);background:var(--surface);border-radius:20px;padding:3px 10px;border:1px solid var(--border);white-space:nowrap}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0 2px}
+.hdr-l{display:flex;align-items:baseline;gap:6px}
+.hdr h1{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
+.hdr .sub{font-size:11px;color:var(--text2)}
+.hdr .stats{font-size:10px;color:var(--text2);background:var(--surface);border-radius:20px;padding:2px 8px;border:1px solid var(--border);white-space:nowrap}
 
 .screen{display:none}
 .screen.active{display:block}
 
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 0 12px}
-.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 14px 14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:all .2s;aspect-ratio:1;box-shadow:0 4px 16px rgba(0,0,0,.2);position:relative;overflow:hidden}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 0 10px}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px 12px;cursor:pointer;display:flex;flex-direction:column;gap:5px;transition:all .2s;aspect-ratio:1;box-shadow:0 4px 12px rgba(0,0,0,.2);position:relative;overflow:hidden}
 .dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;opacity:.6}
 .dash-card.tp-card-gold::before{background:var(--gold)}
 .dash-card.tp-card-ice::before{background:var(--ice)}
 .dash-card.tp-card-amber::before{background:var(--amber)}
 .dash-card.tp-card-green::before{background:var(--emerald)}
 .dash-card:active{transform:scale(.95);background:var(--surface2)}
-.dash-tp{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:6px;display:inline-block;width:fit-content;margin-bottom:4px}
+.dash-tp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:5px;display:inline-block;width:fit-content;margin-bottom:3px}
 .dash-tp.tp-gold{background:var(--gold-bg);color:var(--gold)}
 .dash-tp.tp-ice{background:var(--ice-bg);color:var(--ice)}
 .dash-tp.tp-amber{background:var(--amber-bg);color:var(--amber)}
 .dash-tp.tp-green{background:var(--emerald-bg);color:var(--emerald)}
-.dash-nm{font-size:15px;font-weight:800;line-height:1.2;flex:1;display:flex;align-items:center;letter-spacing:-.3px}
+.dash-nm{font-size:14px;font-weight:800;line-height:1.2;flex:1;display:flex;align-items:center;letter-spacing:-.2px}
 .dash-tech{font-size:10px;color:var(--text2);line-height:1.3}
-.dash-st{font-size:9px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-block;width:fit-content;text-transform:uppercase;letter-spacing:.4px}
+.dash-st{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;width:fit-content;text-transform:uppercase;letter-spacing:.3px}
 .st-green{background:var(--emerald-bg);color:var(--emerald)}
 .st-gold{background:var(--gold-bg);color:var(--gold)}
 .st-ice{background:var(--ice-bg);color:var(--ice)}
 .st-amber{background:var(--amber-bg);color:var(--amber)}
-.st-crimson{background:var(--crimson-bg);color:var(--crimson)}
+.st-gold-dark{background:var(--gold-dark-bg);color:var(--gold-dark)}
 
-.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 16px 90px}
+.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 14px 90px}
 .detail-overlay.open{transform:translateX(0)}
-.detail-hdr{display:flex;align-items:center;gap:12px;padding:14px 0 8px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border);margin-bottom:6px}
-.back-btn{width:40px;height:40px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.detail-hdr{display:flex;align-items:center;gap:10px;padding:12px 0 6px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border);margin-bottom:4px}
+.back-btn{width:36px;height:36px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
 .back-btn:active{background:var(--surface3);transform:scale(.92)}
-.detail-title{font-size:17px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
+.detail-title{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:-.2px}
 .detail-body{padding-top:6px}
 
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;overflow:hidden}
-.chd{display:flex;align-items:center;gap:7px;padding:10px 10px;cursor:pointer;user-select:none}
-.chd .tp{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 5px;border-radius:3px;flex-shrink:0}
+.chd{display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;user-select:none}
+.chd .tp{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 5px;border-radius:4px;flex-shrink:0}
 .chd .inf{flex:1;min-width:0}
 .chd .inf .nm{font-size:11px;font-weight:600}
 .chd .inf .l2{font-size:9px;color:var(--text2)}
-.chd .st{font-size:8px;font-weight:600;padding:1px 6px;border-radius:6px;text-transform:uppercase;letter-spacing:.2px;flex-shrink:0}
+.chd .st{font-size:9px;font-weight:600;padding:1px 6px;border-radius:5px;text-transform:uppercase;letter-spacing:.2px;flex-shrink:0}
 .chd .ar{width:18px;height:18px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--text3);transition:transform .25s}
 .chd .ar.on{transform:rotate(180deg);color:var(--gold)}
 .cbd{max-height:0;overflow:hidden;transition:max-height .35s ease}
 .cbd.on{max-height:5000px}
 .cbd-in{padding:0 10px 10px;border-top:1px solid var(--border)}
 .cbd-in>*{padding-top:5px}
-.stt{font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;margin:8px 0 4px}
+.stt{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.2px;margin:6px 0 3px}
 .stt:first-child{margin-top:0}
 
 .mr{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border)}
@@ -73,19 +73,19 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .mr a{color:var(--ice);text-decoration:none}
 
 .di,.wi{font-size:10px;padding:6px 8px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
-.ri{font-size:10px;padding:6px 8px;background:var(--crimson-bg);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--crimson)}
-.di .tg{font-size:8px}
-.badge{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:600;padding:1px 5px;border-radius:5px}
+.ri{font-size:10px;padding:6px 8px;background:var(--gold-dark-bg);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--gold-dark)}
+.di .tg{font-size:9px}
+.badge{display:inline-flex;align-items:center;gap:2px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px}
 .bd-green{background:var(--emerald-bg);color:var(--emerald)}
 .bd-gold{background:var(--gold-bg);color:var(--gold)}
 .bd-ice{background:var(--ice-bg);color:var(--ice)}
 .bd-amber{background:var(--amber-bg);color:var(--amber)}
-.bd-crimson{background:var(--crimson-bg);color:var(--crimson)}
+.bd-gold-dark{background:var(--gold-dark-bg);color:var(--gold-dark)}
 .dc-item{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 8px;margin-bottom:2px;border-left:3px solid var(--border);font-size:9px}
 .dc-item .dt{color:var(--gold);font-weight:600}
 .hm{display:flex;gap:2px;flex-wrap:wrap;margin:4px 0}
 .hm-cell{width:8px;height:8px;border-radius:1px}
-.hm-labels{display:flex;gap:2px;font-size:7px;color:var(--text3);margin-top:2px}
+.hm-labels{display:flex;gap:2px;font-size:8px;color:var(--text3);margin-top:2px}
 .cl{list-style:none}
 .cl li{font-size:9px;padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:4px;align-items:baseline}
 .cl li:last-child{border-bottom:none}
@@ -119,24 +119,24 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px}
 
 .mando-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
-.mando-hd{display:flex;align-items:center;gap:8px;padding:12px;cursor:pointer;user-select:none}
+.mando-hd{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;user-select:none}
 .mando-hd .mando-icon{font-size:16px;flex-shrink:0}
 .mando-hd .mando-label{flex:1;font-size:12px;font-weight:600}
 .mando-hd .mando-ar{font-size:10px;color:var(--text3);transition:transform .25s}
 .mando-hd .mando-ar.on{transform:rotate(180deg);color:var(--gold)}
 .mando-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
 .mando-bd.on{max-height:5000px}
-.mando-bd-in{padding:0 12px 12px;border-top:1px solid var(--border)}
+.mando-bd-in{padding:0 12px 10px;border-top:1px solid var(--border)}
 
-.repo-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:8px}
-.repo-nm{font-size:13px;font-weight:700;margin-bottom:10px}
+.repo-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:6px}
+.repo-nm{font-size:13px;font-weight:700;margin-bottom:8px}
 .repo-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.repo-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 0;border-radius:var(--radius-sm);font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s}
+.repo-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 0;border-radius:var(--radius-sm);font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s}
 .repo-btn:active{transform:scale(.97)}
 .repo-btn.gh{background:var(--ice-bg);border:1px solid rgba(79,195,247,.3);color:var(--ice)}
 .repo-btn.deploy{background:var(--gold-bg);border:1px solid rgba(200,169,81,.3);color:var(--gold)}
 
-.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:12px 0 14px;max-width:480px;margin:0 auto;box-shadow:0 -4px 20px rgba(0,0,0,.4)}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 0 10px;max-width:480px;margin:0 auto;box-shadow:0 -4px 16px rgba(0,0,0,.4)}
 .nav-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;text-decoration:none;font-size:11px;color:var(--text3);gap:3px;border-radius:10px;margin:0 4px;transition:all .2s;font-weight:600;letter-spacing:.2px}
 .nav-bar a .ni{font-size:24px;line-height:1}
 .nav-bar a.active{color:var(--gold);background:var(--gold-bg)}
@@ -148,7 +148,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .text-gold{color:var(--gold)}
 .text-green{color:var(--emerald)}
 .text-amber{color:var(--amber)}
-.text-crimson{color:var(--crimson)}
+.text-gold-dark{color:var(--gold-dark)}
 .text-ice{color:var(--ice)}
 .fw-600{font-weight:600}
 </style>
@@ -159,7 +159,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="hdr">
   <div class="hdr-l">
     <h1>ULTRAGEN CP</h1>
-    <div class="sub">2026-06-27</div>
+    <div class="sub">2026-06-28</div>
   </div>
   <div class="stats">5 proyectos</div>
 </div>
@@ -384,7 +384,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="stt">&#9654; Trabajo activo</div>
         <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
         <div class="stt">&#9888; Deuda</div>
-        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
+        <div class="di" style="border-left-color:var(--gold-dark)"><span class="tg badge bd-gold-dark">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
         <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta psicologo/SKILL.md</div>
         <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Sin secci&oacute;n tareas en sub-skills</div>
         <div class="stt">&#128221; Decisiones</div>
@@ -394,6 +394,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
         <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo como memoria del PM</div>
         <div class="dc-item"><span class="dt">22/06</span> Base Conocimiento Navegable</div>
+        <div class="dc-item"><span class="dt">27/06</span> Reemplazar confirm() nativo por ConfirmModal (25+ archivos)</div>
+        <div class="dc-item"><span class="dt">27/06</span> Botones SVG icon-only en tablas; Drawer lateral info; modales con ancho controlado; reorganizar sidebar (Monserrat como categoría propia); font-size 14px estandarizado</div>
         <div class="stt">&#128200; Actividad &middot; <span class="text-muted">&uacute;ltimos 84 d&iacute;as</span></div>
         <div class="hm-wrap" id="hm-manager"></div>
         <div class="stt">Config</div>
@@ -439,9 +441,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="cbd-in">
         <div class="stt">&#9654; Trabajo activo</div>
         <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
         <div class="stt">&#9888; Deuda</div>
-        <div class="di" style="border-left-color:var(--crimson)"><span class="tg badge bd-crimson">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
+        <div class="di" style="border-left-color:var(--gold-dark)"><span class="tg badge bd-gold-dark">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
         <div class="stt">&#128221; Decisiones</div>
         <div class="dc-item"><span class="dt">20/06</span> Migrar a HashRouter para compatibilidad GH Pages</div>
         <div class="stt">&#128200; Actividad</div>
@@ -514,6 +516,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
         <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
         <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
+        <div class="dc-item"><span class="dt">27/06</span> ConfirmModal, Drawer, SVG icons, modales controlados, sidebar reorganizado, font-size 14px</div>
         <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
         <div class="hm-wrap" id="hm-opencode"></div>
       </div>
@@ -532,12 +535,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     <div class="cbd on">
       <div class="cbd-in">
         <div class="stt">&#9654; ultragen_manager</div>
+        <div class="di" style="border-left-color:var(--emerald)">&#10003; Reemplazar confirm() por ConfirmModal &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)">&#10003; Botones SVG icon-only + Drawer info en tablas &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)">&#10003; Modales con ancho controlado &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)">&#10003; Sidebar: Monserrat como categor&iacute;a propia &middot; <span class="text-muted">27/06</span></div>
         <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
         <div class="stt">&#9654; ultragen_site_simple</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
         <div class="stt">&#9654; ultragen_site_desktop</div>
         <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-crimson">Alta</span></div>
+        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
         <div class="stt">&#9654; social_monserrat</div>
         <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
         <div class="stt">&#9654; ultragen_prompts</div>
@@ -545,6 +552,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="stt">&#9654; .opencode / skills</div>
         <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
         <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
+        <div class="stt">&#9654; ultragen_manager (panel admin)</div>
+        <div class="di" style="border-left-color:var(--emerald)">&#10003; ConfirmModal, Drawer, SVG icons &middot; <span class="text-muted">27/06</span></div>
         <div class="stt">&#9888; Riesgos globales</div>
         <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
         <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
@@ -559,7 +568,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <script>
 // ====== HEATMAP DATA ======
 const H = {
-  manager: {"2026-06-25":1,"2026-06-24":4,"2026-06-23":1,"2026-06-22":6,"2026-06-20":2,"2026-04-20":1,"2026-03-21":1,"2026-03-19":1,"2026-03-18":1,"2026-03-17":3,"2026-03-15":1,"2026-03-14":3,"2026-03-13":1,"2026-03-10":2,"2026-03-09":2,"2026-03-02":1,"2026-02-28":1,"2026-02-24":1,"2026-02-23":5,"2026-02-22":3,"2026-02-18":1,"2026-02-16":2,"2026-02-15":7,"2026-02-13":4,"2026-02-12":2,"2026-02-11":1},
+  manager: {"2026-06-27":8,"2026-06-25":1,"2026-06-24":4,"2026-06-23":1,"2026-06-22":6,"2026-06-20":2,"2026-04-20":1,"2026-03-21":1,"2026-03-19":1,"2026-03-18":1,"2026-03-17":3,"2026-03-15":1,"2026-03-14":3,"2026-03-13":1,"2026-03-10":2,"2026-03-09":2,"2026-03-02":1,"2026-02-28":1,"2026-02-24":1,"2026-02-23":5,"2026-02-22":3,"2026-02-18":1,"2026-02-16":2,"2026-02-15":7,"2026-02-13":4,"2026-02-12":2,"2026-02-11":1},
   simple: {"2026-06-20":1,"2026-04-21":1,"2026-04-20":1,"2026-03-21":1,"2026-03-18":1,"2026-03-17":5,"2026-03-16":1,"2026-03-15":1,"2026-03-13":1,"2026-03-12":1,"2026-03-09":5,"2026-03-07":1,"2026-03-06":1,"2026-03-02":1,"2026-02-28":2,"2026-02-26":1,"2026-02-24":1,"2026-02-23":4,"2026-02-11":1},
   desktop: {"2026-06-20":3,"2026-06-19":1},
   social: {"2026-06-27":11,"2026-06-26":9,"2026-06-24":1,"2026-06-23":5,"2026-06-22":10},
@@ -569,7 +578,7 @@ const H = {
 
 function buildHeatmap(id, data) {
   const c = document.getElementById(id); if (!c) return;
-  const d = new Date(2026,5,27);
+  const d = new Date(2026,5,28);
   const L = ['#161616','#1f1c12','#2f2818','#4a3d20','#7a6830','#b8942e','#c8a951'];
   const max = Math.max(1,...Object.values(data));
   let html = '<div class="hm">';
