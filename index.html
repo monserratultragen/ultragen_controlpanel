@@ -153,6 +153,15 @@
   .rp-lk a{color:var(--ice);text-decoration:none}
   .rp-lk a:active{text-decoration:underline}
 
+  .cg{margin-bottom:6px}
+  .cg-hd{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--gold);cursor:pointer;padding:2px 0;user-select:none;-webkit-tap-highlight-color:transparent}
+  .cg-hd .cg-ar{font-size:8px;color:var(--text3);transition:transform .25s;display:inline-block}
+  .cg-hd .cg-ar.on{transform:rotate(90deg);color:var(--gold)}
+  .cg-bd{max-height:0;overflow:hidden;transition:max-height .3s}
+  .cg-bd.on{max-height:2000px}
+  .cg-bd-in{padding:3px 0 0 12px;border-left:1px solid var(--border);margin-left:4px}
+  .cg-bd-in .ci{border-left-color:var(--gold)}
+
   @media (min-width:640px){.app{max-width:800px;padding:20px 16px 90px}.nav-bar{max-width:800px;left:50%;transform:translateX(-50%);border-radius:10px 10px 0 0}}
   @media (min-width:1024px){.app{max-width:1100px}.nav-bar{max-width:1100px}}
 </style>
@@ -166,7 +175,7 @@
 </div>
 
 <div class="bar">
-  <span class="d-green dot"></span> 4 proyectos &middot; 12 skills &middot; 5 repos &middot; 7 comandos de deploy &middot; 8 fases
+  <span class="d-green dot"></span> 5 proyectos &middot; 12 skills &middot; 6 repos &middot; 8 comandos de deploy &middot; 8 fases
 </div>
 
 <div class="seg">
@@ -175,6 +184,7 @@
     <option value="manager">ultragen_manager</option>
     <option value="simple">ultragen_site_simple</option>
     <option value="desktop">ultragen_site_desktop</option>
+    <option value="prompts">ultragen_prompts</option>
     <option value="social">social_monserrat</option>
     <option value="opencode">.opencode &mdash; TUS PODERES</option>
     <option value="workflow">&#9881; Centro de Mando</option>
@@ -281,6 +291,28 @@
   </div>
 </div>
 
+<!-- ==================== PROMPTS ==================== -->
+<div class="card" data-p="prompts">
+  <div class="chd" onclick="tog(this)">
+    <span class="tp tp-amber">FRONTEND</span>
+    <div class="inf"><div class="nm">ultragen_prompts</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages &middot; Gestor de Prompts</div></div>
+    <span class="st st-green">desplegado</span>
+    <div class="ar">&#9660;</div>
+  </div>
+  <div class="cbd">
+    <div class="cbd-in">
+      <div class="stt">&#9654; Trabajo activo</div>
+      <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas (reci&eacute;n creado)</em></div>
+      <div class="stt">&#9888; Deuda</div>
+      <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
+      <div class="stt">&#128221; Decisiones</div>
+      <div class="dc-item"><span class="dt">27/06</span> Proyecto separado de site_simple; password gate con clave maestra</div>
+      <div class="stt">&#128200; Actividad</div>
+      <div class="hm-wrap" id="hm-prompts"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== .OPENCODE / SKILLS ==================== -->
 <div class="card" data-p="opencode">
   <div class="chd" onclick="tog(this)">
@@ -331,6 +363,9 @@
       <div class="stt">&#9654; social_monserrat</div>
       <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
 
+      <div class="stt">&#9654; ultragen_prompts</div>
+      <div class="di" style="border-left-color:var(--text3)"><em>Reci&eacute;n creado &mdash; monitorear</em></div>
+
       <div class="stt">&#9654; .opencode / skills</div>
       <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
       <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
@@ -362,16 +397,24 @@
           <div class="ci-phr">"Inicia el backend" o "Arranca Django"</div>
           <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\django_app\manage.py runserver</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_manager\\django_app\\manage.py runserver")' title="Copiar ruta">&#128203;</button></div>
         </div>
-        <div class="ci">
-          <div class="ci-phr">"Inicia [manager|simple|desktop|social]"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\[ultragen_manager|ultragen_site_simple|ultragen_site_desktop|social_monserrat]\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\")' title="Copiar ruta base">&#128203;</button></div>
+        <div class="cg">
+          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Inicia [proyecto]" &mdash; expande para ver cada uno</div>
+          <div class="cg-bd">
+            <div class="cg-bd-in">
+              <div class="ci"><div class="ci-phr">ultragen_manager (backend)</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_site_simple\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_site_simple\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_site_desktop\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_site_desktop\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\social_monserrat\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\social_monserrat\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')" title="Copiar ruta">&#128203;</button></div></div>
+            </div>
+          </div>
         </div>
         <div class="ci">
           <div class="ci-phr">"Inicia todo" o "Entorno completo"</div>
           <div class="ci-row"><span class="ci-path">C:\ultragen2026\documentacion\INICIAR_DESARROLLO.bat</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\documentacion\\INICIAR_DESARROLLO.bat")' title="Copiar ruta">&#128203;</button></div>
         </div>
 
-        <div class="stt">&#128640; 2. DESPLIEGUE (men&uacute; de 7)</div>
+        <div class="stt">&#128640; 2. DESPLIEGUE (men&uacute; de 8)</div>
         <div class="ci">
           <div class="ci-phr"><strong>1</strong> &mdash; Migrar datos Local &rarr; Neon</div>
           <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\MANAGER_MIGRAR_DATOS_A_LA_NUBE.ps1")' title="Copiar ruta">&#128203;</button></div>
@@ -399,6 +442,10 @@
         <div class="ci">
           <div class="ci-phr"><strong>7</strong> &mdash; Versionar Workspace Ra&iacute;z</div>
           <div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1")' title="Copiar ruta">&#128203;</button></div>
+        </div>
+        <div class="ci">
+          <div class="ci-phr"><strong>8</strong> &mdash; Publicar Prompts (npm run deploy)</div>
+          <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_prompts\\")' title="Copiar ruta">&#128203;</button></div>
         </div>
 
         <div class="stt">&#128214; 3. CONSULTAS (memoria del PM)</div>
@@ -438,9 +485,18 @@
           <div class="ci-phr">"Actualiza el control panel"</div>
           <div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\ultragen_controlpanel")' title="Copiar ruta">&#128203;</button></div>
         </div>
-        <div class="ci">
-          <div class="ci-phr">"Guarda cambios [proyecto]"</div>
-          <div class="ci-row"><span class="ci-path">C:\ultragen2026\[proyecto]\</span><button class="cp" onclick='navigator.clipboard.writeText("C:\\ultragen2026\\")' title="Copiar ruta base">&#128203;</button></div>
+        <div class="cg">
+          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Guarda cambios [proyecto]" &mdash; expande</div>
+          <div class="cg-bd">
+            <div class="cg-bd-in">
+              <div class="ci"><div class="ci-phr">ultragen_manager</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\ (npm run deploy)</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')" title="Copiar ruta">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">Workspace ra&iacute;z</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1')" title="Copiar ruta">&#128203;</button></div></div>
+            </div>
+          </div>
         </div>
 
         <div class="stt">&#128221; EL MANDATO (8 fases)</div>
@@ -489,16 +545,20 @@
       <div class="cbd-in">
         <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">1. Toda respuesta inicia con <strong>Valeria:</strong></div></div>
         <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">2. Tono profesional, eficiente, directo y amable</div></div>
-        <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">3. Ante solicitudes de deploy presenta las 7 opciones y espera tu selecci&oacute;n num&eacute;rica</div></div>
+        <div class="di" style="border-left-color:var(--gold)"><div class="cmd-body">3. Ante solicitudes de deploy presenta las 8 opciones y espera tu selecci&oacute;n num&eacute;rica</div></div>
       </div>
     </div>
   </div>
 
+</div>
+
+<!-- ==================== REPOS TAB (standalone) ==================== -->
+<div id="repoTab" class="hidden">
   <div class="card">
     <div class="chd" onclick="tog(this)">
       <span class="tp tp-ice">REPOS</span>
       <div class="inf"><div class="nm">Repositorios &amp; Deploys</div><div class="l2">Cada proyecto con su repo y despliegue</div></div>
-      <span class="st st-ice">5 proyectos</span>
+      <span class="st st-ice">6 proyectos</span>
       <div class="ar">&#9660;</div>
     </div>
     <div class="cbd on">
@@ -520,6 +580,10 @@
           <div class="rp-lk"><a href="https://github.com/monserratultragen/social" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/social" target="_blank">GH Pages</a></div>
         </div>
         <div class="rp">
+          <div class="rp-nm">ultragen_prompts</div>
+          <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen_prompts" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen_prompts" target="_blank">GH Pages</a></div>
+        </div>
+        <div class="rp">
           <div class="rp-nm">ultragen_controlpanel</div>
           <div class="rp-lk"><a href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">GitHub</a> <span class="text-muted">&middot;</span> <a href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank">GH Pages</a></div>
         </div>
@@ -531,7 +595,7 @@
 <div class="nav-bar">
   <a href="#" class="active" data-t="db" onclick="sw('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
   <a href="#" data-t="wf" onclick="sw('wf',this)"><span class="ni">&#9881;</span>Mando</a>
-  <a href="#" data-t="repo" onclick="sw('wf',this);setTimeout(function(){document.querySelector('#wfTab .card:nth-child(3)')?.scrollIntoView({behavior:'smooth'})},100)"><span class="ni">&#128279;</span>Repo</a>
+  <a href="#" data-t="repo" onclick="sw('repo',this)"><span class="ni">&#128279;</span>Repo</a>
 </div>
 </div>
 
@@ -542,7 +606,8 @@ const H = {
   simple: {"2026-06-20":1,"2026-04-21":1,"2026-04-20":1,"2026-03-21":1,"2026-03-18":1,"2026-03-17":5,"2026-03-16":1,"2026-03-15":1,"2026-03-13":1,"2026-03-12":1,"2026-03-09":5,"2026-03-07":1,"2026-03-06":1,"2026-03-02":1,"2026-02-28":2,"2026-02-26":1,"2026-02-24":1,"2026-02-23":4,"2026-02-11":1},
   desktop: {"2026-06-20":3,"2026-06-19":1},
   social: {"2026-06-27":11,"2026-06-26":9,"2026-06-24":1,"2026-06-23":5,"2026-06-22":10},
-  opencode: {"2026-06-22":1,"2026-06-20":2,"2026-06-19":2}
+  opencode: {"2026-06-22":1,"2026-06-20":2,"2026-06-19":2},
+  prompts: {"2026-06-27":1}
 };
 
 function buildHeatmap(id, data) {
@@ -562,7 +627,7 @@ function buildHeatmap(id, data) {
   c.innerHTML = html;
 }
 buildHeatmap('hm-manager',H.manager); buildHeatmap('hm-simple',H.simple);
-buildHeatmap('hm-desktop',H.desktop); buildHeatmap('hm-social',H.social); buildHeatmap('hm-opencode',H.opencode);
+buildHeatmap('hm-desktop',H.desktop); buildHeatmap('hm-social',H.social); buildHeatmap('hm-opencode',H.opencode); buildHeatmap('hm-prompts',H.prompts);
 
 let allExp = false;
 document.querySelectorAll('.chd').forEach(el => {
@@ -583,19 +648,30 @@ function togAll() {
   btn.textContent = allExp ? '\u25B2' : '\u25BC';
   btn.classList.toggle('on', allExp);
 }
+function togCg(el) {
+  const ar = el.querySelector('.cg-ar');
+  const bd = el.nextElementSibling;
+  if (!bd) return;
+  const on = bd.classList.contains('on');
+  bd.classList.toggle('on');
+  if (ar) ar.classList.toggle('on');
+}
 function sw(tab, el) {
   document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.card[data-p], #wfTab').forEach(c => {
-    if(c.id==='wfTab')c.classList.toggle('hidden',tab!=='wf');else c.classList.toggle('hidden',tab!=='db');
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.card[data-p], #wfTab, #repoTab').forEach(c => {
+    if (c.id === 'wfTab') c.classList.toggle('hidden', tab !== 'wf');
+    else if (c.id === 'repoTab') c.classList.toggle('hidden', tab !== 'repo');
+    else c.classList.toggle('hidden', tab !== 'db');
   });
-  if(tab==='wf')document.getElementById('wfTab').classList.remove('hidden');
-  document.getElementById('expBtn').classList.toggle('hidden',tab!=='db');
+  if (tab === 'wf') document.getElementById('wfTab').classList.remove('hidden');
+  if (tab === 'repo') document.getElementById('repoTab').classList.remove('hidden');
+  document.getElementById('expBtn').classList.toggle('hidden', tab !== 'db');
 }
 document.getElementById('pf').addEventListener('change', function() {
   const v = this.value;
   if(v==='workflow') {
-    document.querySelectorAll('.card[data-p]').forEach(c=>c.classList.add('hidden'));
+    document.querySelectorAll('.card[data-p], #repoTab').forEach(c=>c.classList.add('hidden'));
     document.getElementById('wfTab').classList.remove('hidden');
     document.querySelectorAll('.nav-bar a').forEach(a=>a.classList.remove('active'));
     document.querySelector('.nav-bar a[data-t="wf"]').classList.add('active');
@@ -603,6 +679,7 @@ document.getElementById('pf').addEventListener('change', function() {
     return;
   }
   document.getElementById('wfTab').classList.add('hidden');
+  document.getElementById('repoTab').classList.add('hidden');
   document.querySelectorAll('.nav-bar a').forEach(a=>a.classList.remove('active'));
   document.querySelector('.nav-bar a[data-t="db"]').classList.add('active');
   document.getElementById('expBtn').classList.remove('hidden');
