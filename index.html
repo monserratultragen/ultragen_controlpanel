@@ -18,6 +18,28 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .hdr .sub{font-size:11px;color:var(--text2)}
 .hdr .stats{font-size:10px;color:var(--text2);background:var(--surface);border-radius:20px;padding:2px 8px;border:1px solid var(--border);white-space:nowrap}
 
+.rp-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:600;padding:3px 8px;border-radius:10px}
+.rp-badge.ok{background:var(--emerald-bg);color:var(--emerald)}
+.rp-badge.warn{background:var(--amber-bg);color:var(--amber)}
+.rp-badge.risk{background:var(--gold-dark-bg);color:var(--gold-dark)}
+.rp-badge.info{background:var(--ice-bg);color:var(--ice)}
+.rp-section{margin-bottom:12px}
+.rp-section:last-child{margin-bottom:0}
+.rp-h2{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px}
+.rp-h3{font-size:11px;font-weight:600;color:var(--text);margin:6px 0 4px}
+.rp-row{display:flex;justify-content:space-between;align-items:center;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border)}
+.rp-row:last-child{border-bottom:none}
+.rp-row .rp-l{color:var(--text2)}
+.rp-row .rp-v{color:var(--text);text-align:right}
+.rp-gold{color:var(--gold);font-weight:600}
+.rp-ice{color:var(--ice)}
+.rp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.rp-card{background:var(--surface2);border-radius:var(--radius-sm);padding:6px 8px;border-left:3px solid var(--border)}
+.rp-card .rp-c-title{font-size:10px;font-weight:600;color:var(--text)}
+.rp-card .rp-c-sub{font-size:9px;color:var(--text2);margin-top:1px}
+.rp-card .rp-c-st{font-size:8px;font-weight:600;padding:1px 5px;border-radius:4px;display:inline-block;margin-top:2px}
+.rp-footer{font-size:9px;color:var(--text3);text-align:center;padding:8px 0 4px;border-top:1px solid var(--border);margin-top:8px}
+
 .screen{display:none}
 .screen.active{display:block}
 
@@ -159,7 +181,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="hdr">
   <div class="hdr-l">
     <h1>ULTRAGEN CP</h1>
-    <div class="sub">2026-06-28</div>
+    <div class="sub" id="headerDate">2026-06-28</div>
   </div>
   <div class="stats">5 proyectos</div>
 </div>
@@ -351,6 +373,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   </div>
 </div>
 
+<!-- ===== INFORME ===== -->
+<div id="screen-rp" class="screen">
+  <div id="reportContent"></div>
+</div>
+
 <!-- ===== DETAIL OVERLAY ===== -->
 <div id="detailOverlay" class="detail-overlay">
   <div class="detail-hdr">
@@ -365,6 +392,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <a href="#" class="active" data-t="db" onclick="switchTab('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
   <a href="#" data-t="wf" onclick="switchTab('wf',this)"><span class="ni">&#9881;</span>Mando</a>
   <a href="#" data-t="repo" onclick="switchTab('repo',this)"><span class="ni">&#128279;</span>Repo</a>
+  <a href="#" data-t="rp" onclick="switchTab('rp',this);renderReport()"><span class="ni">&#128196;</span>Informe</a>
 </div>
 </div>
 
@@ -677,7 +705,64 @@ function togCg(el) {
   if (ar) ar.classList.toggle('on');
 }
 
+function renderReport() {
+  const now = new Date();
+  const d = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  const c = document.getElementById('reportContent'); if (!c) return;
+  c.innerHTML =
+    '<div class="rp-section">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+        '<div style="font-size:13px;font-weight:800;color:var(--gold)">INFORME DE ESTADO</div>'+
+        '<div style="font-size:9px;color:var(--text2)">'+d+'</div>'+
+      '</div>'+
+      '<div style="font-size:9px;color:var(--text3);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:4px">Elaborado por Product Manager &mdash; Proyecciones y estado del ecosistema Ultragen 2026</div>'+
+    '</div>'+
+    '<div class="rp-section">'+
+      '<div class="rp-h2">RESUMEN DE PROYECTOS</div>'+
+      '<div class="rp-row"><span class="rp-l">ultragen_manager (backend)</span><span class="rp-v"><span class="rp-badge ok">&#10003; Activo</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">ultragen_site_simple</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">ultragen_site_desktop</span><span class="rp-v"><span class="rp-badge warn">&#9888; Integrando</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">social_monserrat</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">ultragen_prompts</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">ultragen_controlpanel</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
+      '<div class="rp-row"><span class="rp-l">.opencode / Skills (12)</span><span class="rp-v"><span class="rp-badge info">&#9881; Operativo</span></span></div>'+
+    '</div>'+
+    '<div class="rp-section">'+
+      '<div class="rp-h2">TRABAJO ACTIVO &amp; DEUDA</div>'+
+      '<div class="rp-h3">&#9654; En Progreso</div>'+
+      '<div class="rp-card" style="border-left-color:var(--ice);margin-bottom:3px"><div class="rp-c-title">&#8635; Integraci&oacute;n diarios reales en site_desktop</div><div class="rp-c-sub">Distribuci&oacute;n de Contenido &middot; 20/06</div></div>'+
+      '<div class="rp-h3" style="margin-top:5px">&#9888; Deuda Operacional</div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold-dark);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge risk">Alta</span> D3: Hardcode DiariosModal.jsx</div><div class="rp-c-sub">site_desktop &middot; En integraci&oacute;n</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--amber);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge warn">Media</span> D1: Ruta psicologo/SKILL.md</div><div class="rp-c-sub">documentacion/ &rarr; references/</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--text3);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge info" style="background:var(--gold-bg);color:var(--gold)">Baja</span> D2: Tareas en sub-skills</div><div class="rp-c-sub">Estandarizaci&oacute;n v&iacute;a mandato</div></div>'+
+    '</div>'+
+    '<div class="rp-section">'+
+      '<div class="rp-h2">PROYECCIONES &mdash; PR&Oacute;XIMOS PASOS</div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold);margin-bottom:3px"><div class="rp-c-title">1. Completar integraci&oacute;n de diarios en site_desktop</div><div class="rp-c-sub">Reemplazar hardcode DiariosModal.jsx con datos de API &middot; Prioridad Alta</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold);margin-bottom:3px"><div class="rp-c-title">2. Corregir ruta psicologo/SKILL.md</div><div class="rp-c-sub">documentacion/ &rarr; references/ &middot; Prioridad Media</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold);margin-bottom:3px"><div class="rp-c-title">3. Estandarizar secci&oacute;n de tareas en SKILL.md</div><div class="rp-c-sub">Los 12 skills &middot; Prioridad Baja</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold);margin-bottom:3px"><div class="rp-c-title">4. Monitorear Neon Free Tier</div><div class="rp-c-sub">L&iacute;mite de conexiones &middot; Cargador inteligente activo</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold)"><div class="rp-c-title">5. Pr&oacute;ximo deploy del manager backend</div><div class="rp-c-sub">Verificar SQLite local antes de dump &rarr; Neon &rarr; Render</div></div>'+
+    '</div>'+
+    '<div class="rp-section">'+
+      '<div class="rp-h2">RIESGOS ACTIVOS</div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold-dark);margin-bottom:3px"><div class="rp-c-title">Neon Free Tier</div><div class="rp-c-sub">L&iacute;mite de conexiones concurrentes. Mitigado por cargador inteligente.</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold-dark);margin-bottom:3px"><div class="rp-c-title">Render redespliegue</div><div class="rp-c-sub">Tarda 2-4 min tras cada push. Webhook puede fallar.</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--gold-dark)"><div class="rp-c-title">Documentaci&oacute;n faltante</div><div class="rp-c-sub">Ruta documentacion/perfiles_psicologicos.md no existe (D1).</div></div>'+
+    '</div>'+
+    '<div class="rp-footer">Ultragen 2026 &mdash; Informe generado el '+d+' &mdash; Product Manager</div>';
+}
+
+function updateHeaderDate() {
+  const el = document.getElementById('headerDate');
+  if (el) {
+    const now = new Date();
+    el.textContent = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  }
+}
+
 // init
+updateHeaderDate();
 renderDashboard();
 buildHeatmap('hm-manager',H.manager);
 buildHeatmap('hm-simple',H.simple);
