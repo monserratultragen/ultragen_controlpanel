@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.U.T.H.U.R. 6000 — INITIALIZING</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+body{font-family:'Courier New',Courier,monospace;color:#33ff66;font-size:14px;line-height:1.6}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9000}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.85) 100%);pointer-events:none;z-index:9001}
+.screen{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;padding:32px 40px;overflow:hidden;z-index:100}
+@keyframes flicker{0%,95%,100%{opacity:1}96%{opacity:.92}97%{opacity:.97}98%{opacity:.88}99%{opacity:.96}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scanDown{from{top:-4px}to{top:100%}}
+@keyframes glowPulse{0%,100%{text-shadow:0 0 6px rgba(51,255,102,.4)}50%{text-shadow:0 0 18px rgba(51,255,102,.9),0 0 30px rgba(51,255,102,.3)}}
+.crt-flicker{animation:flicker 4s infinite}
+.scan-line{position:fixed;top:0;left:0;right:0;height:4px;background:linear-gradient(transparent,rgba(51,255,102,.08),transparent);animation:scanDown 6s linear infinite;pointer-events:none;z-index:9002}
+.logo-block{text-align:center;margin-bottom:20px}
+.logo-corp{font-size:11px;letter-spacing:6px;color:#1a9944;text-transform:uppercase;margin-bottom:4px}
+.logo-main{font-size:clamp(18px,4vw,28px);letter-spacing:8px;color:#33ff66;font-weight:400;text-transform:uppercase;animation:glowPulse 3s ease-in-out infinite;text-shadow:0 0 12px rgba(51,255,102,.5)}
+.logo-sub{font-size:11px;letter-spacing:3px;color:#1a9944;margin-top:2px;font-style:italic}
+.divider{border:none;border-top:1px solid #1a2a1a;margin:8px 0;box-shadow:0 0 4px rgba(51,255,102,.1)}
+.terminal{flex:1;overflow:hidden;position:relative;max-height:calc(100vh - 200px)}
+.terminal-inner{position:absolute;bottom:0;left:0;right:0}
+.t-line{display:flex;gap:8px;align-items:baseline;min-height:20px;opacity:0;transition:opacity .1s}
+.t-line.visible{opacity:1}
+.t-label{color:#1a9944;flex-shrink:0;font-size:13px}
+.t-text{color:#33ff66;font-size:13px;flex:1}
+.t-text.dim{color:#2ccc55}
+.t-text.warn{color:#ffb000;text-shadow:0 0 6px rgba(255,176,0,.3)}
+.t-text.alert{color:#ff3333;text-shadow:0 0 8px rgba(255,51,51,.5)}
+.t-text.ice{color:#33ccff}
+.t-text.ok{color:#00cc33}
+.t-ok{color:#00cc33;flex-shrink:0;font-size:13px}
+.t-fail{color:#ff3333;flex-shrink:0;font-size:13px}
+.t-warn{color:#ffb000;flex-shrink:0;font-size:13px}
+.progress-wrap{margin:6px 0 2px}
+.progress-label{font-size:13px;color:#2ccc55;margin-bottom:3px}
+.progress-bar{height:4px;background:#0a140a;border:1px solid #1a2a1a;position:relative;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a5a1a,#33ff66);position:absolute;top:0;left:0;width:0;box-shadow:0 0 6px rgba(51,255,102,.6)}
+.progress-pct{font-size:13px;color:#33ff66;text-align:right;margin-top:2px}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 24px;margin:4px 0}
+.s-row{display:flex;justify-content:space-between;font-size:13px;opacity:0;transition:opacity .2s}
+.s-key{color:#1a9944}
+.s-val{color:#33ff66}
+.s-val.warn{color:#ffb000}
+.s-val.ice{color:#33ccff}
+.priority-box{border:1px solid #ff3333;padding:10px 14px;margin:8px 0;background:rgba(255,51,51,.05)}
+.priority-title{font-size:14px;letter-spacing:3px;color:#ff3333;text-shadow:0 0 10px rgba(255,51,51,.8);text-align:center;margin-bottom:6px;animation:glowPulse .8s ease-in-out infinite}
+.priority-text{font-size:13px;color:#ffb000;line-height:1.8}
+.bottom-bar{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #1a2a1a;margin-top:8px}
+.bottom-l{font-size:13px;color:#1a9944;letter-spacing:1px}
+.bottom-r{font-size:13px;color:#1a9944}
+.skip-btn{position:fixed;top:20px;right:24px;z-index:9999;background:transparent;border:1px solid #1a2a1a;color:#1a9944;font-family:'Courier New',monospace;font-size:13px;padding:4px 14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.skip-btn:hover{border-color:#33ff66;color:#33ff66;background:rgba(51,255,102,.05)}
+.flash-out{position:fixed;top:0;left:0;right:0;bottom:0;background:#33ff66;z-index:9998;opacity:0;pointer-events:none;transition:opacity .15s ease}
+.flash-out.active{opacity:1}
+.phase{display:none}
+.phase.active{display:block}
+@media(max-width:600px){.screen{padding:20px 16px}.logo-main{font-size:18px;letter-spacing:4px}.status-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="flash-out" id="flashOut"></div>
+<button class="skip-btn" onclick="skipIntro()">[SKIP]</button>
+<div class="screen crt-flicker" id="mainScreen">
+  <div class="logo-block" id="logoBlock" style="opacity:0;transition:opacity 1.2s ease">
+    <div class="logo-corp">WEYLAND-YUTANI CORPORATION</div>
+    <div class="logo-main">M.U.T.H.U.R. 6000</div>
+    <div class="logo-sub">"Building Better Worlds" &nbsp;|&nbsp; MAINFRAME SERIES IV</div>
+  </div>
+  <hr class="divider" id="div1" style="opacity:0;transition:opacity .6s">
+  <div class="phase active" id="phase1">
+    <div class="terminal"><div class="terminal-inner" id="bootLines"></div></div>
+  </div>
+  <div class="phase" id="phase2">
+    <div style="font-size:13px;color:#1a9944;letter-spacing:2px;margin-bottom:8px">SYSTEM DIAGNOSTICS — USCSS NOSTROMO / REG. 180924609</div>
+    <div class="status-grid" id="diagGrid"></div>
+    <div class="progress-wrap" id="progressWrap" style="display:none">
+      <div class="progress-label">MEMORY ALLOCATION</div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-pct" id="progPct">0%</div>
+    </div>
+  </div>
+  <div class="phase" id="phase3">
+    <div class="priority-box" id="prioBox" style="display:none">
+      <div class="priority-title">&#x26A0; PRIORITY ONE &#x26A0;</div>
+      <div class="priority-text" id="prioText"></div>
+    </div>
+    <div id="missionLines" style="margin-top:8px"></div>
+  </div>
+  <div class="phase" id="phase4">
+    <div id="initLines"></div>
+    <div class="progress-wrap" style="margin-top:8px">
+      <div class="progress-label">ULTRAGEN CP — CARGANDO MODULOS</div>
+      <div class="progress-bar"><div class="progress-fill" id="initFill"></div></div>
+      <div class="progress-pct" id="initPct">0%</div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <div class="bottom-l">USCSS NOSTROMO &nbsp;|&nbsp; HAUL: 20,000,000T ORE &nbsp;|&nbsp; CREW: 7</div>
+    <div class="bottom-r" id="clock">--:--:--</div>
+  </div>
+</div>
+<script>
+if (sessionStorage.getItem('ucp_booted')==='1') { location.replace('index.html'); }
+setInterval(function(){var n=new Date();document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');},1000);
+var killed=false;
+function skipIntro(){killed=true;doFlashAndGo();}
+function doFlashAndGo(){sessionStorage.setItem('ucp_booted','1');var f=document.getElementById('flashOut');f.classList.add('active');setTimeout(function(){location.replace('index.html');},300);}
+var wait=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
+function addLine(container,label,text,cls,statusCls){var row=document.createElement('div');row.className='t-line';if(label){var lbl=document.createElement('span');lbl.className='t-label';lbl.textContent=label;row.appendChild(lbl);}var txt=document.createElement('span');txt.className='t-text '+(cls||'');txt.textContent=text;row.appendChild(txt);if(statusCls){var st=document.createElement('span');st.className=statusCls;st.textContent=statusCls==='t-ok'?'[ OK ]':statusCls==='t-fail'?'[FAIL]':'[WARN]';row.appendChild(st);}container.appendChild(row);requestAnimationFrame(function(){row.classList.add('visible');});return txt;}
+function addDiagRow(label,value,cls){var grid=document.getElementById('diagGrid');var row=document.createElement('div');row.className='s-row';row.innerHTML='<span class="s-key">'+label+'</span><span class="s-val '+cls+'">'+value+'</span>';grid.appendChild(row);requestAnimationFrame(function(){row.style.opacity='1';});}
+async function animateProgress(fillEl,pctEl,duration){var steps=60;var interval=duration/steps;for(var i=0;i<=steps;i++){if(killed)return;var pct=Math.round((i/steps)*100);fillEl.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%';await wait(interval);}}
+async function runSequence(){
+  await wait(400); if(killed)return;
+  document.getElementById('logoBlock').style.opacity='1';
+  await wait(1400); if(killed)return;
+  document.getElementById('div1').style.opacity='1';
+  await wait(500); if(killed)return;
+  var bc=document.getElementById('bootLines');
+  var bootSeq=[
+    {l:'>',t:'MUTHUR 6000 BOOT SEQUENCE v4.1.2',cls:'',st:'t-ok',d:70},
+    {l:'>',t:'LOADING CORE KERNEL',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'INITIALIZING HYPERDRIVE NAVIGATION ARRAY',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'LIFE SUPPORT SYSTEMS',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'HYPERSLEEP CHAMBERS — STATUS: STANDBY',cls:'dim',st:'',d:55},
+    {l:'>',t:'SCIENCE OFFICER MODULE',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'CREW MANIFEST AUTHENTICATED',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'LONG RANGE COMMUNICATIONS ARRAY',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'DEEP SPACE TELEMETRY: NOMINAL',cls:'dim',st:'t-ok',d:55},
+    {l:'>',t:'SELF-DESTRUCT SYSTEM: ARMED (STANDBY)',cls:'warn',st:'t-warn',d:90},
+    {l:'>',t:'SCIENCE DIVISION UPLINK: ACTIVE',cls:'ice',st:'t-ok',d:70},
+  ];
+  for(var i=0;i<bootSeq.length;i++){if(killed)return;var s=bootSeq[i];addLine(bc,s.l,s.t,s.cls,s.st);await wait(s.d);}
+  await wait(400); if(killed)return;
+  document.getElementById('phase1').classList.remove('active');
+  document.getElementById('phase2').classList.add('active');
+  await wait(200); if(killed)return;
+  var diags=[
+    ['REACTOR CORE','NOMINAL',''],
+    ['HULL INTEGRITY','100%',''],
+    ['ATMOSPHERIC O2','21.3%',''],
+    ['FUEL RESERVES','34.7%','warn'],
+    ['ARTIFICIAL GRAVITY','ACTIVE',''],
+    ['SENSOR ARRAY','CALIBRATING...','warn'],
+    ['CARGO HOLD A','SEALED',''],
+    ['CARGO HOLD B','SEALED',''],
+    ['ENGINE ROOM','OPERATIONAL',''],
+    ['BRIDGE','ACTIVE — 1 CREW',''],
+    ['HYPERSLEEP PODS','OCCUPIED: 6/7',''],
+    ['SCIENCE DIVISION','UPLINK ACTIVE','ice'],
+  ];
+  for(var j=0;j<diags.length;j++){if(killed)return;addDiagRow(diags[j][0],diags[j][1],diags[j][2]);await wait(75);}
+  await wait(300); if(killed)return;
+  document.getElementById('progressWrap').style.display='block';
+  await animateProgress(document.getElementById('progFill'),document.getElementById('progPct'),1400);
+  await wait(500); if(killed)return;
+  document.getElementById('phase2').classList.remove('active');
+  document.getElementById('phase3').classList.add('active');
+  await wait(300); if(killed)return;
+  var prioBox=document.getElementById('prioBox');
+  var prioText=document.getElementById('prioText');
+  prioBox.style.display='block';
+  await wait(100); if(killed)return;
+  var prioLines=[
+    'INCOMING TRANSMISSION — WEYLAND-YUTANI CORP',
+    'CLASSIFICATION: EYES ONLY — SCIENCE DIVISION',
+    '',
+    'DIRECT ORDERS OF THE COMPANY.',
+    'CREW EXPENDABLE.',
+    '',
+    'DESTINATION: LV-426 — SECTOR 40A',
+    'OBJECTIVE: INVESTIGATE SIGNAL OF NON-HUMAN ORIGIN',
+    'SECONDARY OBJECTIVE: RETRIEVE SPECIMEN — PRIORITY ABSOLUTE',
+  ];
+  for(var k=0;k<prioLines.length;k++){if(killed)return;var span=document.createElement('div');span.textContent=prioLines[k];prioText.appendChild(span);await wait(100);}
+  await wait(400); if(killed)return;
+  var ml=document.getElementById('missionLines');
+  var mLines=[
+    {l:'CREW:',t:'DALLAS / RIPLEY / LAMBERT / KANE / PARKER / BRETT / ASH (SCI)'},
+    {l:'VESSEL:',t:'USCSS NOSTROMO — COMMERCIAL TOWING — REG. 180924609'},
+    {l:'STATUS:',t:'EN ROUTE — ETA: 10 MONTHS — RETURNING TO EARTH SECTOR'},
+    {l:'NOTE:',t:'ALL CREW MEMBERS UNAWARE OF SCIENCE DIVISION OVERRIDE'},
+  ];
+  for(var m=0;m<mLines.length;m++){if(killed)return;var row=document.createElement('div');row.style.cssText='font-size:13px;display:flex;gap:10px;margin-bottom:3px;opacity:0;transition:opacity .2s';row.innerHTML='<span style="color:#1a9944;flex-shrink:0">'+mLines[m].l+'</span><span style="color:#2ccc55">'+mLines[m].t+'</span>';ml.appendChild(row);await wait(50);requestAnimationFrame(function(r){return function(){r.style.opacity='1';};}(row));await wait(90);}
+  await wait(800); if(killed)return;
+  document.getElementById('phase3').classList.remove('active');
+  document.getElementById('phase4').classList.add('active');
+  await wait(300); if(killed)return;
+  var il=document.getElementById('initLines');
+  var iSeq=[
+    {t:'MUTHUR 6000 — HANDOFF COMPLETE',cls:'dim'},
+    {t:'TRANSFERRING CONTROL TO: ULTRAGEN SYSTEMS',cls:''},
+    {t:'LOADING ECOSISTEMA ULTRAGEN 2026...',cls:'ice'},
+    {t:'  > ultragen_manager (Django 5.2.8 / Neon / Render)',cls:'dim'},
+    {t:'  > ultragen_site_simple (React 19 / Vite 7)',cls:'dim'},
+    {t:'  > ultragen_site_desktop (React 19 / Tailwind 4)',cls:'dim'},
+    {t:'  > social_monserrat (React 19 / Vite 8)',cls:'dim'},
+    {t:'  > .opencode / 12 skills operativos',cls:'dim'},
+    {t:'PRODUCT MANAGER — VALERIA — ONLINE',cls:'ok'},
+    {t:'CONTROL PANEL READY',cls:''},
+  ];
+  for(var n=0;n<iSeq.length;n++){if(killed)return;var iRow=document.createElement('div');iRow.style.cssText='font-size:13px;opacity:0;transition:opacity .15s;margin-bottom:2px';iRow.className='t-text '+(iSeq[n].cls||'');iRow.textContent='> '+iSeq[n].t;il.appendChild(iRow);await wait(30);requestAnimationFrame(function(r){return function(){r.style.opacity='1';};}(iRow));await wait(110);}
+  await wait(200); if(killed)return;
+  await animateProgress(document.getElementById('initFill'),document.getElementById('initPct'),2000);
+  await wait(600);
+  doFlashAndGo();
+}
+runSequence();
+</script>
+</body>
+</html>

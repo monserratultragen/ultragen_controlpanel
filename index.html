@@ -4,175 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ultragen CP</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{--bg:#0c0c0c;--surface:#161616;--surface2:#1e1e1e;--surface3:#282828;--border:#2a2a2a;--border2:#383838;--text:#e0e0e0;--text2:#888;--text3:#555;--gold:#c8a951;--gold-bg:rgba(200,169,81,.1);--gold-dark:#8a7030;--gold-dark-bg:rgba(138,112,48,.15);--ice:#4fc3f7;--ice-bg:rgba(79,195,247,.1);--emerald:#4caf50;--emerald-bg:rgba(76,175,80,.1);--amber:#d4893a;--amber-bg:rgba(212,137,58,.1);--radius:10px;--radius-sm:6px}
+:root{--bg:#050805;--surface:#080c08;--surface2:#0c120c;--surface3:#121a12;--border:#1a2a1a;--border2:#2a4a2a;--text:#33ff66;--text2:#2ccc55;--text3:#1a9944;--gold:#ffb000;--gold-bg:rgba(255,176,0,.08);--gold-dark:#cc8800;--gold-dark-bg:rgba(204,136,0,.12);--ice:#00ff41;--ice-bg:rgba(0,255,65,.08);--emerald:#00cc33;--emerald-bg:rgba(0,204,51,.1);--amber:#ff8800;--amber-bg:rgba(255,136,0,.1);--alert:#ff3333;--alert-bg:rgba(255,51,51,.1);--cold-blue:#33ccff;--radius:8px;--radius-sm:4px;--fs:13px;--fs-min:13px;--icon-sm:14px;--icon-md:16px;--icon-lg:20px}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-.app{max-width:480px;margin:0 auto;padding:0 10px 72px;position:relative}
+svg{vertical-align:middle;flex-shrink:0}
+body{font-family:'Courier New','Courier','Liberation Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;font-size:var(--fs);-webkit-text-size-adjust:100%;overscroll-behavior:none;line-height:1.5}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,255,65,.015) 1px,rgba(0,255,65,.015) 2px);pointer-events:none;z-index:9999}
+.app{padding:0 0 calc(62px + env(safe-area-inset-bottom,0px));min-height:100vh}
 
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 0 2px}
-.hdr-l{display:flex;align-items:baseline;gap:6px}
-.hdr h1{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:-.3px}
-.hdr .sub{font-size:11px;color:var(--text2)}
-.hdr .stats{font-size:10px;color:var(--text2);background:var(--surface);border-radius:20px;padding:2px 8px;border:1px solid var(--border);white-space:nowrap}
+/* Header - Nostromo MUTHUR style */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 4px;position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border)}
+.hdr-l{display:flex;align-items:baseline;gap:10px}
+.hdr h1{font-size:22px;font-weight:400;color:var(--text);letter-spacing:1px;text-transform:uppercase;text-shadow:0 0 8px rgba(51,255,102,.2)}
+.hdr .sub{color:var(--text2);font-size:13px}
+.hdr .stats{color:var(--text2);border:1px solid var(--border);padding:3px 8px;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
 
-.rp-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:600;padding:3px 8px;border-radius:10px}
-.rp-badge.ok{background:var(--emerald-bg);color:var(--emerald)}
-.rp-badge.warn{background:var(--amber-bg);color:var(--amber)}
-.rp-badge.risk{background:var(--gold-dark-bg);color:var(--gold-dark)}
-.rp-badge.info{background:var(--ice-bg);color:var(--ice)}
-.rp-section{margin-bottom:12px}
-.rp-section:last-child{margin-bottom:0}
-.rp-h2{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px}
-.rp-h3{font-size:11px;font-weight:600;color:var(--text);margin:6px 0 4px}
-.rp-row{display:flex;justify-content:space-between;align-items:center;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border)}
-.rp-row:last-child{border-bottom:none}
-.rp-row .rp-l{color:var(--text2)}
-.rp-row .rp-v{color:var(--text);text-align:right}
-.rp-gold{color:var(--gold);font-weight:600}
-.rp-ice{color:var(--ice)}
-.rp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.rp-card{background:var(--surface2);border-radius:var(--radius-sm);padding:6px 8px;border-left:3px solid var(--border)}
-.rp-card .rp-c-title{font-size:10px;font-weight:600;color:var(--text)}
-.rp-card .rp-c-sub{font-size:9px;color:var(--text2);margin-top:1px}
-.rp-card .rp-c-st{font-size:8px;font-weight:600;padding:1px 5px;border-radius:4px;display:inline-block;margin-top:2px}
-.rp-footer{font-size:9px;color:var(--text3);text-align:center;padding:8px 0 4px;border-top:1px solid var(--border);margin-top:8px}
-
-.screen{display:none}
+/* Screens */
+.screen{display:none;padding:0 16px}
 .screen.active{display:block}
 
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 0 10px}
-.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px 12px;cursor:pointer;display:flex;flex-direction:column;gap:5px;transition:all .2s;aspect-ratio:1;box-shadow:0 4px 12px rgba(0,0,0,.2);position:relative;overflow:hidden}
-.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;opacity:.6}
+/* Dashboard Cards - Nostromo terminal style */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 0 16px}
+.dash-card{background:var(--surface);border:1px solid var(--border);padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;transition:all .15s;position:relative;min-width:0;overflow:hidden}
+.dash-card:hover{border-color:var(--border2)}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:.8}
 .dash-card.tp-card-gold::before{background:var(--gold)}
 .dash-card.tp-card-ice::before{background:var(--ice)}
 .dash-card.tp-card-amber::before{background:var(--amber)}
 .dash-card.tp-card-green::before{background:var(--emerald)}
-.dash-card:active{transform:scale(.95);background:var(--surface2)}
-.dash-tp{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:5px;display:inline-block;width:fit-content;margin-bottom:3px}
-.dash-tp.tp-gold{background:var(--gold-bg);color:var(--gold)}
-.dash-tp.tp-ice{background:var(--ice-bg);color:var(--ice)}
-.dash-tp.tp-amber{background:var(--amber-bg);color:var(--amber)}
-.dash-tp.tp-green{background:var(--emerald-bg);color:var(--emerald)}
-.dash-nm{font-size:14px;font-weight:800;line-height:1.2;flex:1;display:flex;align-items:center;letter-spacing:-.2px}
-.dash-tech{font-size:10px;color:var(--text2);line-height:1.3}
-.dash-st{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;width:fit-content;text-transform:uppercase;letter-spacing:.3px}
-.st-green{background:var(--emerald-bg);color:var(--emerald)}
-.st-gold{background:var(--gold-bg);color:var(--gold)}
-.st-ice{background:var(--ice-bg);color:var(--ice)}
-.st-amber{background:var(--amber-bg);color:var(--amber)}
-.st-gold-dark{background:var(--gold-dark-bg);color:var(--gold-dark)}
+.dash-card:active{opacity:.85;background:var(--surface2)}
+.dash-top{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin-bottom:2px;min-width:0}
+.dash-tp{font-weight:400;text-transform:uppercase;letter-spacing:.5px;padding:1px 5px;border:1px solid;font-size:13px;line-height:1.3}
+.dash-tp.tp-gold{border-color:var(--gold);color:var(--gold)}
+.dash-tp.tp-ice{border-color:var(--ice);color:var(--ice)}
+.dash-tp.tp-amber{border-color:var(--amber);color:var(--amber)}
+.dash-tp.tp-green{border-color:var(--emerald);color:var(--emerald)}
+.dash-nm{font-size:13px;font-weight:400;line-height:1.2;letter-spacing:.3px;margin:3px 0 1px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.dash-tech{color:var(--text2);line-height:1.3;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.dash-dates{display:flex;flex-direction:column;gap:2px;margin-top:auto;padding-top:4px;border-top:1px solid var(--border);min-width:0}
+.dd{display:flex;justify-content:space-between;align-items:center;font-size:13px;min-width:0;gap:3px}
+.dd-l{color:var(--text3);text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;display:flex;align-items:center;gap:2px;font-size:13px}
+.dd-l svg{width:12px;height:12px;flex-shrink:0}
+.dd-v{color:var(--text);text-align:right;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1}
+.dash-st{font-weight:400;padding:1px 5px;border:1px solid;font-size:13px;letter-spacing:.3px;text-transform:uppercase;align-self:flex-start;line-height:1.3}
+.st-green{border-color:var(--emerald);color:var(--emerald)}
+.st-gold{border-color:var(--gold);color:var(--gold)}
+.st-ice{border-color:var(--ice);color:var(--ice)}
+.st-amber{border-color:var(--amber);color:var(--amber)}
+.st-gold-dark{border-color:var(--gold-dark);color:var(--gold-dark)}
 
-.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 14px 90px}
+/* Detail Overlay */
+.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .detail-overlay.open{transform:translateX(0)}
-.detail-hdr{display:flex;align-items:center;gap:10px;padding:12px 0 6px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border);margin-bottom:4px}
-.back-btn{width:36px;height:36px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.back-btn:active{background:var(--surface3);transform:scale(.92)}
-.detail-title{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:-.2px}
-.detail-body{padding-top:6px}
+.detail-hdr{display:flex;align-items:center;gap:8px;padding:12px 16px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border);min-height:52px}
+.back-btn{width:44px;height:44px;background:var(--surface2);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;touch-action:manipulation}
+.back-btn:active{background:var(--surface3);border-color:var(--border2)}
+.detail-title{font-size:15px;font-weight:400;color:var(--text);letter-spacing:.5px;flex:1;text-transform:uppercase}
+.detail-body{padding:8px 16px 24px}
 
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;overflow:hidden}
-.chd{display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;user-select:none}
-.chd .tp{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 5px;border-radius:4px;flex-shrink:0}
+/* Detail Cards - Terminal grouped */
+.card{background:var(--surface);border:1px solid var(--border);margin-bottom:8px}
+.chd{display:flex;align-items:center;gap:8px;padding:12px;cursor:pointer;user-select:none;touch-action:manipulation;border-bottom:1px solid var(--border)}
+.chd .tp{font-weight:400;text-transform:uppercase;letter-spacing:.6px;padding:2px 6px;border:1px solid;font-size:13px;flex-shrink:0}
+.chd .tp.tp-gold{border-color:var(--gold);color:var(--gold)}
+.chd .tp.tp-ice{border-color:var(--ice);color:var(--ice)}
+.chd .tp.tp-amber{border-color:var(--amber);color:var(--amber)}
+.chd .tp.tp-green{border-color:var(--emerald);color:var(--emerald)}
 .chd .inf{flex:1;min-width:0}
-.chd .inf .nm{font-size:11px;font-weight:600}
-.chd .inf .l2{font-size:9px;color:var(--text2)}
-.chd .st{font-size:9px;font-weight:600;padding:1px 6px;border-radius:5px;text-transform:uppercase;letter-spacing:.2px;flex-shrink:0}
-.chd .ar{width:18px;height:18px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--text3);transition:transform .25s}
-.chd .ar.on{transform:rotate(180deg);color:var(--gold)}
+.chd .inf .nm{font-size:13px;font-weight:400;letter-spacing:.3px}
+.chd .inf .l2{color:var(--text2);margin-top:1px;font-size:13px}
+.chd .st{font-weight:400;padding:2px 6px;border:1px solid;font-size:13px;letter-spacing:.4px;text-transform:uppercase;flex-shrink:0}
+.chd .ar{width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text3);transition:transform .25s}
+.chd .ar.on{transform:rotate(180deg)}
 .cbd{max-height:0;overflow:hidden;transition:max-height .35s ease}
 .cbd.on{max-height:5000px}
-.cbd-in{padding:0 10px 10px;border-top:1px solid var(--border)}
-.cbd-in>*{padding-top:5px}
-.stt{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.2px;margin:6px 0 3px}
-.stt:first-child{margin-top:0}
+.cbd-in{padding:0 12px 12px;border-top:1px solid var(--border)}
+.cbd-in>*{padding-top:6px}
+.stt{font-weight:400;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin:8px 0 4px;font-size:13px}
 
-.mr{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border)}
+.dc-item{padding:6px 8px;margin-bottom:2px;border-left:2px solid var(--border);font-size:13px}
+.dc-item .dt{color:var(--gold);margin-right:4px}
+.mr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5;font-size:13px}
+.mr:last-child{border-bottom:none}
 .mr .l{color:var(--text2)}
 .mr .v{color:var(--text);text-align:right}
-.mr a{color:var(--ice);text-decoration:none}
+.mr a{color:var(--gold);text-decoration:none}
+.mr a:hover{text-decoration:underline}
+.di,.wi{padding:8px 10px;background:var(--surface2);margin-bottom:4px;border-left:3px solid var(--border);line-height:1.4;font-size:13px}
+.ri{padding:8px 10px;background:var(--alert-bg);margin-bottom:4px;border-left:3px solid var(--alert);line-height:1.4;font-size:13px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-weight:400;padding:2px 6px;border:1px solid;font-size:13px;letter-spacing:.3px}
+.bd-green{border-color:var(--emerald);color:var(--emerald);background:var(--emerald-bg)}
+.bd-gold{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+.bd-ice{border-color:var(--ice);color:var(--ice);background:var(--ice-bg)}
+.bd-amber{border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
+.bd-gold-dark{border-color:var(--gold-dark);color:var(--gold-dark);background:var(--gold-dark-bg)}
 
-.di,.wi{font-size:10px;padding:6px 8px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
-.ri{font-size:10px;padding:6px 8px;background:var(--gold-dark-bg);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--gold-dark)}
-.di .tg{font-size:9px}
-.badge{display:inline-flex;align-items:center;gap:2px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px}
-.bd-green{background:var(--emerald-bg);color:var(--emerald)}
-.bd-gold{background:var(--gold-bg);color:var(--gold)}
-.bd-ice{background:var(--ice-bg);color:var(--ice)}
-.bd-amber{background:var(--amber-bg);color:var(--amber)}
-.bd-gold-dark{background:var(--gold-dark-bg);color:var(--gold-dark)}
-.dc-item{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 8px;margin-bottom:2px;border-left:3px solid var(--border);font-size:9px}
-.dc-item .dt{color:var(--gold);font-weight:600}
-.hm{display:flex;gap:2px;flex-wrap:wrap;margin:4px 0}
-.hm-cell{width:8px;height:8px;border-radius:1px}
-.hm-labels{display:flex;gap:2px;font-size:8px;color:var(--text3);margin-top:2px}
+.hm{display:flex;gap:2px;flex-wrap:wrap;margin:6px 0}
+.hm-cell{width:10px;height:10px}
+.hm-labels{display:flex;gap:2px;color:var(--text3);margin-top:2px;font-size:13px}
+
 .cl{list-style:none}
-.cl li{font-size:9px;padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:4px;align-items:baseline}
-.cl li:last-child{border-bottom:none}
-.ch{font-family:'SF Mono','Cascadia Code',monospace;color:var(--gold);font-size:8px;flex-shrink:0}
-.ct{color:var(--text3);font-size:8px;flex-shrink:0}
-.dot{display:inline-block;width:4px;height:4px;border-radius:50%}
-.d-green{background:var(--emerald)}
-.oi{display:flex;align-items:flex-start;gap:5px;padding:3px 0;border-bottom:1px solid var(--border);font-size:10px}
-.oi:last-child{border-bottom:none}
-.oi .cb{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:7px;color:transparent;background:var(--surface2)}
-.oi .cb.chk{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.cl li{padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:5px;align-items:baseline}
+.ch{font-family:'Courier New',Courier,monospace;color:var(--gold);flex-shrink:0}
+.ct{color:var(--text3);flex-shrink:0}
+
+.oi{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--border);font-size:13px}
+.oi .cb{width:16px;height:16px;border:1px solid var(--border2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;background:var(--surface2)}
+.oi .cb.chk{background:var(--emerald);border-color:var(--emerald);color:var(--bg)}
 .oi .cb.v2{border-color:var(--amber)}
 .oi .cb.v2.chk{background:var(--gold);border-color:var(--gold)}
 .oi .tx{flex:1;line-height:1.4}
-.oi .tx .sk{font-size:8px;color:var(--text3)}
-.obj-card{background:var(--surface2);border-radius:var(--radius-sm);padding:5px 7px;border-left:3px solid var(--border);margin-bottom:3px}
-.obj-card .oc-tit{font-size:10px;font-weight:600}
-.obj-card .oc-bd{font-size:9px;color:var(--text2);margin-top:1px;line-height:1.5}
-.cycle{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);font-size:9px}
-.cycle .step{padding:2px 5px;border-radius:3px;background:var(--surface3);color:var(--text)}
-.cycle .arr{color:var(--gold)}
-.cmd-group{margin-bottom:6px}
-.cmd-group .cmd-tit{font-size:10px;font-weight:600;color:var(--gold);margin-bottom:3px;display:flex;align-items:center;gap:4px}
-.cmd-item{display:flex;align-items:flex-start;gap:6px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:2px;font-size:10px;border-left:3px solid var(--border)}
-.cmd-item .cmd-num{width:16px;height:16px;border-radius:3px;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px}
-.cmd-item .cmd-body{flex:1}
-.cmd-item .cmd-body .cmd-phrase{font-family:'SF Mono','Cascadia Code',monospace;font-size:9px;color:var(--gold);margin:1px 0}
-.cmd-item .cmd-body .cmd-desc{color:var(--text2)}
-.ii{font-size:10px;padding:5px 7px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid var(--border)}
-.ii .dt{color:var(--ice);font-weight:600}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.oi .tx .sk{color:var(--text3)}
 
-.mando-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
-.mando-hd{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;user-select:none}
-.mando-hd .mando-icon{font-size:16px;flex-shrink:0}
-.mando-hd .mando-label{flex:1;font-size:12px;font-weight:600}
-.mando-hd .mando-ar{font-size:10px;color:var(--text3);transition:transform .25s}
-.mando-hd .mando-ar.on{transform:rotate(180deg);color:var(--gold)}
+.obj-card{background:var(--surface2);padding:8px 10px;border-left:3px solid var(--border);margin-bottom:4px;font-size:13px}
+.obj-card .oc-tit{font-weight:400;letter-spacing:.3px}
+.obj-card .oc-bd{color:var(--text2);margin-top:2px;line-height:1.5}
+
+.cycle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px;background:var(--surface2);margin-bottom:4px}
+.cycle .step{padding:3px 8px;background:var(--surface3);color:var(--text);font-size:13px;text-transform:uppercase;letter-spacing:.3px}
+.cycle .arr{color:var(--gold)}
+
+.cmd-group{margin-bottom:8px}
+.cmd-group .cmd-tit{font-weight:400;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:.5px;font-size:13px}
+.cmd-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:var(--surface2);margin-bottom:4px;border-left:3px solid var(--border);font-size:13px}
+.cmd-item .cmd-num{width:20px;height:20px;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:13px}
+.cmd-item .cmd-body{flex:1}
+.cmd-item .cmd-body .cmd-phrase{font-family:'Courier New',Courier,monospace;color:var(--gold);margin:2px 0}
+.cmd-item .cmd-body .cmd-desc{color:var(--text2)}
+.ii{padding:8px 10px;background:var(--surface2);margin-bottom:4px;border-left:3px solid var(--border);font-size:13px}
+.ii .dt{color:var(--gold)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+
+/* Mando Groups - Nostromo terminal sections */
+.mando-group{background:var(--surface);border:1px solid var(--border);margin-bottom:10px}
+.mando-hd{display:flex;align-items:center;gap:10px;padding:14px;cursor:pointer;user-select:none;touch-action:manipulation;min-height:48px;border-bottom:1px solid var(--border);transition:background .15s}
+.mando-hd:hover{background:var(--surface2)}
+.mando-hd .mando-icon{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px}
+.mando-hd .mando-icon svg{width:18px;height:18px}
+.mando-hd .mando-label{flex:1;font-size:13px;font-weight:400;letter-spacing:.5px;text-transform:uppercase}
+.mando-hd .mando-ar{color:var(--text2);transition:transform .25s;display:flex;align-items:center}
+.mando-hd .mando-ar.on{transform:rotate(180deg)}
 .mando-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
 .mando-bd.on{max-height:5000px}
-.mando-bd-in{padding:0 12px 10px;border-top:1px solid var(--border)}
+.mando-bd-in{padding:0 14px 14px}
 
-.repo-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:6px}
-.repo-nm{font-size:13px;font-weight:700;margin-bottom:8px}
-.repo-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.repo-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 0;border-radius:var(--radius-sm);font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s}
-.repo-btn:active{transform:scale(.97)}
-.repo-btn.gh{background:var(--ice-bg);border:1px solid rgba(79,195,247,.3);color:var(--ice)}
-.repo-btn.deploy{background:var(--gold-bg);border:1px solid rgba(200,169,81,.3);color:var(--gold)}
+/* CI items in Mando */
+.ci{padding:8px 0;border-bottom:1px solid var(--border)}
+.ci:last-child{border-bottom:none}
+.ci-phr{font-weight:400;margin-bottom:2px;font-size:13px}
+.ci-row{display:flex;align-items:center;gap:4px;margin-top:2px}
+.ci-path{color:var(--text3);word-break:break-all;flex:1;font-size:13px}
+.cp{background:var(--surface3);border:1px solid var(--border);padding:6px;cursor:pointer;color:var(--text2);flex-shrink:0;min-height:36px;min-width:36px;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+.cp:active{background:var(--border2)}
+.cp svg{width:14px;height:14px}
 
-.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 0 10px;max-width:480px;margin:0 auto;box-shadow:0 -4px 16px rgba(0,0,0,.4)}
-.nav-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;text-decoration:none;font-size:11px;color:var(--text3);gap:3px;border-radius:10px;margin:0 4px;transition:all .2s;font-weight:600;letter-spacing:.2px}
-.nav-bar a .ni{font-size:24px;line-height:1}
-.nav-bar a.active{color:var(--gold);background:var(--gold-bg)}
-.nav-bar a:active{background:var(--surface2)}
+/* CG accordion in Mando */
+.cg{margin-top:4px}
+.cg-hd{display:flex;align-items:center;gap:6px;padding:6px 0;cursor:pointer;color:var(--text2);font-weight:400;touch-action:manipulation;font-size:13px}
+.cg-hd:active{color:var(--gold)}
+.cg-ar{transition:transform .25s;display:flex;align-items:center;color:var(--text2)}
+.cg-ar.on{transform:rotate(90deg)}
+.cg-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.cg-bd.on{max-height:5000px}
+.cg-bd-in{padding-left:12px;border-left:1px solid var(--border);margin-top:4px}
 
+/* Repo View - borderless cards, bigger text/icons */
+.repo-item{background:var(--surface);border:none;padding:20px 22px;margin-bottom:12px}
+.repo-nm{font-size:20px;font-weight:400;letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px;color:var(--text)}
+.repo-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.repo-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 0;font-weight:400;text-decoration:none;cursor:pointer;transition:all .15s;touch-action:manipulation;min-height:52px;text-transform:uppercase;letter-spacing:.5px;font-size:15px}
+.repo-btn:active{opacity:.7}
+.repo-btn svg{width:18px !important;height:18px !important}
+.repo-btn.gh{border:1px solid var(--border);color:var(--text);background:var(--surface2)}
+.repo-btn.gh:hover{border-color:var(--border2)}
+.repo-btn.deploy{border:1px solid var(--gold);color:var(--gold);background:var(--gold-bg)}
+
+/* Informe View */
+.rp-badge{display:inline-flex;align-items:center;gap:4px;font-weight:400;padding:2px 6px;border:1px solid;font-size:13px;letter-spacing:.3px;text-transform:uppercase}
+.rp-badge.ok{border-color:var(--emerald);color:var(--emerald);background:var(--emerald-bg)}
+.rp-badge.warn{border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
+.rp-badge.risk{border-color:var(--alert);color:var(--alert);background:var(--alert-bg)}
+.rp-badge.info{border-color:var(--ice);color:var(--ice);background:var(--ice-bg)}
+.rp-section{margin-bottom:14px}
+.rp-h2{font-size:13px;font-weight:400;color:var(--gold);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.6px}
+.rp-h3{font-weight:400;color:var(--text);margin:8px 0 4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.rp-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px}
+.rp-row:last-child{border-bottom:none}
+.rp-row .rp-l{color:var(--text2)}
+.rp-row .rp-v{color:var(--text);text-align:right}
+.rp-gold{color:var(--gold)}
+.rp-ice{color:var(--ice)}
+.rp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.rp-card{background:var(--surface2);padding:8px 10px;border-left:3px solid var(--border);margin-bottom:4px}
+.rp-card .rp-c-title{font-weight:400;color:var(--text);font-size:13px;letter-spacing:.3px}
+.rp-card .rp-c-sub{color:var(--text2);margin-top:2px;font-size:13px}
+.rp-card .rp-c-st{font-weight:400;padding:1px 6px;border:1px solid;display:inline-block;margin-top:2px;font-size:13px}
+.rp-footer{color:var(--text3);text-align:center;padding:10px 0 6px;border-top:1px solid var(--border);margin-top:10px;font-size:13px}
+
+/* Bottom Nav - Nostromo terminal bar */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(5,8,5,.95);border-top:1px solid var(--border);display:flex;padding:6px 0 calc(4px + env(safe-area-inset-bottom,8px))}
+.nav-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;text-decoration:none;color:var(--text2);gap:4px;transition:all .15s;touch-action:manipulation;min-height:44px;text-transform:uppercase;letter-spacing:.3px;font-size:13px}
+.nav-bar a svg{width:18px;height:18px}
+.nav-bar a.active{color:var(--text);text-shadow:0 0 6px rgba(51,255,102,.2)}
+.nav-bar a:active{opacity:.5}
+
+/* Icons */
+.rp-badge svg,.badge svg,.stt svg,.rp-h3 svg{margin-right:2px;width:var(--icon-sm);height:var(--icon-sm)}
+.dash-st svg{margin-right:2px;width:var(--icon-sm);height:var(--icon-sm)}
+.rp-card svg{width:var(--icon-sm);height:var(--icon-sm)}
+
+/* Informe page - constrain all inline SVGs */
+#reportContent svg{width:var(--icon-sm);height:var(--icon-sm)}
+#reportContent .rp-badge svg{margin-right:2px}
+#reportContent .rp-h3 svg{margin-right:4px}
+
+/* Glow effect - Nostromo terminal style */
+.glow{text-shadow:0 0 6px rgba(51,255,102,.3)}
+.glow-amber{text-shadow:0 0 6px rgba(255,176,0,.25)}
+
+/* Utility */
 .hidden{display:none!important}
-.text-xs{font-size:9px}
-.text-muted{color:var(--text2)}
-.text-gold{color:var(--gold)}
-.text-green{color:var(--emerald)}
-.text-amber{color:var(--amber)}
-.text-gold-dark{color:var(--gold-dark)}
-.text-ice{color:var(--ice)}
-.fw-600{font-weight:600}
+.text-muted{color:var(--text2)!important}
+.text-gold{color:var(--gold)!important}
+.text-green{color:var(--emerald)!important}
+.text-amber{color:var(--amber)!important}
+.text-gold-dark{color:var(--gold-dark)!important}
+.text-ice{color:var(--ice)!important}
+.fw-600{font-weight:400!important;letter-spacing:.3px}
+
+/* Responsive */
+@media(max-width:412px){
+  .dash-grid{gap:6px}
+  .dash-card{padding:8px}
+  .hdr{padding:10px 12px 4px}
+  .hdr h1{font-size:18px}
+  .screen{padding:0 12px}
+  .nav-bar a svg{width:16px;height:16px}
+  .repo-btns{gap:8px}
+  .repo-btn{padding:12px 0}
+  .repo-item{padding:14px 14px}
+  .rp-grid{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+}
+@media(max-width:370px){
+  .dash-grid{grid-template-columns:1fr;gap:8px}
+  .dash-card{padding:14px}
+  .repo-btns{grid-template-columns:1fr}
+  .mando-hd{padding:12px}
+  .mando-bd-in{padding:0 12px 12px}
+  .rp-row{flex-direction:column;align-items:flex-start;gap:2px}
+}
+@media(min-width:413px) and (max-width:900px){
+  .dash-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .dash-card{padding:16px}
+}
+@media(min-width:901px){
+  .dash-grid{grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .dash-card{padding:18px}
+  .dash-nm{font-size:17px}
+  .hdr{padding:16px 24px 6px}
+  .screen{padding:0 24px}
+  .rp-grid{grid-template-columns:1fr 1fr}
+  .repo-nm{font-size:22px}
+}
 </style>
 </head>
 <body>
@@ -186,8 +282,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="stats">5 proyectos</div>
 </div>
 
+<!-- ===== INFORME ===== -->
+<div id="screen-rp" class="screen active">
+  <div id="reportContent"></div>
+</div>
+
 <!-- ===== DASHBOARD ===== -->
-<div id="screen-db" class="screen active">
+<div id="screen-db" class="screen">
   <div class="dash-grid" id="dashGrid"></div>
 </div>
 
@@ -195,77 +296,77 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div id="screen-wf" class="screen">
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128640;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg></span>
       <span class="mando-label">1. Despliegue</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
-        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; el agente te presenta todas las opciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; el agente te presenta todas las opciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
       </div>
     </div>
   </div>
 
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128214;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg></span>
       <span class="mando-label">2. Consultas (memoria del PM)</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
-        <div class="ci"><div class="ci-phr">C1 &mdash; "&iquest;Cu&aacute;l es el estado actual?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\02_estado_general.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\02_estado_general.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">C2 &mdash; "&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\07_trabajo_activo.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\07_trabajo_activo.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">C3 &mdash; "&iquest;Cu&aacute;l es la deuda operacional?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\06_deuda_operacional.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\06_deuda_operacional.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">C4 &mdash; "Mu&eacute;strame los objetivos"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\01_objetivos_secundarios.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\01_objetivos_secundarios.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">C5 &mdash; "&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\05_incidentes.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\05_incidentes.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">C1 &mdash; "&iquest;Cu&aacute;l es el estado actual?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\02_estado_general.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\02_estado_general.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">C2 &mdash; "&iquest;Qu&eacute; tareas est&aacute;n pendientes?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\07_trabajo_activo.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\07_trabajo_activo.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">C3 &mdash; "&iquest;Cu&aacute;l es la deuda operacional?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\06_deuda_operacional.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\06_deuda_operacional.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">C4 &mdash; "Mu&eacute;strame los objetivos"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\01_objetivos_secundarios.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\01_objetivos_secundarios.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">C5 &mdash; "&iquest;Qu&eacute; pas&oacute; con el &uacute;ltimo deploy?"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\memoria\05_incidentes.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\memoria\\05_incidentes.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
       </div>
     </div>
   </div>
 
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128295;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,5 6,8 2,11"/><line x1="9" y1="11" x2="14" y2="11"/></svg></span>
       <span class="mando-label">3. Invocar Skills</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
-        <div class="ci"><div class="ci-phr">"Activa Director" &mdash; Narrativa</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\director\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\director\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Escritor" &mdash; Drama NTR</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\escritor\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\escritor\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Psic&oacute;logo" &mdash; Perfiles</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\psicologo\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\psicologo\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Diarios" &mdash; Jerarqu&iacute;a</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\diarios\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\diarios\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa M&oacute;viles" &mdash; 3 tel&eacute;fonos</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\moviles\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\moviles\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Tablets" &mdash; Presentaciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablets\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablets\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Tablero" &mdash; Pistas visuales</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablero\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablero\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Laptop" &mdash; Mercado Umbral</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\laptop\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\laptop\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; Deploy/Backup</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Reg. Datos" &mdash; Sync BD</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\registro-datos\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\registro-datos\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa Dist. Cont." &mdash; API monitor</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\distribucion-contenido\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\distribucion-contenido\\SKILL.md')">&#128203;</button></div></div>
-        <div class="ci"><div class="ci-phr">"Activa PM/Valeria" &mdash; Coordinaci&oacute;n</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\product-manager\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\product-manager\\SKILL.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Director" &mdash; Narrativa</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\director\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\director\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Escritor" &mdash; Drama NTR</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\escritor\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\escritor\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Psic&oacute;logo" &mdash; Perfiles</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\psicologo\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\psicologo\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Diarios" &mdash; Jerarqu&iacute;a</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\diarios\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\diarios\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa M&oacute;viles" &mdash; 3 tel&eacute;fonos</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\moviles\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\moviles\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Tablets" &mdash; Presentaciones</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablets\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablets\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Tablero" &mdash; Pistas visuales</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\tablero\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\tablero\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Laptop" &mdash; Mercado Umbral</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\laptop\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\laptop\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Despliegue" &mdash; Deploy/Backup</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\despliegue\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\despliegue\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Reg. Datos" &mdash; Sync BD</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\registro-datos\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\registro-datos\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa Dist. Cont." &mdash; API monitor</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\distribucion-contenido\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\distribucion-contenido\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+        <div class="ci"><div class="ci-phr">"Activa PM/Valeria" &mdash; Coordinaci&oacute;n</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\.opencode\skills\product-manager\SKILL.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\.opencode\\skills\\product-manager\\SKILL.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
       </div>
     </div>
   </div>
 
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128260;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg></span>
       <span class="mando-label">4. Ciclo de Mantenimiento</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
-        <div class="ci"><div class="ci-phr">"Actualiza el control panel"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_controlpanel')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">"Actualiza el control panel"</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_controlpanel\</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_controlpanel')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
         <div class="cg">
-          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar">&#9654;</span> "Guarda cambios [proyecto]"</div>
+          <div class="cg-hd" onclick="togCg(this)"><span class="cg-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px"><polyline points="6,3 11,8 6,13"/></svg></span> "Guarda cambios [proyecto]"</div>
           <div class="cg-bd">
             <div class="cg-bd-in">
-              <div class="ci"><div class="ci-phr">ultragen_manager</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1')">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1')">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1')">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1')">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\ (npm run deploy)</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')">&#128203;</button></div></div>
-              <div class="ci"><div class="ci-phr">Workspace ra&iacute;z</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1')">&#128203;</button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_manager</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\MANAGER_SUBIR_CAMBIOS_A_GITHUB.ps1')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_simple</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_publicar_web.ps1')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_site_desktop</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SITE_DESKTOP_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SITE_DESKTOP_publicar_web.ps1')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+              <div class="ci"><div class="ci-phr">social_monserrat</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\SOCIAL_publicar_web.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\SOCIAL_publicar_web.ps1')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+              <div class="ci"><div class="ci-phr">ultragen_prompts</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_prompts\ (npm run deploy)</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_prompts\\')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
+              <div class="ci"><div class="ci-phr">Workspace ra&iacute;z</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\backup_scripts\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\backup_scripts\\WORKSPACE_SUBIR_CAMBIOS_A_GITHUB.ps1')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
             </div>
           </div>
         </div>
@@ -275,13 +376,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128221;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></span>
       <span class="mando-label">5. El Mandato (8 fases)</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
-        <div class="ci"><div class="ci-phr">Constituci&oacute;n de Valeria</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\mandato.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\mandato.md')">&#128203;</button></div></div>
+        <div class="ci"><div class="ci-phr">Constituci&oacute;n de Valeria</div><div class="ci-row"><span class="ci-path">C:\ultragen2026\ultragen_manager\skills\product_manager\mandato.md</span><button class="cp" onclick="navigator.clipboard.writeText('C:\\ultragen2026\\ultragen_manager\\skills\\product_manager\\mandato.md')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></button></div></div>
         <div class="cycle" style="margin-top:4px">
           <span class="step">F1 Reconstruye</span><span class="arr">&rarr;</span>
           <span class="step">F2 Detecta</span><span class="arr">&rarr;</span>
@@ -313,9 +414,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
   <div class="mando-group">
     <div class="mando-hd" onclick="togMando(this)">
-      <span class="mando-icon">&#128221;</span>
+      <span class="mando-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg></span>
       <span class="mando-label">6. Protocolo Valeria</span>
-      <span class="mando-ar">&#9660;</span>
+      <span class="mando-ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg></span>
     </div>
     <div class="mando-bd">
       <div class="mando-bd-in">
@@ -332,56 +433,53 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   <div class="repo-item">
     <div class="repo-nm">ultragen_manager</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://ultragen-2026-core.onrender.com" target="_blank">&#128640; Render</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://ultragen-2026-core.onrender.com" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> Render</a>
     </div>
   </div>
   <div class="repo-item">
     <div class="repo-nm">ultragen_site_simple</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-simple" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank">&#128640; GH Pages</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-simple" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-simple" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> GH Pages</a>
     </div>
   </div>
   <div class="repo-item">
     <div class="repo-nm">ultragen_site_desktop</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-desktop" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank">&#128640; GH Pages</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen-2026-site-desktop" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen-2026-site-desktop" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> GH Pages</a>
     </div>
   </div>
   <div class="repo-item">
     <div class="repo-nm">social_monserrat</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/social" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://monserratultragen.github.io/social" target="_blank">&#128640; GH Pages</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/social" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/social" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> GH Pages</a>
     </div>
   </div>
   <div class="repo-item">
     <div class="repo-nm">ultragen_prompts</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_prompts" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_prompts" target="_blank">&#128640; GH Pages</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_prompts" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_prompts" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> GH Pages</a>
     </div>
   </div>
   <div class="repo-item">
     <div class="repo-nm">ultragen_controlpanel</div>
     <div class="repo-btns">
-      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank">&#128279; GitHub</a>
-      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank">&#128640; GH Pages</a>
+      <a class="repo-btn gh" href="https://github.com/monserratultragen/ultragen_controlpanel" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg> GitHub</a>
+      <a class="repo-btn deploy" href="https://monserratultragen.github.io/ultragen_controlpanel" target="_blank"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg> GH Pages</a>
     </div>
   </div>
 </div>
 
-<!-- ===== INFORME ===== -->
-<div id="screen-rp" class="screen">
-  <div id="reportContent"></div>
-</div>
+
 
 <!-- ===== DETAIL OVERLAY ===== -->
 <div id="detailOverlay" class="detail-overlay">
   <div class="detail-hdr">
-    <button class="back-btn" onclick="closeDetail()">&larr;</button>
+    <button class="back-btn" onclick="closeDetail()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><polyline points="10,3 5,8 10,13"/></svg></button>
     <span class="detail-title" id="detailTitle"></span>
   </div>
   <div class="detail-body" id="detailBody"></div>
@@ -389,11 +487,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 <!-- ===== BOTTOM NAV ===== -->
 <div class="nav-bar">
-  <a href="#" class="active" data-t="db" onclick="switchTab('db',this)"><span class="ni">&#9632;</span>Dashboard</a>
-  <a href="#" data-t="wf" onclick="switchTab('wf',this)"><span class="ni">&#9881;</span>Mando</a>
-  <a href="#" data-t="repo" onclick="switchTab('repo',this)"><span class="ni">&#128279;</span>Repo</a>
-  <a href="#" data-t="rp" onclick="switchTab('rp',this);renderReport()"><span class="ni">&#128196;</span>Informe</a>
+  <a href="#" class="active" data-t="rp" onclick="switchTab('rp',this);renderReport()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg><span>Informe</span></a>
+  <a href="#" data-t="db" onclick="switchTab('db',this)"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg><span>Dashboard</span></a>
+  <a href="#" data-t="wf" onclick="switchTab('wf',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,5 6,8 2,11"/><line x1="9" y1="11" x2="14" y2="11"/></svg><span>Mando</span></a>
+  <a href="#" data-t="repo" onclick="switchTab('repo',this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2.5"/><circle cx="11" cy="11" r="2.5"/><line x1="5" y1="7.5" x2="5" y2="11"/><line x1="5" y1="11" x2="8.5" y2="11"/></svg><span>Repo</span></a>
 </div>
+<div class="hi"></div>
 </div>
 
 <!-- ===== HIDDEN DETAIL CONTENTS ===== -->
@@ -405,17 +504,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-gold">BACKEND</span>
       <div class="inf"><div class="nm">ultragen_manager</div><div class="l2">Django 5.2.8 &middot; Render &middot; Neon</div></div>
       <span class="st st-green">activo</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; Trabajo activo</div>
-        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg> Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--gold-dark)"><span class="tg badge bd-gold-dark">Alta</span> <strong>D3:</strong> Datos hardcodeados DiariosModal.jsx</div>
         <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta psicologo/SKILL.md</div>
         <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Sin secci&oacute;n tareas en sub-skills</div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">17/06</span> Modelo Dispositivo unificado en JSON field</div>
         <div class="dc-item"><span class="dt">20/06</span> HashRouter en site_desktop (vs BrowserRouter + 404)</div>
         <div class="dc-item"><span class="dt">20/06</span> No auto-deploy; preguntar siempre</div>
@@ -424,7 +523,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         <div class="dc-item"><span class="dt">22/06</span> Base Conocimiento Navegable</div>
         <div class="dc-item"><span class="dt">27/06</span> Reemplazar confirm() nativo por ConfirmModal (25+ archivos)</div>
         <div class="dc-item"><span class="dt">27/06</span> Botones SVG icon-only en tablas; Drawer lateral info; modales con ancho controlado; reorganizar sidebar (Monserrat como categoría propia); font-size 14px estandarizado</div>
-        <div class="stt">&#128200; Actividad &middot; <span class="text-muted">&uacute;ltimos 84 d&iacute;as</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad &middot; <span class="text-muted">&uacute;ltimos 84 d&iacute;as</span></div>
         <div class="hm-wrap" id="hm-manager"></div>
         <div class="stt">Config</div>
         <div class="mr"><span class="l">GitHub</span><span class="v"><a href="https://github.com/monserratultragen/ultragen-2026-core" target="_blank">ultragen-2026-core</a> <span class="text-green">limpio</span></span></div>
@@ -440,17 +539,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-ice">FRONTEND</span>
       <div class="inf"><div class="nm">ultragen_site_simple</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages</div></div>
       <span class="st st-green">desplegado</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> Trabajo activo</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">&mdash;</span> (depende del backend; sin decisiones propias)</div>
-        <div class="stt">&#128200; Actividad</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad</div>
         <div class="hm-wrap" id="hm-simple"></div>
       </div>
     </div>
@@ -463,18 +562,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-ice">FRONTEND</span>
       <div class="inf"><div class="nm">ultragen_site_desktop</div><div class="l2">React 19 &middot; Tailwind 4 &middot; Framer Motion</div></div>
       <span class="st st-amber">integrando</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; Trabajo activo</div>
-        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--ice)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg> Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="di" style="border-left-color:var(--amber)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="12" height="12"/></svg> Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--gold-dark)"><span class="tg badge bd-gold-dark">Alta</span> <strong>D3:</strong> Datos hardcodeados en DiariosModal.jsx</div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">20/06</span> Migrar a HashRouter para compatibilidad GH Pages</div>
-        <div class="stt">&#128200; Actividad</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad</div>
         <div class="hm-wrap" id="hm-desktop"></div>
       </div>
     </div>
@@ -487,17 +586,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-ice">FRONTEND</span>
       <div class="inf"><div class="nm">social_monserrat</div><div class="l2">React 19 &middot; Vite 8 &middot; Easter eggs</div></div>
       <span class="st st-green">desplegado</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; Trabajo activo</div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> Trabajo activo</div>
+        <div class="di" style="border-left-color:var(--amber)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="12" height="12"/></svg> Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Deuda saldada &mdash; incidente VITE_API_URL resuelto</em></div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">22/06</span> Corregir VITE_API_URL con /api en .env.production y script</div>
-        <div class="stt">&#128200; Actividad</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad</div>
         <div class="hm-wrap" id="hm-social"></div>
       </div>
     </div>
@@ -510,17 +609,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-amber">FRONTEND</span>
       <div class="inf"><div class="nm">ultragen_prompts</div><div class="l2">React 19 &middot; Vite 7 &middot; GH Pages &middot; Gestor de Prompts</div></div>
       <span class="st st-green">desplegado</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; Trabajo activo</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> Trabajo activo</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas (reci&eacute;n creado)</em></div>
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin deuda registrada</em></div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">27/06</span> Proyecto separado de site_simple; password gate con clave maestra</div>
-        <div class="stt">&#128200; Actividad</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad</div>
         <div class="hm-wrap" id="hm-prompts"></div>
       </div>
     </div>
@@ -533,19 +632,19 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-green">AGENTE</span>
       <div class="inf"><div class="nm">.opencode / Skills &mdash; TUS PODERES</div><div class="l2">12 skills invocables &middot; mandato &middot; t&uacute; eres el jefe</div></div>
       <span class="st st-gold">jefe</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9888; Deuda</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Deuda</div>
         <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> <strong>D1:</strong> Ruta incorrecta psicologo/SKILL.md:39</div>
         <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> <strong>D2:</strong> Falta secci&oacute;n tareas en sub-skills</div>
-        <div class="stt">&#128221; Decisiones</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg> Decisiones</div>
         <div class="dc-item"><span class="dt">21/06</span> Eliminar prefijos z_ / agente_ en skills</div>
         <div class="dc-item"><span class="dt">21/06</span> Protocolo Operativo (mandato.md) como memoria del PM</div>
         <div class="dc-item"><span class="dt">22/06</span> Crear Base Conocimiento Navegable</div>
         <div class="dc-item"><span class="dt">27/06</span> ConfirmModal, Drawer, SVG icons, modales controlados, sidebar reorganizado, font-size 14px</div>
-        <div class="stt">&#128200; Actividad (workspace ra&iacute;z)</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg> Actividad (workspace ra&iacute;z)</div>
         <div class="hm-wrap" id="hm-opencode"></div>
       </div>
     </div>
@@ -558,31 +657,31 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <span class="tp tp-amber">TRABAJO</span>
       <div class="inf"><div class="nm">Trabajo Activo &middot; Riesgos</div><div class="l2">Por proyecto &middot; lo que est&aacute; en marcha</div></div>
       <span class="st st-amber">en progreso</span>
-      <div class="ar">&#9660;</div>
+      <div class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px"><polyline points="3,6 8,11 13,6"/></svg></div>
     </div>
     <div class="cbd on">
       <div class="cbd-in">
-        <div class="stt">&#9654; ultragen_manager</div>
-        <div class="di" style="border-left-color:var(--emerald)">&#10003; Reemplazar confirm() por ConfirmModal &middot; <span class="text-muted">27/06</span></div>
-        <div class="di" style="border-left-color:var(--emerald)">&#10003; Botones SVG icon-only + Drawer info en tablas &middot; <span class="text-muted">27/06</span></div>
-        <div class="di" style="border-left-color:var(--emerald)">&#10003; Modales con ancho controlado &middot; <span class="text-muted">27/06</span></div>
-        <div class="di" style="border-left-color:var(--emerald)">&#10003; Sidebar: Monserrat como categor&iacute;a propia &middot; <span class="text-muted">27/06</span></div>
-        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="stt">&#9654; ultragen_site_simple</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> ultragen_manager</div>
+        <div class="di" style="border-left-color:var(--emerald)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;vertical-align:middle"><polyline points="3,8 7,12 13,4"/></svg> Reemplazar confirm() por ConfirmModal &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;vertical-align:middle"><polyline points="3,8 7,12 13,4"/></svg> Botones SVG icon-only + Drawer info en tablas &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;vertical-align:middle"><polyline points="3,8 7,12 13,4"/></svg> Modales con ancho controlado &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--emerald)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;vertical-align:middle"><polyline points="3,8 7,12 13,4"/></svg> Sidebar: Monserrat como categor&iacute;a propia &middot; <span class="text-muted">27/06</span></div>
+        <div class="di" style="border-left-color:var(--ice)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg> Integraci&oacute;n diarios site_desktop &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> ultragen_site_simple</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Sin tareas activas</em></div>
-        <div class="stt">&#9654; ultragen_site_desktop</div>
-        <div class="di" style="border-left-color:var(--ice)">&#8635; Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
-        <div class="stt">&#9654; social_monserrat</div>
-        <div class="di" style="border-left-color:var(--amber)">&#9744; Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
-        <div class="stt">&#9654; ultragen_prompts</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> ultragen_site_desktop</div>
+        <div class="di" style="border-left-color:var(--ice)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg> Integraci&oacute;n diarios reales &middot; <span class="text-muted">Dist. Contenido &middot; 20/06</span></div>
+        <div class="di" style="border-left-color:var(--amber)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="12" height="12"/></svg> Reemplazar hardcode DiariosModal.jsx <span class="tg badge bd-gold-dark">Alta</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> social_monserrat</div>
+        <div class="di" style="border-left-color:var(--amber)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><rect x="2" y="2" width="12" height="12"/></svg> Pushear cambios pendientes <span class="tg badge bd-amber">1 archivo</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> ultragen_prompts</div>
         <div class="di" style="border-left-color:var(--text3)"><em>Reci&eacute;n creado &mdash; monitorear</em></div>
-        <div class="stt">&#9654; .opencode / skills</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> .opencode / skills</div>
         <div class="di" style="border-left-color:var(--amber)"><span class="tg badge bd-amber">Media</span> Corregir ruta psicologo/SKILL.md</div>
         <div class="di" style="border-left-color:var(--text3)"><span class="tg badge bd-gold">Baja</span> Estandarizar tareas en SKILL.md</div>
-        <div class="stt">&#9654; ultragen_manager (panel admin)</div>
-        <div class="di" style="border-left-color:var(--emerald)">&#10003; ConfirmModal, Drawer, SVG icons &middot; <span class="text-muted">27/06</span></div>
-        <div class="stt">&#9888; Riesgos globales</div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><polyline points="6,3 11,8 6,13"/></svg> ultragen_manager (panel admin)</div>
+        <div class="di" style="border-left-color:var(--emerald)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;vertical-align:middle"><polyline points="3,8 7,12 13,4"/></svg> ConfirmModal, Drawer, SVG icons &middot; <span class="text-muted">27/06</span></div>
+        <div class="stt"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;vertical-align:middle"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg> Riesgos globales</div>
         <div class="ri">Neon Free Tier: l&iacute;mite conexiones. Mitigado por cargador inteligente.</div>
         <div class="ri">Render: redespliegue tarda 2-4 min. A veces webhook falla.</div>
         <div class="ri">Ruta <code>documentacion/perfiles_psicologicos.md</code> no existe (D1).</div>
@@ -604,10 +703,15 @@ const H = {
   prompts: {"2026-06-27":1}
 };
 
+if (sessionStorage.getItem('ucp_booted') !== '1') {
+  location.replace('boot.html');
+}
+
+function ic(n){var s={'grid':'<svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>','term':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,5 6,8 2,11"/><line x1="9" y1="11" x2="14" y2="11"/></svg>','git':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2.5"/><circle cx="11" cy="11" r="2.5"/><line x1="5" y1="7.5" x2="5" y2="11"/><line x1="5" y1="11" x2="8.5" y2="11"/></svg>','doc':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="12" height="14"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="9" y2="11"/></svg>','arr':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,3 11,8 6,13"/></svg>','arrd':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3,6 8,11 13,6"/></svg>','arrr':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="5,3 10,8 5,13"/></svg>','chk':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 7,12 13,4"/></svg>','cpy':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="9" height="10"/><polyline points="13,4 13,13 14,13 14,2 5,2 5,3"/></svg>','wrn':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8,2 L1,14 L15,14 Z"/><line x1="8" y1="6" x2="8" y2="10"/><circle cx="8" cy="12" r=".5" fill="currentColor"/></svg>','sync':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13,8 A5,5 0 1,1 8,3"/><polyline points="13,3 13,8 8,8"/></svg>','box':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12"/></svg>','chkb':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" fill="currentColor" opacity=".2"/><polyline points="5,8 7,11 11,5" stroke-width="2"/></svg>','pl':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,3 11,8 6,13"/></svg>','lnk':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7,9 A3,3 0 0,0 11,11 L13,9 A3,3 0 0,0 9,5"/><path d="M9,7 A3,3 0 0,0 5,5 L3,7 A3,3 0 0,0 7,11"/></svg>','dpl':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8,1 L8,11"/><polyline points="3,7 8,12 13,7"/></svg>','act':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="6" height="6"/><rect x="8" y="2" width="6" height="6"/><rect x="2" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="8.5" y="8.5" width="5" height="5" fill="currentColor"/></svg>','bk':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="10,3 5,8 10,13"/></svg>','x':'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>'};return s[n]||''}
 function buildHeatmap(id, data) {
   const c = document.getElementById(id); if (!c) return;
   const d = new Date(2026,5,28);
-  const L = ['#161616','#1f1c12','#2f2818','#4a3d20','#7a6830','#b8942e','#c8a951'];
+  const L = ['#0a0a0a','#0a140a','#0c1c0c','#0f2a0f','#144014','#1a5a1a','#229922'];
   const max = Math.max(1,...Object.values(data));
   let html = '<div class="hm">';
   for (let i = 83; i >= 0; i--) {
@@ -622,14 +726,33 @@ function buildHeatmap(id, data) {
 }
 
 const PROYECTOS = [
-  {id:'manager',tp:'BACKEND',tpClass:'tp-gold',nm:'ultragen_manager',tech:'Django 5.2.8 &middot; Render &middot; Neon',st:'activo',stClass:'st-green'},
-  {id:'simple',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_simple',tech:'React 19 &middot; Vite 7 &middot; GH Pages',st:'desplegado',stClass:'st-green'},
-  {id:'desktop',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_desktop',tech:'React 19 &middot; Tailwind 4',st:'integrando',stClass:'st-amber'},
-  {id:'social',tp:'FRONTEND',tpClass:'tp-ice',nm:'social_monserrat',tech:'React 19 &middot; Vite 8',st:'desplegado',stClass:'st-green'},
-  {id:'prompts',tp:'FRONTEND',tpClass:'tp-amber',nm:'ultragen_prompts',tech:'React 19 &middot; Vite 7',st:'desplegado',stClass:'st-green'},
-  {id:'opencode',tp:'AGENTE',tpClass:'tp-gold',nm:'.opencode / Skills',tech:'12 skills &middot; mandato',st:'jefe',stClass:'st-gold'},
-  {id:'trabajo',tp:'TRABAJO',tpClass:'tp-amber',nm:'Trabajo Activo',tech:'Riesgos &middot; por proyecto',st:'en progreso',stClass:'st-amber'}
+  {id:'manager',tp:'BACKEND',tpClass:'tp-gold',nm:'ultragen_manager',tech:'Django 5.2.8 &middot; Render &middot; Neon',st:'activo',stClass:'st-green',commit:'2026-06-27',push:'2026-06-27',deploy:'2026-06-27'},
+  {id:'simple',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_simple',tech:'React 19 &middot; Vite 7 &middot; GH Pages',st:'desplegado',stClass:'st-green',commit:'2026-06-20',push:'2026-06-20',deploy:'2026-06-20'},
+  {id:'desktop',tp:'FRONTEND',tpClass:'tp-ice',nm:'ultragen_site_desktop',tech:'React 19 &middot; Tailwind 4',st:'integrando',stClass:'st-amber',commit:'2026-06-20',push:'2026-06-20',deploy:''},
+  {id:'social',tp:'FRONTEND',tpClass:'tp-ice',nm:'social_monserrat',tech:'React 19 &middot; Vite 8',st:'desplegado',stClass:'st-green',commit:'2026-06-27',push:'2026-06-27',deploy:'2026-06-27'},
+  {id:'prompts',tp:'FRONTEND',tpClass:'tp-amber',nm:'ultragen_prompts',tech:'React 19 &middot; Vite 7',st:'desplegado',stClass:'st-green',commit:'2026-06-27',push:'2026-06-27',deploy:'2026-06-27'},
+  {id:'opencode',tp:'AGENTE',tpClass:'tp-gold',nm:'.opencode / Skills',tech:'12 skills &middot; mandato',st:'jefe',stClass:'st-gold',commit:'2026-06-22',push:'2026-06-22',deploy:''},
+  {id:'trabajo',tp:'TRABAJO',tpClass:'tp-amber',nm:'Trabajo Activo',tech:'Riesgos &middot; por proyecto',st:'en progreso',stClass:'st-amber',commit:'',push:'',deploy:''}
 ];
+
+function getAgeIcon(dateStr) {
+  if (!dateStr) return {svg:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8,2 C5,2 3,3.5 3,8 C3,10.5 5.5,11 8,11.5 L8,14 L7,13 M8,14 L9,13"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="5" y1="3" x2="4" y2="5"/><circle cx="8" cy="8" r="3" fill="none"/></svg>',color:'var(--cold-blue)'};
+  const now = new Date('2026-06-29');
+  const d = new Date(dateStr);
+  const diff = Math.floor((now - d) / (1000*60*60*24));
+  if (diff <= 2) return {
+    svg: '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8,14 C5,11 3,9 3,6.5 C3,4 5.2,2 8,2 C10.8,2 13,4 13,6.5 C13,9 11,11 8,14 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8,12 C6.5,10 5.5,8.5 5.5,7 C5.5,5.6 6.6,4.5 8,4.5 C9.4,4.5 10.5,5.6 10.5,7 C10.5,8.5 9.5,10 8,12 Z"/></svg>',
+    color: 'var(--alert)'
+  };
+  if (diff <= 7) return {
+    svg: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><polyline points="8,5 8,8 10,10"/></svg>',
+    color: 'var(--amber)'
+  };
+  return {
+    svg: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3" y1="3" x2="4.5" y2="4.5"/><line x1="11.5" y1="11.5" x2="13" y2="13"/><line x1="13" y1="3" x2="11.5" y2="4.5"/><line x1="4.5" y1="11.5" x2="3" y2="13"/><circle cx="8" cy="8" r="2" fill="currentColor" opacity=".3"/></svg>',
+    color: 'var(--cold-blue)'
+  };
+}
 
 function renderDashboard() {
   const grid = document.getElementById('dashGrid');
@@ -637,11 +760,17 @@ function renderDashboard() {
     const card = document.createElement('div');
     card.className = 'dash-card tp-card-'+p.tpClass.replace('tp-','');
     card.onclick = function(){ showDetail(p.id); };
+    let datesHtml = '';
+    if (p.commit) { const ag=getAgeIcon(p.commit); datesHtml += '<div class="dd"><span class="dd-l" style="color:'+ag.color+'"><span style="display:inline-flex;width:13px;height:13px;align-items:center;justify-content:center;color:'+ag.color+'">'+ag.svg+'</span> Commit</span><span class="dd-v">'+p.commit.substring(5)+'</span></div>'; }
+    if (p.push)   { const ag=getAgeIcon(p.push);   datesHtml += '<div class="dd"><span class="dd-l" style="color:'+ag.color+'"><span style="display:inline-flex;width:13px;height:13px;align-items:center;justify-content:center;color:'+ag.color+'">'+ag.svg+'</span> Push</span><span class="dd-v">'+p.push.substring(5)+'</span></div>'; }
+    if (p.deploy) { const ag=getAgeIcon(p.deploy);  datesHtml += '<div class="dd"><span class="dd-l" style="color:'+ag.color+'"><span style="display:inline-flex;width:13px;height:13px;align-items:center;justify-content:center;color:'+ag.color+'">'+ag.svg+'</span> Deploy</span><span class="dd-v">'+p.deploy.substring(5)+'</span></div>'; }
     card.innerHTML =
-      '<span class="dash-tp '+p.tpClass+'">'+p.tp+'</span>'+
-      '<div class="dash-nm">'+p.nm+'</div>'+
-      '<div class="dash-tech">'+p.tech+'</div>'+
-      '<span class="dash-st '+p.stClass+'">'+p.st+'</span>';
+      '<div class="dash-top">'+
+        '<span class="dash-tp '+p.tpClass+'">'+p.tp+'</span>'+
+      '</div>'+
+      '<div class="dash-nm" title="'+p.nm+'">'+p.nm+'</div>'+
+      '<div class="dash-tech" title="'+p.tech+'">'+p.tech+'</div>'+
+      '<div class="dash-dates">'+datesHtml+'</div>';
     grid.appendChild(card);
   });
 }
@@ -650,10 +779,24 @@ function showDetail(id) {
   const src = document.getElementById('detail-'+id);
   if (!src) return;
   const body = document.getElementById('detailBody');
-  body.innerHTML = src.innerHTML;
-  const title = document.getElementById('detailTitle');
   const p = PROYECTOS.find(x => x.id === id);
+  const title = document.getElementById('detailTitle');
   title.textContent = p ? p.nm : id;
+
+  // Build git dates header
+  let datesBlock = '';
+  if (p && (p.commit || p.push || p.deploy)) {
+    let rows = '';
+    if (p.commit) { const ag=getAgeIcon(p.commit); rows += '<div class="mr"><span class="l" style="color:'+ag.color+';display:flex;align-items:center;gap:5px"><span style="display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center">'+ag.svg+'</span> Commit</span><span class="v">'+p.commit+'</span></div>'; }
+    if (p.push)   { const ag=getAgeIcon(p.push);   rows += '<div class="mr"><span class="l" style="color:'+ag.color+';display:flex;align-items:center;gap:5px"><span style="display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center">'+ag.svg+'</span> Push</span><span class="v">'+p.push+'</span></div>'; }
+    if (p.deploy) { const ag=getAgeIcon(p.deploy);  rows += '<div class="mr"><span class="l" style="color:'+ag.color+';display:flex;align-items:center;gap:5px"><span style="display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center">'+ag.svg+'</span> Deploy</span><span class="v">'+p.deploy+'</span></div>'; }
+    datesBlock = '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);padding:10px 12px;margin-bottom:10px">'+
+      '<div style="font-size:13px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">&#x25BA; Últimas Acciones Git</div>'+
+      rows+
+    '</div>';
+  }
+
+  body.innerHTML = datesBlock + src.innerHTML;
   const ol = document.getElementById('detailOverlay');
   ol.classList.add('open');
   ol.scrollTop = 0;
@@ -673,11 +816,17 @@ function closeDetail() {
 function switchTab(tab, el) {
   document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
+  else {
+    const navEl = document.querySelector('.nav-bar a[data-t="'+tab+'"]');
+    if (navEl) navEl.classList.add('active');
+  }
   document.querySelectorAll('.screen').forEach(s => {
     if (s.id === 'screen-'+tab) s.classList.add('active');
     else s.classList.remove('active');
   });
   if (document.getElementById('detailOverlay').classList.contains('open')) closeDetail();
+  try { localStorage.setItem('ucpTab', tab); } catch(e) {}
+  if (tab === 'rp') renderReport();
 }
 
 function tog(el) {
@@ -709,32 +858,49 @@ function renderReport() {
   const now = new Date();
   const d = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   const c = document.getElementById('reportContent'); if (!c) return;
+
+  // Build project rows dynamically from PROYECTOS data
+  function gitTag(p) {
+    const best = p.deploy || p.push || p.commit;
+    if (!best) return '';
+    const label = p.deploy ? 'Deploy' : (p.push ? 'Push' : 'Commit');
+    const ag = getAgeIcon(best);
+    return '<span style="display:inline-flex;align-items:center;gap:4px;color:'+ag.color+'">'+
+      '<span style="display:inline-flex;width:13px;height:13px;align-items:center;justify-content:center">'+ag.svg+'</span>'+
+      '<span style="font-size:13px">'+label+' '+best.substring(5)+'</span>'+
+    '</span>';
+  }
+
+  const skipIds = ['trabajo'];
+  let projectRows = '';
+  PROYECTOS.filter(p => !skipIds.includes(p.id)).forEach(p => {
+    projectRows +=
+      '<div class="rp-row">'+
+        '<span class="rp-l">'+p.nm+'</span>'+
+        '<span class="rp-v">'+gitTag(p)+'</span>'+
+      '</div>';
+  });
+
   c.innerHTML =
     '<div class="rp-section">'+
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
-        '<div style="font-size:13px;font-weight:800;color:var(--gold)">INFORME DE ESTADO</div>'+
-        '<div style="font-size:9px;color:var(--text2)">'+d+'</div>'+
+        '<div style="font-size:13px;color:var(--gold);letter-spacing:.5px">INFORME DE ESTADO</div>'+
+        '<div style="font-size:13px;color:var(--text2)">'+d+'</div>'+
       '</div>'+
-      '<div style="font-size:9px;color:var(--text3);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:4px">Elaborado por Product Manager &mdash; Proyecciones y estado del ecosistema Ultragen 2026</div>'+
+      '<div style="font-size:13px;color:var(--text3);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:4px">Elaborado por Product Manager &mdash; Proyecciones y estado del ecosistema Ultragen 2026</div>'+
     '</div>'+
     '<div class="rp-section">'+
       '<div class="rp-h2">RESUMEN DE PROYECTOS</div>'+
-      '<div class="rp-row"><span class="rp-l">ultragen_manager (backend)</span><span class="rp-v"><span class="rp-badge ok">&#10003; Activo</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">ultragen_site_simple</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">ultragen_site_desktop</span><span class="rp-v"><span class="rp-badge warn">&#9888; Integrando</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">social_monserrat</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">ultragen_prompts</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">ultragen_controlpanel</span><span class="rp-v"><span class="rp-badge ok">&#10003; Desplegado</span></span></div>'+
-      '<div class="rp-row"><span class="rp-l">.opencode / Skills (12)</span><span class="rp-v"><span class="rp-badge info">&#9881; Operativo</span></span></div>'+
+      projectRows+
     '</div>'+
     '<div class="rp-section">'+
       '<div class="rp-h2">TRABAJO ACTIVO &amp; DEUDA</div>'+
-      '<div class="rp-h3">&#9654; En Progreso</div>'+
-      '<div class="rp-card" style="border-left-color:var(--ice);margin-bottom:3px"><div class="rp-c-title">&#8635; Integraci&oacute;n diarios reales en site_desktop</div><div class="rp-c-sub">Distribuci&oacute;n de Contenido &middot; 20/06</div></div>'+
-      '<div class="rp-h3" style="margin-top:5px">&#9888; Deuda Operacional</div>'+
+      '<div class="rp-h3">'+ic('arrr')+' En Progreso</div>'+
+      '<div class="rp-card" style="border-left-color:var(--ice);margin-bottom:3px"><div class="rp-c-title">'+ic('sync')+' Integraci&oacute;n diarios reales en site_desktop</div><div class="rp-c-sub">Distribuci&oacute;n de Contenido &middot; 20/06</div></div>'+
+      '<div class="rp-h3" style="margin-top:5px">'+ic('wrn')+' Deuda Operacional</div>'+
       '<div class="rp-card" style="border-left-color:var(--gold-dark);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge risk">Alta</span> D3: Hardcode DiariosModal.jsx</div><div class="rp-c-sub">site_desktop &middot; En integraci&oacute;n</div></div>'+
       '<div class="rp-card" style="border-left-color:var(--amber);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge warn">Media</span> D1: Ruta psicologo/SKILL.md</div><div class="rp-c-sub">documentacion/ &rarr; references/</div></div>'+
-      '<div class="rp-card" style="border-left-color:var(--text3);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge info" style="background:var(--gold-bg);color:var(--gold)">Baja</span> D2: Tareas en sub-skills</div><div class="rp-c-sub">Estandarizaci&oacute;n v&iacute;a mandato</div></div>'+
+      '<div class="rp-card" style="border-left-color:var(--text3);margin-bottom:2px"><div class="rp-c-title"><span class="rp-badge info">Baja</span> D2: Tareas en sub-skills</div><div class="rp-c-sub">Estandarizaci&oacute;n v&iacute;a mandato</div></div>'+
     '</div>'+
     '<div class="rp-section">'+
       '<div class="rp-h2">PROYECCIONES &mdash; PR&Oacute;XIMOS PASOS</div>'+
@@ -759,6 +925,8 @@ function updateHeaderDate() {
     const now = new Date();
     el.textContent = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   }
+  const st = document.querySelector('.stats');
+  if (st) st.textContent = PROYECTOS.length+' proyectos';
 }
 
 // init
@@ -770,6 +938,13 @@ buildHeatmap('hm-desktop',H.desktop);
 buildHeatmap('hm-social',H.social);
 buildHeatmap('hm-opencode',H.opencode);
 buildHeatmap('hm-prompts',H.prompts);
+
+// Restore last active tab from localStorage (F5 persistence)
+(function(){
+  var savedTab = 'rp';
+  try { savedTab = localStorage.getItem('ucpTab') || 'rp'; } catch(e) {}
+  switchTab(savedTab, null);
+})();
 </script>
 </body>
 </html>
